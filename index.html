@@ -1,6 +1,82 @@
-<div class="grid">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COREX // SYNC</title>
+    <style>
+        body {
+            background-color: rgba(30, 30, 30, 0.85); 
+            color: #E8E8E8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 15px;
+            overflow-x: hidden; 
+        }
+        .header {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #E8E8E8;
+            padding-bottom: 10px;
+        }
+        .grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; 
+        }
+        .category-container {
+            width: 100%;
+        }
+        .btn {
+            width: 100%;
+            background: transparent;
+            border: 2px solid #E8E8E8; 
+            color: #E8E8E8;
+            padding: 16px 0; 
+            border-radius: 4px;
+            font-size: 16px; 
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background: #E8E8E8;
+            color: #1e1e1e;
+        }
+        .submenu {
+            display: none; 
+            flex-direction: column;
+            gap: 8px;
+            padding: 10px 10px 0 10px;
+        }
+        .sub-btn {
+            background: rgba(232, 232, 232, 0.1);
+            border: 1px dashed #E8E8E8;
+            color: #E8E8E8;
+            padding: 14px 0; 
+            font-size: 14px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .sub-btn:hover {
+            background: rgba(232, 232, 232, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">COREX // SYNC</div>
+
+    <div class="grid">
         
-        <!-- BASE CATEGORY -->
+        <!-- BASE -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('base-menu')">Base</button>
             <div id="base-menu" class="submenu">
@@ -8,7 +84,7 @@
             </div>
         </div>
 
-        <!-- CASUAL CATEGORY -->
+        <!-- CASUAL -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('casual-menu')">Casual</button>
             <div id="casual-menu" class="submenu">
@@ -18,7 +94,7 @@
             </div>
         </div>
 
-        <!-- FORMAL CATEGORY -->
+        <!-- FORMAL -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('formal-menu')">Formal</button>
             <div id="formal-menu" class="submenu">
@@ -27,7 +103,7 @@
             </div>
         </div>
 
-        <!-- CLUB CATEGORY -->
+        <!-- CLUB -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('club-menu')">Club</button>
             <div id="club-menu" class="submenu">
@@ -35,7 +111,7 @@
             </div>
         </div>
 
-        <!-- LOUNGE CATEGORY -->
+        <!-- LOUNGE -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('lounge-menu')">Lounge</button>
             <div id="lounge-menu" class="submenu">
@@ -43,7 +119,7 @@
             </div>
         </div>
 
-        <!-- NUDE CATEGORY -->
+        <!-- NUDE -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('nude-menu')">Nude</button>
             <div id="nude-menu" class="submenu">
@@ -51,7 +127,7 @@
             </div>
         </div>
 
-        <!-- PJS CATEGORY (Now moved above Alt) -->
+        <!-- PJS -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('pjs-menu')">PJs</button>
             <div id="pjs-menu" class="submenu">
@@ -59,7 +135,7 @@
             </div>
         </div>
 
-        <!-- ALT CATEGORY (Now at the bottom) -->
+        <!-- ALT -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('alt-menu')">Alt</button>
             <div id="alt-menu" class="submenu">
@@ -68,3 +144,42 @@
         </div>
 
     </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const slurl = urlParams.get('slurl');
+
+        function toggleMenu(menuId) {
+            let allMenus = document.querySelectorAll('.submenu');
+            allMenus.forEach(menu => {
+                if (menu.id !== menuId) {
+                    menu.style.display = 'none';
+                }
+            });
+
+            let selectedMenu = document.getElementById(menuId);
+            if (selectedMenu.style.display === 'flex') {
+                selectedMenu.style.display = 'none';
+            } else {
+                selectedMenu.style.display = 'flex';
+            }
+        }
+
+        function sendToSL(category, slot) {
+            let outfitPath = category + "/" + slot;
+            
+            if (slurl) {
+                fetch(slurl, {
+                    method: 'POST',
+                    body: outfitPath
+                }).catch(error => {
+                    console.error("Transmission Error:", error);
+                });
+            } else {
+                alert("Cannot find SL Connection. Are you using this inside Second Life?");
+            }
+        }
+    </script>
+
+</body>
+</html>
