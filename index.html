@@ -4,21 +4,20 @@
     <meta charset="UTF-8">
     <title>COREX // SYNC UI</title>
     <style>
-        /* Base Reset & Background Image */
-        body {
+        /* Force absolute transparency for SL Media on a Prim */
+        html, body {
+            background: transparent !important;
+            background-color: transparent !important;
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
-            background-image: url('closet.jpg'); /* Change to match your image filename */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
         }
 
-        /* Main Smoky Glass Container */
+        /* Main HUD Container */
         .hud-container {
-            background: rgba(20, 20, 20, 0.65);
+            /* Slightly more transparent base in case SL viewer ignores the blur */
+            background: rgba(40, 40, 40, 0.75); 
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -66,12 +65,11 @@
             gap: 12px;
         }
 
-        /* Hide non-active submenus by default (for LSL/JS to toggle) */
         .hidden {
             display: none;
         }
 
-        /* Category Item & Slots */
+        /* Category Item & 4 Slots */
         .category {
             display: flex;
             align-items: center;
@@ -123,120 +121,44 @@
 
     <div class="hud-container">
         
-        <!-- MAIN MENU -->
-        <!-- Row 1: Nude prioritized first -->
         <div class="menu-row">
             <button class="menu-btn active">Nude</button>
             <button class="menu-btn">Dresser</button>
             <button class="menu-btn">Closet</button>
         </div>
-        <!-- Row 2: Alt prioritized last -->
         <div class="menu-row">
             <button class="menu-btn">Wardrobe</button>
             <button class="menu-btn">Minimize</button>
             <button class="menu-btn">Alt</button>
         </div>
 
-        <!-- NUDE SUBMENU -->
-        <div class="submenu hidden" id="menu-nude">
-            <div class="category"><span class="category-label">Nude</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <button class="remove-btn">Remove Last Detach</button>
-        </div>
-
-        <!-- DRESSER SUBMENU (Currently visible for preview) -->
         <div class="submenu" id="menu-dresser">
             <div class="category"><span class="category-label">Undies: Bra's</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
             </div>
             <div class="category"><span class="category-label">Undies: Panties</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
             </div>
             <div class="category"><span class="category-label">Undies: Boxers</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
             </div>
             <div class="category"><span class="category-label">Undies: Briefs</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
             </div>
             <div class="category"><span class="category-label">Undies: Lingerie</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
             </div>
             <div class="category"><span class="category-label">Undies: Stocking & Socks</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
             </div>
             <div class="category"><span class="category-label">Pj's</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
             </div>
             <div class="category"><span class="category-label">Lounge</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
             </div>
             <div class="category"><span class="category-label">Swim</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <button class="remove-btn">Remove Last Detach</button>
-        </div>
-
-        <!-- CLOSET SUBMENU -->
-        <div class="submenu hidden" id="menu-closet">
-            <div class="category"><span class="category-label">Dresses</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Shirts: Long Sleeve</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Shirts: Short Sleeve</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Shirts: Tanks</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Pants</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Skirts</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Shorts</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <button class="remove-btn">Remove Last Detach</button>
-        </div>
-
-        <!-- WARDROBE SUBMENU -->
-        <div class="submenu hidden" id="menu-wardrobe">
-            <div class="category"><span class="category-label">Casual</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Club</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Formal</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Sleep</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Roleplay</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Shopping</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Swimwear</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Seasons: Spring</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Seasons: Summer</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Seasons: Winter</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Seasons: Autumn</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
             </div>
             <button class="remove-btn">Remove Last Detach</button>
         </div>
