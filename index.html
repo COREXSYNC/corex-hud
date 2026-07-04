@@ -15,7 +15,7 @@
         }
         .header {
             text-align: center;
-            font-size: 26px; /* INCREASED FONT */
+            font-size: 26px; 
             font-weight: bold;
             letter-spacing: 3px;
             margin-bottom: 20px;
@@ -26,7 +26,7 @@
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr; 
-            gap: 15px; /* Slightly increased gap for larger buttons */
+            gap: 15px; 
             align-items: start; 
         }
         .category-container {
@@ -37,9 +37,9 @@
             background: transparent;
             border: 2px solid #E8E8E8; 
             color: #E8E8E8;
-            padding: 20px 0; /* INCREASED PADDING */
+            padding: 20px 0; 
             border-radius: 4px;
-            font-size: 20px; /* INCREASED FONT */
+            font-size: 20px; 
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -65,8 +65,8 @@
             background: rgba(232, 232, 232, 0.1);
             border: 1px dashed #E8E8E8;
             color: #E8E8E8;
-            padding: 16px 0; /* INCREASED PADDING */
-            font-size: 16px; /* INCREASED FONT */
+            padding: 16px 0; 
+            font-size: 16px; 
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
@@ -83,8 +83,6 @@
         .remove-btn:hover {
             background: rgba(255, 107, 107, 0.15);
         }
-        
-        /* NEW STYLES FOR THE MINIMIZE BUTTON */
         .minimize-container {
             display: flex;
             align-items: center;
@@ -106,15 +104,14 @@
 
     <div class="grid">
         
-        <!-- DRESSER -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('dresser-menu')">Dresser</button>
             <div id="dresser-menu" class="submenu main-submenu">
                 <button class="sub-btn" onclick="sendToSL('Dresser', 'Lounge')">Lounge</button>
                 <button class="sub-btn" onclick="sendToSL('Dresser', 'PJs')">PJ's</button>
                 <button class="sub-btn" onclick="sendToSL('Dresser', 'Swim')">Swim</button>
+                <button class="sub-btn" onclick="sendToSL('Dresser', 'Lingerie')">Lingerie</button>
                 
-                <!-- Nested Underwear Menu -->
                 <button class="sub-btn" onclick="toggleMenu('underwear-menu', true)">Underwear ►</button>
                 <div id="underwear-menu" class="submenu nested-submenu">
                     <button class="sub-btn" onclick="sendToSL('Dresser/Underwear', 'Bras')">Bras</button>
@@ -129,7 +126,6 @@
             </div>
         </div>
 
-        <!-- CLOSET -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('closet-menu')">Closet</button>
             <div id="closet-menu" class="submenu main-submenu">
@@ -143,7 +139,6 @@
             </div>
         </div>
 
-        <!-- WARDROBE -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('wardrobe-menu')">Wardrobe</button>
             <div id="wardrobe-menu" class="submenu main-submenu">
@@ -157,7 +152,6 @@
             </div>
         </div>
 
-        <!-- SHOE RACK -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('shoe-menu')">Shoe Rack</button>
             <div id="shoe-menu" class="submenu main-submenu">
@@ -170,12 +164,10 @@
             </div>
         </div>
 
-        <!-- NUDE -->
         <div class="category-container">
             <button class="btn" onclick="sendToSL('System', 'Nude')">Nude</button>
         </div>
         
-        <!-- MINIMIZE -->
         <div class="category-container minimize-container">
             <button class="btn btn-minimize" onclick="sendToSL('System', 'Minimize')">Minimize</button>
         </div>
@@ -221,4 +213,4 @@
     </script>
 
 </body>
-</html> 
+</html>
