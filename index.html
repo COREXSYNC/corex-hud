@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COREX // SYNC</title>
+    <!-- Imports the Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            /* Dropped opacity to 0.65 for a truly smokey, transparent glass look */
             background-color: rgba(20, 20, 20, 0.65); 
             color: #E8E8E8;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -39,13 +40,20 @@
             border: 2px solid #E8E8E8; 
             color: #E8E8E8;
             padding: 20px 0; 
-            border-radius: 30px; /* Cranked up to 30px for perfectly round ends */
-            font-size: 20px; 
+            border-radius: 30px; 
+            font-size: 18px; /* Slightly reduced to fit icons perfectly */
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn i {
+            margin-right: 10px; /* Adds space between the icon and the text */
+            font-size: 20px;
         }
         .btn:hover {
             background: #E8E8E8;
@@ -67,8 +75,8 @@
             border: 1px dashed #E8E8E8;
             color: #E8E8E8;
             padding: 16px 0; 
-            border-radius: 20px; /* Curved the sub-buttons to match */
-            font-size: 16px; 
+            border-radius: 20px; 
+            font-size: 15px; 
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
@@ -93,10 +101,14 @@
         }
         .btn-minimize {
             width: 70%; 
-            font-size: 14px; 
+            font-size: 13px; 
             padding: 12px 0; 
             border-width: 1px; 
             letter-spacing: 1px;
+        }
+        .btn-minimize i {
+            font-size: 14px;
+            margin-right: 6px;
         }
     </style>
 </head>
@@ -106,14 +118,16 @@
 
     <div class="grid">
         
+        <!-- DRESSER -->
         <div class="category-container">
-            <button class="btn" onclick="toggleMenu('dresser-menu')">Dresser</button>
+            <button class="btn" onclick="toggleMenu('dresser-menu')"><i class="fa-solid fa-box-archive"></i> Dresser</button>
             <div id="dresser-menu" class="submenu main-submenu">
                 <button class="sub-btn" onclick="sendToSL('Dresser', 'Lounge')">Lounge</button>
                 <button class="sub-btn" onclick="sendToSL('Dresser', 'PJs')">PJ's</button>
                 <button class="sub-btn" onclick="sendToSL('Dresser', 'Swim')">Swim</button>
                 <button class="sub-btn" onclick="sendToSL('Dresser', 'Lingerie')">Lingerie</button>
                 
+                <!-- Nested Underwear Menu -->
                 <button class="sub-btn" onclick="toggleMenu('underwear-menu', true)">Underwear ►</button>
                 <div id="underwear-menu" class="submenu nested-submenu">
                     <button class="sub-btn" onclick="sendToSL('Dresser/Underwear', 'Bras')">Bras</button>
@@ -128,8 +142,9 @@
             </div>
         </div>
 
+        <!-- CLOSET -->
         <div class="category-container">
-            <button class="btn" onclick="toggleMenu('closet-menu')">Closet</button>
+            <button class="btn" onclick="toggleMenu('closet-menu')"><i class="fa-solid fa-door-closed"></i> Closet</button>
             <div id="closet-menu" class="submenu main-submenu">
                 <button class="sub-btn" onclick="sendToSL('Closet', 'Shirts')">Shirts</button>
                 <button class="sub-btn" onclick="sendToSL('Closet', 'Pants')">Pants</button>
@@ -141,8 +156,9 @@
             </div>
         </div>
 
+        <!-- WARDROBE -->
         <div class="category-container">
-            <button class="btn" onclick="toggleMenu('wardrobe-menu')">Wardrobe</button>
+            <button class="btn" onclick="toggleMenu('wardrobe-menu')"><i class="fa-solid fa-shirt"></i> Wardrobe</button>
             <div id="wardrobe-menu" class="submenu main-submenu">
                 <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Casual')">Casual</button>
                 <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Club')">Club</button>
@@ -154,8 +170,9 @@
             </div>
         </div>
 
+        <!-- SHOE RACK -->
         <div class="category-container">
-            <button class="btn" onclick="toggleMenu('shoe-menu')">Shoe Rack</button>
+            <button class="btn" onclick="toggleMenu('shoe-menu')"><i class="fa-solid fa-shoe-prints"></i> Shoe Rack</button>
             <div id="shoe-menu" class="submenu main-submenu">
                 <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Boots')">Boots</button>
                 <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Dress Shoes')">Dress Shoes</button>
@@ -166,12 +183,14 @@
             </div>
         </div>
 
+        <!-- NUDE -->
         <div class="category-container">
-            <button class="btn" onclick="sendToSL('System', 'Nude')">Nude</button>
+            <button class="btn" onclick="sendToSL('System', 'Nude')"><i class="fa-solid fa-user"></i> Nude</button>
         </div>
         
+        <!-- MINIMIZE -->
         <div class="category-container minimize-container">
-            <button class="btn btn-minimize" onclick="sendToSL('System', 'Minimize')">Minimize</button>
+            <button class="btn btn-minimize" onclick="sendToSL('System', 'Minimize')"><i class="fa-solid fa-compress"></i> Minimize</button>
         </div>
 
     </div>
