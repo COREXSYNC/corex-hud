@@ -4,45 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COREX // SYNC</title>
-    <!-- Imports the Font Awesome Icon Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            background-color: rgba(20, 20, 20, 0.65); 
-            color: #E8E8E8;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Links to the background image you upload to GitHub */
+            background-image: url('bg.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* Adds a dark tint over the image so the white text stays readable */
+            background-color: rgba(15, 15, 15, 0.7); 
+            background-blend-mode: overlay;
+            
+            color: #ffffff;
+            font-family: 'Segoe UI Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 15px;
             overflow: hidden; 
         }
+        
         .header {
             text-align: center;
-            font-size: 26px; 
-            font-weight: bold;
-            letter-spacing: 3px;
+            font-size: 28px; 
+            font-weight: 300; 
+            letter-spacing: 6px;
             margin-bottom: 20px;
-            border-bottom: 2px solid #E8E8E8;
-            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 15px;
             text-transform: uppercase;
         }
+
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
+            gap: 12px; 
             align-items: start; 
         }
         .category-container {
             width: 100%;
         }
+
+        /* THIN-BORDERED RECTANGULAR BUTTONS */
         .btn {
             width: 100%;
-            background: transparent;
-            border: 2px solid #E8E8E8; 
-            color: #E8E8E8;
-            padding: 20px 0; 
-            border-radius: 30px; 
-            font-size: 18px; /* Slightly reduced to fit icons perfectly */
-            font-weight: bold;
+            /* Adds a slight frosted glass look to the buttons themselves */
+            background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.4); 
+            color: #ffffff;
+            padding: 16px 0; 
+            border-radius: 0px; 
+            font-size: 16px; 
+            font-weight: 300;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
@@ -52,47 +66,66 @@
             justify-content: center;
         }
         .btn i {
-            margin-right: 10px; /* Adds space between the icon and the text */
-            font-size: 20px;
+            margin-right: 10px;
+            font-size: 16px;
         }
+        
         .btn:hover {
-            background: #E8E8E8;
-            color: #1e1e1e;
+            background: rgba(220, 220, 220, 0.9);
+            color: #1a1a1a;
+            border-color: rgba(220, 220, 220, 0.9);
         }
+
+        /* SUB-MENUS */
         .submenu {
             display: none; 
             flex-direction: column;
             gap: 8px;
-            padding: 12px 0 0 0; 
+            padding: 10px 0 0 0; 
         }
+        
         .nested-submenu {
-            padding-left: 10px;
-            border-left: 1px dashed rgba(232, 232, 232, 0.5);
-            margin-top: 4px;
+            padding-left: 0;
+            margin-top: 8px;
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            gap: 8px;
         }
+
         .sub-btn {
-            background: rgba(232, 232, 232, 0.1);
-            border: 1px dashed #E8E8E8;
-            color: #E8E8E8;
-            padding: 16px 0; 
-            border-radius: 20px; 
-            font-size: 15px; 
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #cccccc;
+            padding: 12px 0; 
+            border-radius: 0px; 
+            font-size: 13px; 
+            font-weight: 300;
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
             width: 100%;
         }
         .sub-btn:hover {
-            background: rgba(232, 232, 232, 0.3);
+            background: rgba(220, 220, 220, 0.9);
+            color: #1a1a1a;
+            border-color: rgba(220, 220, 220, 0.9);
         }
+
+        .nested-submenu > .remove-btn {
+            grid-column: span 2; 
+        }
+
         .remove-btn {
-            color: #ff6b6b;
-            border-color: #ff6b6b;
+            color: #ff8888;
+            border-color: rgba(255, 136, 136, 0.4);
         }
         .remove-btn:hover {
-            background: rgba(255, 107, 107, 0.15);
+            background: rgba(255, 100, 100, 0.9);
+            color: #ffffff;
+            border-color: rgba(255, 100, 100, 0.9);
         }
+
         .minimize-container {
             display: flex;
             align-items: center;
@@ -100,15 +133,9 @@
             height: 100%;
         }
         .btn-minimize {
-            width: 70%; 
-            font-size: 13px; 
-            padding: 12px 0; 
-            border-width: 1px; 
-            letter-spacing: 1px;
-        }
-        .btn-minimize i {
-            font-size: 14px;
-            margin-right: 6px;
+            width: 100%; 
+            font-size: 14px; 
+            padding: 16px 0; 
         }
     </style>
 </head>
