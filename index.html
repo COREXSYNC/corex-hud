@@ -6,56 +6,64 @@
     <title>COREX // SYNC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Forces the HTML to take up the full screen to eliminate the grey box */
+        html, body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            /* Links exactly to the image you just uploaded */
             background-image: url('https://raw.githubusercontent.com/hypnotic087-commits/corex-hud/main/closet.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            background-attachment: fixed; /* Locks the background so it never cuts off */
             
-            /* Adds a heavy dark tint and a slight blur so your white menus stay easily readable */
             background-color: rgba(15, 15, 15, 0.75); 
             background-blend-mode: overlay;
             backdrop-filter: blur(2px);
             
             color: #ffffff;
             font-family: 'Segoe UI Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 15px;
-            overflow: hidden; 
+            padding: 20px;
+            overflow-x: hidden; 
         }
         
         .header {
             text-align: center;
-            font-size: 28px; 
+            font-size: 34px; /* Increased Font Size */
             font-weight: 300; 
             letter-spacing: 6px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
             padding-bottom: 15px;
             text-transform: uppercase;
         }
 
+        /* 3-Column Grid to force 6 items into exactly two rows */
         .grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 12px; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 15px; 
             align-items: start; 
         }
+        
         .category-container {
             width: 100%;
         }
 
-        /* THIN-BORDERED RECTANGULAR BUTTONS */
+        /* MAIN BUTTONS */
         .btn {
             width: 100%;
             background: rgba(255, 255, 255, 0.05); 
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255, 255, 255, 0.4); 
             color: #ffffff;
-            padding: 16px 0; 
+            padding: 20px 0; 
             border-radius: 0px; 
-            font-size: 16px; 
+            font-size: 20px; /* Increased Font Size */
             font-weight: 300;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -66,8 +74,8 @@
             justify-content: center;
         }
         .btn i {
-            margin-right: 10px;
-            font-size: 16px;
+            margin-right: 12px;
+            font-size: 20px; /* Increased Icon Size */
         }
         
         .btn:hover {
@@ -80,25 +88,17 @@
         .submenu {
             display: none; 
             flex-direction: column;
-            gap: 8px;
-            padding: 10px 0 0 0; 
-        }
-        
-        .nested-submenu {
-            padding-left: 0;
-            margin-top: 8px;
-            display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 8px;
+            gap: 10px;
+            padding: 12px 0 0 0; 
         }
 
         .sub-btn {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.25);
             color: #cccccc;
-            padding: 12px 0; 
+            padding: 16px 0; 
             border-radius: 0px; 
-            font-size: 13px; 
+            font-size: 17px; /* Increased Font Size */
             font-weight: 300;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -112,13 +112,10 @@
             border-color: rgba(220, 220, 220, 0.9);
         }
 
-        .nested-submenu > .remove-btn {
-            grid-column: span 2; 
-        }
-
         .remove-btn {
             color: #ff8888;
             border-color: rgba(255, 136, 136, 0.4);
+            margin-top: 5px;
         }
         .remove-btn:hover {
             background: rgba(255, 100, 100, 0.9);
@@ -127,15 +124,17 @@
         }
 
         .minimize-container {
+            margin-top: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100%;
+            width: 100%;
         }
         .btn-minimize {
-            width: 100%; 
-            font-size: 14px; 
-            padding: 16px 0; 
+            width: 50%; 
+            font-size: 18px; 
+            padding: 18px 0; 
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -145,26 +144,26 @@
 
     <div class="grid">
         
+        <!-- NUDE -->
+        <div class="category-container">
+            <button class="btn" onclick="toggleMenu('nude-menu')"><i class="fa-solid fa-user"></i> Nude</button>
+            <div id="nude-menu" class="submenu main-submenu">
+                <button class="sub-btn" onclick="sendToSL('Nude', 'Style1')">Style 1</button>
+                <button class="sub-btn" onclick="sendToSL('Nude', 'Style2')">Style 2</button>
+                <button class="sub-btn" onclick="sendToSL('Nude', 'Style3')">Style 3</button>
+                <button class="sub-btn" onclick="sendToSL('Nude', 'Style4')">Style 4</button>
+                <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
+            </div>
+        </div>
+
         <!-- DRESSER -->
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('dresser-menu')"><i class="fa-solid fa-box-archive"></i> Dresser</button>
             <div id="dresser-menu" class="submenu main-submenu">
-                <button class="sub-btn" onclick="sendToSL('Dresser', 'Lounge')">Lounge</button>
-                <button class="sub-btn" onclick="sendToSL('Dresser', 'PJs')">PJ's</button>
-                <button class="sub-btn" onclick="sendToSL('Dresser', 'Swim')">Swim</button>
-                <button class="sub-btn" onclick="sendToSL('Dresser', 'Lingerie')">Lingerie</button>
-                
-                <!-- Nested Underwear Menu -->
-                <button class="sub-btn" onclick="toggleMenu('underwear-menu', true)">Underwear ►</button>
-                <div id="underwear-menu" class="submenu nested-submenu">
-                    <button class="sub-btn" onclick="sendToSL('Dresser/Underwear', 'Bras')">Bras</button>
-                    <button class="sub-btn" onclick="sendToSL('Dresser/Underwear', 'Panties')">Panties</button>
-                    <button class="sub-btn" onclick="sendToSL('Dresser/Underwear', 'Pasties')">Pasties</button>
-                    <button class="sub-btn" onclick="sendToSL('Dresser/Underwear', 'Boxers')">Boxers</button>
-                    <button class="sub-btn" onclick="sendToSL('Dresser/Underwear', 'Briefs')">Briefs</button>
-                    <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
-                </div>
-                
+                <button class="sub-btn" onclick="sendToSL('Dresser', 'Style1')">Style 1</button>
+                <button class="sub-btn" onclick="sendToSL('Dresser', 'Style2')">Style 2</button>
+                <button class="sub-btn" onclick="sendToSL('Dresser', 'Style3')">Style 3</button>
+                <button class="sub-btn" onclick="sendToSL('Dresser', 'Style4')">Style 4</button>
                 <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
             </div>
         </div>
@@ -173,12 +172,10 @@
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('closet-menu')"><i class="fa-solid fa-door-closed"></i> Closet</button>
             <div id="closet-menu" class="submenu main-submenu">
-                <button class="sub-btn" onclick="sendToSL('Closet', 'Shirts')">Shirts</button>
-                <button class="sub-btn" onclick="sendToSL('Closet', 'Pants')">Pants</button>
-                <button class="sub-btn" onclick="sendToSL('Closet', 'Shorts')">Shorts</button>
-                <button class="sub-btn" onclick="sendToSL('Closet', 'Skirts')">Skirts</button>
-                <button class="sub-btn" onclick="sendToSL('Closet', 'Tank Tops')">Tank Tops</button>
-                <button class="sub-btn" onclick="sendToSL('Closet', 'Sweaters')">Sweaters</button>
+                <button class="sub-btn" onclick="sendToSL('Closet', 'Style1')">Style 1</button>
+                <button class="sub-btn" onclick="sendToSL('Closet', 'Style2')">Style 2</button>
+                <button class="sub-btn" onclick="sendToSL('Closet', 'Style3')">Style 3</button>
+                <button class="sub-btn" onclick="sendToSL('Closet', 'Style4')">Style 4</button>
                 <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
             </div>
         </div>
@@ -187,12 +184,10 @@
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('wardrobe-menu')"><i class="fa-solid fa-shirt"></i> Wardrobe</button>
             <div id="wardrobe-menu" class="submenu main-submenu">
-                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Casual')">Casual</button>
-                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Club')">Club</button>
-                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Formal')">Formal</button>
-                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Shopping')">Shopping</button>
-                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Sleep')">Sleep</button>
-                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Roleplay')">Roleplay</button>
+                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Style1')">Style 1</button>
+                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Style2')">Style 2</button>
+                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Style3')">Style 3</button>
+                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Style4')">Style 4</button>
                 <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
             </div>
         </div>
@@ -201,40 +196,44 @@
         <div class="category-container">
             <button class="btn" onclick="toggleMenu('shoe-menu')"><i class="fa-solid fa-shoe-prints"></i> Shoe Rack</button>
             <div id="shoe-menu" class="submenu main-submenu">
-                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Boots')">Boots</button>
-                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Dress Shoes')">Dress Shoes</button>
-                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Heels')">Heels</button>
-                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Sneakers')">Sneakers</button>
-                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Sandals')">Sandals</button>
+                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Style1')">Style 1</button>
+                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Style2')">Style 2</button>
+                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Style3')">Style 3</button>
+                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Style4')">Style 4</button>
                 <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
             </div>
         </div>
 
-        <!-- NUDE -->
+        <!-- ALT -->
         <div class="category-container">
-            <button class="btn" onclick="sendToSL('System', 'Nude')"><i class="fa-solid fa-user"></i> Nude</button>
-        </div>
-        
-        <!-- MINIMIZE -->
-        <div class="category-container minimize-container">
-            <button class="btn btn-minimize" onclick="sendToSL('System', 'Minimize')"><i class="fa-solid fa-compress"></i> Minimize</button>
+            <button class="btn" onclick="toggleMenu('alt-menu')"><i class="fa-solid fa-masks-theater"></i> Alt</button>
+            <div id="alt-menu" class="submenu main-submenu">
+                <button class="sub-btn" onclick="sendToSL('Alt', 'Style1')">Style 1</button>
+                <button class="sub-btn" onclick="sendToSL('Alt', 'Style2')">Style 2</button>
+                <button class="sub-btn" onclick="sendToSL('Alt', 'Style3')">Style 3</button>
+                <button class="sub-btn" onclick="sendToSL('Alt', 'Style4')">Style 4</button>
+                <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
+            </div>
         </div>
 
+    </div>
+    
+    <!-- MINIMIZE (Separated from the grid to span across the bottom neatly) -->
+    <div class="minimize-container">
+        <button class="btn btn-minimize" onclick="sendToSL('System', 'Minimize')"><i class="fa-solid fa-compress"></i> Minimize</button>
     </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const slurl = urlParams.get('slurl');
 
-        function toggleMenu(menuId, isNested = false) {
-            if (!isNested) {
-                let allMenus = document.querySelectorAll('.main-submenu');
-                allMenus.forEach(menu => {
-                    if (menu.id !== menuId) {
-                        menu.style.display = 'none';
-                    }
-                });
-            }
+        function toggleMenu(menuId) {
+            let allMenus = document.querySelectorAll('.main-submenu');
+            allMenus.forEach(menu => {
+                if (menu.id !== menuId) {
+                    menu.style.display = 'none';
+                }
+            });
 
             let selectedMenu = document.getElementById(menuId);
             if (selectedMenu.style.display === 'flex') {
@@ -255,7 +254,7 @@
                     console.error("Transmission Error:", error);
                 });
             } else {
-                alert("Cannot find SL Connection. Are you using this inside Second Life?");
+                console.log("No SL connection. Sent command:", outfitPath);
             }
         }
     </script>
