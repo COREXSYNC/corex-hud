@@ -2,297 +2,169 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COREX // SYNC</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>COREX // SYNC UI</title>
     <style>
-        html, body {
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Base Reset */
         body {
-            background-image: url('https://raw.githubusercontent.com/hypnotic087-commits/corex-hud/main/closet.jpg'); 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed; 
-            
-            background-color: rgba(15, 15, 15, 0.75); 
-            background-blend-mode: overlay;
-            backdrop-filter: blur(2px);
-            
-            color: #ffffff;
-            font-family: 'Segoe UI Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
             padding: 20px;
-            overflow-x: hidden; 
-        }
-        
-        .header {
-            text-align: center;
-            font-size: 38px; /* Increased Header Font */
-            font-weight: 300; 
-            letter-spacing: 8px;
-            margin-bottom: 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr; 
-            gap: 15px; 
-            align-items: start; 
-        }
-        
-        .category-container {
-            width: 100%;
-        }
-
-        .btn {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.4); 
-            color: #ffffff;
-            padding: 22px 0; 
-            border-radius: 0px; 
-            font-size: 22px; /* Increased Button Font */
-            font-weight: 300;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            cursor: pointer;
-            transition: all 0.2s;
+            background: transparent; /* Allows SL environment to show through */
             display: flex;
-            align-items: center;
             justify-content: center;
         }
-        .btn i {
-            margin-right: 12px;
-            font-size: 22px; 
-        }
-        
-        .btn:hover {
-            background: rgba(220, 220, 220, 0.9);
-            color: #1a1a1a;
-            border-color: rgba(220, 220, 220, 0.9);
+
+        /* Main Smoky Glass Container */
+        .hud-container {
+            background: rgba(20, 20, 20, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #b0b0b0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 15px;
+            width: 320px;
         }
 
-        .submenu {
-            display: none; 
-            flex-direction: column;
-            gap: 10px;
-            padding: 12px 0 0 0; 
+        /* Two-Row Main Menu Layout */
+        .menu-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .menu-row:last-of-type {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 15px;
         }
 
-        .sub-btn {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #cccccc;
-            padding: 18px 0; 
-            border-radius: 0px; 
-            font-size: 18px; /* Increased Sub-Menu Font */
-            font-weight: 300;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        /* Menu Buttons */
+        .menu-btn {
+            background: transparent;
+            border: none;
+            color: #b0b0b0;
             cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .sub-btn:hover {
-            background: rgba(220, 220, 220, 0.9);
-            color: #1a1a1a;
-            border-color: rgba(220, 220, 220, 0.9);
+        .menu-btn:hover, .menu-btn.active {
+            color: #E8E8E8;
+            text-shadow: 0 0 8px rgba(232, 232, 232, 0.4);
         }
 
+        /* Submenu Container */
+        .submenu {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Category Item & Slots */
+        .category {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .category-label {
+            font-size: 13px;
+            color: #E8E8E8;
+        }
+        .slot-group {
+            display: flex;
+            gap: 5px;
+        }
+        .style-slot {
+            width: 18px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .style-slot:hover {
+            background: rgba(232, 232, 232, 0.6);
+        }
+
+        /* Remove Item Action Button */
         .remove-btn {
-            color: #ff8888;
-            border-color: rgba(255, 136, 136, 0.4);
-            margin-top: 5px;
+            margin-top: 10px;
+            background: rgba(200, 50, 50, 0.15);
+            border: 1px solid rgba(200, 50, 50, 0.3);
+            color: #ff7b7b;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: 0.2s;
         }
         .remove-btn:hover {
-            background: rgba(255, 100, 100, 0.9);
-            color: #ffffff;
-            border-color: rgba(255, 100, 100, 0.9);
-        }
-
-        .minimize-container {
-            margin-top: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-        .btn-minimize {
-            width: 50%; 
-            font-size: 20px; 
-            padding: 20px 0; 
-            margin: 0 auto;
-        }
-
-        /* --- THE MINIMIZE FIX --- */
-        .maximize-view {
-            display: none; 
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            width: 100vw;
-            background: rgba(15, 15, 15, 0.85);
-            cursor: pointer;
-            text-align: center;
-        }
-        .maximize-view span {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            font-size: 24px;
-            letter-spacing: 8px;
-            color: #ffffff;
-            font-weight: bold;
-        }
-
-        /* When the prim resizes below 250px, hide the main UI and show the Maximize button */
-        @media (max-width: 250px) {
-            .header, .grid, .minimize-container {
-                display: none !important;
-            }
-            .maximize-view {
-                display: flex !important;
-            }
-            body {
-                padding: 0;
-            }
+            background: rgba(200, 50, 50, 0.3);
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
-    <!-- This view ONLY shows when the HUD is minimized -->
-    <div class="maximize-view" onclick="sendToSL('System', 'Maximize')">
-        <span>COREX</span>
-        <i class="fa-solid fa-expand" style="margin-top: 20px; color: #fff; font-size: 24px;"></i>
-    </div>
-
-    <div class="header">COREX // SYNC</div>
-
-    <div class="grid">
+    <div class="hud-container">
         
-        <!-- NUDE (Forced to First Position) -->
-        <div class="category-container">
-            <button class="btn" onclick="toggleMenu('nude-menu')"><i class="fa-solid fa-user"></i> Nude</button>
-            <div id="nude-menu" class="submenu main-submenu">
-                <button class="sub-btn" onclick="sendToSL('Nude', 'Style1')">Style 1</button>
-                <button class="sub-btn" onclick="sendToSL('Nude', 'Style2')">Style 2</button>
-                <button class="sub-btn" onclick="sendToSL('Nude', 'Style3')">Style 3</button>
-                <button class="sub-btn" onclick="sendToSL('Nude', 'Style4')">Style 4</button>
-                <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
-            </div>
+        <!-- MAIN MENU -->
+        <!-- Row 1: Nude prioritized first -->
+        <div class="menu-row">
+            <button class="menu-btn active">Nude</button>
+            <button class="menu-btn">Dresser</button>
+            <button class="menu-btn">Closet</button>
+        </div>
+        <!-- Row 2: Alt prioritized last -->
+        <div class="menu-row">
+            <button class="menu-btn">Wardrobe</button>
+            <button class="menu-btn">Minimize</button>
+            <button class="menu-btn">Alt</button>
         </div>
 
-        <!-- DRESSER -->
-        <div class="category-container">
-            <button class="btn" onclick="toggleMenu('dresser-menu')"><i class="fa-solid fa-box-archive"></i> Dresser</button>
-            <div id="dresser-menu" class="submenu main-submenu">
-                <button class="sub-btn" onclick="sendToSL('Dresser', 'Style1')">Style 1</button>
-                <button class="sub-btn" onclick="sendToSL('Dresser', 'Style2')">Style 2</button>
-                <button class="sub-btn" onclick="sendToSL('Dresser', 'Style3')">Style 3</button>
-                <button class="sub-btn" onclick="sendToSL('Dresser', 'Style4')">Style 4</button>
-                <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
-            </div>
-        </div>
-
-        <!-- CLOSET -->
-        <div class="category-container">
-            <button class="btn" onclick="toggleMenu('closet-menu')"><i class="fa-solid fa-door-closed"></i> Closet</button>
-            <div id="closet-menu" class="submenu main-submenu">
-                <button class="sub-btn" onclick="sendToSL('Closet', 'Style1')">Style 1</button>
-                <button class="sub-btn" onclick="sendToSL('Closet', 'Style2')">Style 2</button>
-                <button class="sub-btn" onclick="sendToSL('Closet', 'Style3')">Style 3</button>
-                <button class="sub-btn" onclick="sendToSL('Closet', 'Style4')">Style 4</button>
-                <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
-            </div>
-        </div>
-
-        <!-- WARDROBE -->
-        <div class="category-container">
-            <button class="btn" onclick="toggleMenu('wardrobe-menu')"><i class="fa-solid fa-shirt"></i> Wardrobe</button>
-            <div id="wardrobe-menu" class="submenu main-submenu">
-                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Style1')">Style 1</button>
-                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Style2')">Style 2</button>
-                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Style3')">Style 3</button>
-                <button class="sub-btn" onclick="sendToSL('Wardrobe', 'Style4')">Style 4</button>
-                <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
-            </div>
-        </div>
-
-        <!-- SHOE RACK -->
-        <div class="category-container">
-            <button class="btn" onclick="toggleMenu('shoe-menu')"><i class="fa-solid fa-shoe-prints"></i> Shoe Rack</button>
-            <div id="shoe-menu" class="submenu main-submenu">
-                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Style1')">Style 1</button>
-                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Style2')">Style 2</button>
-                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Style3')">Style 3</button>
-                <button class="sub-btn" onclick="sendToSL('Shoe Rack', 'Style4')">Style 4</button>
-                <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
-            </div>
-        </div>
-
-        <!-- ALT (Forced to Last Position) -->
-        <div class="category-container">
-            <button class="btn" onclick="toggleMenu('alt-menu')"><i class="fa-solid fa-masks-theater"></i> Alt</button>
-            <div id="alt-menu" class="submenu main-submenu">
-                <button class="sub-btn" onclick="sendToSL('Alt', 'Style1')">Style 1</button>
-                <button class="sub-btn" onclick="sendToSL('Alt', 'Style2')">Style 2</button>
-                <button class="sub-btn" onclick="sendToSL('Alt', 'Style3')">Style 3</button>
-                <button class="sub-btn" onclick="sendToSL('Alt', 'Style4')">Style 4</button>
-                <button class="sub-btn remove-btn" onclick="sendToSL('System', 'RemoveLast')">Remove</button>
-            </div>
-        </div>
-
-    </div>
-    
-    <div class="minimize-container">
-        <button class="btn btn-minimize" onclick="sendToSL('System', 'Minimize')"><i class="fa-solid fa-compress"></i> Minimize</button>
-    </div>
-
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const slurl = urlParams.get('slurl');
-
-        function toggleMenu(menuId) {
-            let allMenus = document.querySelectorAll('.main-submenu');
-            allMenus.forEach(menu => {
-                if (menu.id !== menuId) {
-                    menu.style.display = 'none';
-                }
-            });
-
-            let selectedMenu = document.getElementById(menuId);
-            if (selectedMenu.style.display === 'flex') {
-                selectedMenu.style.display = 'none';
-            } else {
-                selectedMenu.style.display = 'flex';
-            }
-        }
-
-        function sendToSL(category, slot) {
-            let outfitPath = category + "/" + slot;
+        <!-- ACTIVE SUBMENU AREA -->
+        <div class="submenu" id="active-menu-content">
             
-            if (slurl) {
-                fetch(slurl, {
-                    method: 'POST',
-                    body: outfitPath
-                }).catch(error => {
-                    console.error("Transmission Error:", error);
-                });
-            } else {
-                console.log("No SL connection. Sent command:", outfitPath);
-            }
-        }
-    </script>
+            <!-- DRESSER ITEMS (Example view) -->
+            <div class="category"><span class="category-label">Undies: Bra's</span>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+            </div>
+            <div class="category"><span class="category-label">Undies: Panties</span>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+            </div>
+            <div class="category"><span class="category-label">Undies: Boxers</span>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+            </div>
+            <div class="category"><span class="category-label">Undies: Briefs</span>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+            </div>
+            <div class="category"><span class="category-label">Undies: Lingerie</span>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+            </div>
+            <div class="category"><span class="category-label">Undies: Stocking & Socks</span>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+            </div>
+            <div class="category"><span class="category-label">Pj's</span>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+            </div>
+            <div class="category"><span class="category-label">Lounge</span>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+            </div>
+            <div class="category"><span class="category-label">Swim</span>
+                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
+            </div>
+
+            <!-- UNIVERSAL REMOVE BUTTON -->
+            <button class="remove-btn">Remove Last Detach</button>
+            
+        </div>
+    </div>
 
 </body>
 </html>
