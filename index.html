@@ -1,94 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>COREX // SYNC UI</title>
     <style>
-        body { margin: 0; padding: 20px; display: flex; justify-content: center; background: transparent; }
-        .hud-container {
-            background: rgba(20, 20, 20, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
+        /* ... keep your existing .hud-container, .btn, .style-slot styles ... */
+
+        /* Dropdown Structure */
+        .dropdown-container { margin-top: 10px; }
+        .dropdown-header {
+            background: rgba(255, 255, 255, 0.1);
             color: #E8E8E8;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            padding: 20px;
-            width: 360px;
-        }
-        .menu-row { display: flex; gap: 5px; margin-bottom: 10px; }
-        .btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #E8E8E8;
-            padding: 12px;
-            border-radius: 2px;
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
-            flex: 1;
-            transition: 0.2s;
-        }
-        .btn.active { background: rgba(255, 255, 255, 0.3); border-color: #fff; }
-        
-        .submenu { display: none; flex-direction: column; gap: 8px; margin-top: 15px; }
-        .submenu.active { display: flex; }
-        
-        .category { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-        .category-label { font-size: 14px; }
-        .slot-group { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
-        .style-slot {
-            width: 20px; height: 20px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-        }
-        .remove-btn {
-            margin-top: 15px;
-            background: rgba(200, 50, 50, 0.2);
-            border: 1px solid rgba(200, 50, 50, 0.4);
-            color: #ff9999;
             padding: 10px;
             cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             text-transform: uppercase;
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
         }
+        .dropdown-content {
+            display: none; /* Hidden by default */
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .dropdown-content.show { display: block; }
     </style>
 </head>
 <body>
     <div class="hud-container">
-        <!-- FOLDER TABS -->
-        <div class="menu-row">
-            <button class="btn" onclick="showFolder('nude')">Nude</button>
-            <button class="btn" onclick="showFolder('dresser')">Dresser</button>
-            <button class="btn" onclick="showFolder('closet')">Closet</button>
-        </div>
-        <div class="menu-row">
-            <button class="btn" onclick="showFolder('wardrobe')">Wardrobe</button>
-            <button class="btn">Minimize</button>
-            <button class="btn">Alt</button>
-        </div>
-
         <!-- DRESSER FOLDER -->
-        <div id="dresser" class="submenu">
-            <div class="category"><span class="category-label">Bra's</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <!-- Add other items here -->
-            <button class="remove-btn">Remove Last Detach</button>
-        </div>
-
-        <!-- CLOSET FOLDER -->
-        <div id="closet" class="submenu">
-            <div class="category"><span class="category-label">Dresses</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <button class="remove-btn">Remove Last Detach</button>
+        <div class="dropdown-container">
+            <div class="dropdown-header" onclick="toggleDropdown('dresser-list')">
+                Dresser <span>▼</span>
+            </div>
+            <div id="dresser-list" class="dropdown-content">
+                <!-- Sub-dropdown for Undies -->
+                <div class="dropdown-header" onclick="toggleDropdown('undies-list')">Undies <span>▼</span></div>
+                <div id="undies-list" class="dropdown-content">
+                    <div class="category"><span class="category-label">Bra's</span>...</div>
+                    <div class="category"><span class="category-label">Panties</span>...</div>
+                </div>
+                <!-- Other Dresser Items -->
+                <div class="category"><span class="category-label">Pj's</span>...</div>
+                <button class="remove-btn">Remove</button>
+            </div>
         </div>
     </div>
 
     <script>
-        function showFolder(folderId) {
-            document.querySelectorAll('.submenu').forEach(f => f.classList.remove('active'));
-            document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(folderId).classList.add('active');
-            event.currentTarget.classList.add('active');
+        function toggleDropdown(id) {
+            document.getElementById(id).classList.toggle('show');
         }
     </script>
 </body>
