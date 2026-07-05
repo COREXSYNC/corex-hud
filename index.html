@@ -1,55 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>COREX // SYNC UI</title>
     <style>
-        /* ... keep your existing .hud-container, .btn, .style-slot styles ... */
-
-        /* Dropdown Structure */
-        .dropdown-container { margin-top: 10px; }
-        .dropdown-header {
-            background: rgba(255, 255, 255, 0.1);
-            color: #E8E8E8;
-            padding: 10px;
-            cursor: pointer;
+        body { margin: 0; padding: 20px; display: flex; justify-content: center; background: transparent; }
+        .hud-container {
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: #E8E8E8;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 15px;
+            width: 380px;
+        }
+
+        /* Main Nav Buttons */
+        .nav-row { display: flex; gap: 5px; margin-bottom: 10px; }
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #E8E8E8;
+            padding: 12px;
+            flex: 1;
             text-transform: uppercase;
             font-weight: bold;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        /* Dropdown System */
+        .folder { margin-top: 5px; }
+        .header {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 12px;
             display: flex;
             justify-content: space-between;
         }
-        .dropdown-content {
-            display: none; /* Hidden by default */
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.2);
-        }
-        .dropdown-content.show { display: block; }
+        .content { display: none; padding: 5px 0 5px 15px; }
+        .show { display: block; }
+
+        /* Items */
+        .category { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; }
+        .slot-group { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; }
+        .style-slot { width: 18px; height: 18px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
+        
+        .remove-btn { margin-top: 10px; background: rgba(200, 50, 50, 0.2); border: 1px solid rgba(200, 50, 50, 0.4); color: #ff9999; padding: 8px; width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div class="hud-container">
-        <!-- DRESSER FOLDER -->
-        <div class="dropdown-container">
-            <div class="dropdown-header" onclick="toggleDropdown('dresser-list')">
-                Dresser <span>▼</span>
-            </div>
-            <div id="dresser-list" class="dropdown-content">
-                <!-- Sub-dropdown for Undies -->
-                <div class="dropdown-header" onclick="toggleDropdown('undies-list')">Undies <span>▼</span></div>
-                <div id="undies-list" class="dropdown-content">
-                    <div class="category"><span class="category-label">Bra's</span>...</div>
-                    <div class="category"><span class="category-label">Panties</span>...</div>
-                </div>
-                <!-- Other Dresser Items -->
-                <div class="category"><span class="category-label">Pj's</span>...</div>
-                <button class="remove-btn">Remove</button>
-            </div>
-        </div>
+
+<div class="hud-container">
+    <div class="nav-row">
+        <button class="nav-btn">Nude</button>
+        <button class="nav-btn" onclick="toggle('dresser-f')">Dresser</button>
+        <button class="nav-btn" onclick="toggle('closet-f')">Closet</button>
+    </div>
+    <div class="nav-row">
+        <button class="nav-btn" onclick="toggle('wardrobe-f')">Wardrobe</button>
+        <button class="nav-btn">Minimize</button>
+        <button class="nav-btn">Alt</button>
     </div>
 
-    <script>
-        function toggleDropdown(id) {
-            document.getElementById(id).classList.toggle('show');
-        }
-    </script>
+    <div id="dresser-f" class="folder content">
+        <div class="header" onclick="toggle('undies-f')">Undies ▼</div>
+        <div id="undies-f" class="content">
+            <div class="category"><span>Bra's</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span>Panties</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+        </div>
+        <div class="category"><span>Pj's</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+        <button class="remove-btn">Remove Last Detach</button>
+    </div>
+
+    <div id="closet-f" class="folder content">
+        <div class="category"><span>Dresses</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+        <button class="remove-btn">Remove Last Detach</button>
+    </div>
+</div>
+
+<script>
+    function toggle(id) { document.getElementById(id).classList.toggle('show'); }
+</script>
+
 </body>
 </html>
