@@ -4,244 +4,123 @@
     <meta charset="UTF-8">
     <title>COREX // SYNC UI</title>
     <style>
-        /* Base Reset & Background Image */
+        /* Base Reset & Background */
         body {
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
-            background-image: url('closet1.jpg'); /* Change to match your image filename */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-color: transparent;
         }
 
-        /* Main Smoky Glass Container */
+        /* Main Container */
         .hud-container {
-            background: rgba(20, 20, 20, 0.65);
+            background: rgba(20, 20, 20, 0.75);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 8px;
-            color: #b0b0b0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 15px;
-            width: 340px;
+            color: #E8E8E8;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            padding: 20px;
+            width: 360px;
         }
 
-        /* Two-Row Main Menu Layout */
+        /* Two-Row Main Menu */
         .menu-row {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-        .menu-row:last-of-type {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 15px;
-            margin-bottom: 15px;
+            gap: 5px;
+            margin-bottom: 10px;
         }
 
-        /* Menu Buttons */
-        .menu-btn {
-            background: transparent;
-            border: none;
-            color: #b0b0b0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            flex: 1;
-        }
-        .menu-btn:hover, .menu-btn.active {
+        /* Rectangular Buttons (Category & Menu) */
+        .btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #E8E8E8;
-            text-shadow: 0 0 8px rgba(232, 232, 232, 0.4);
-        }
-
-        /* Submenu Container */
-        .submenu {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        /* Hide non-active submenus by default (for LSL/JS to toggle) */
-        .hidden {
-            display: none;
-        }
-
-        /* Category Item & Slots */
-        .category {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .category-label {
-            font-size: 13px;
-            color: #E8E8E8;
-        }
-        .slot-group {
-            display: flex;
-            gap: 4px;
-        }
-        .style-slot {
-            width: 16px;
-            height: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 3px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .style-slot:hover {
-            background: rgba(232, 232, 232, 0.6);
-        }
-
-        /* Remove Item Action Button */
-        .remove-btn {
-            margin-top: 10px;
-            background: rgba(200, 50, 50, 0.15);
-            border: 1px solid rgba(200, 50, 50, 0.3);
-            color: #ff7b7b;
-            padding: 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            text-align: center;
-            font-size: 12px;
+            padding: 12px;
+            border-radius: 2px;
             text-transform: uppercase;
             font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            flex: 1;
             transition: 0.2s;
         }
-        .remove-btn:hover {
-            background: rgba(200, 50, 50, 0.3);
-            color: #fff;
+        .btn:hover, .btn.active {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Submenu Layout */
+        .submenu { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
+        .hidden { display: none; }
+
+        /* Category Item Grid */
+        .category { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .category-label { flex: 1; font-size: 14px; }
+        
+        .slot-group { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+        .style-slot {
+            width: 20px; height: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .style-slot:hover { background: rgba(255, 255, 255, 0.25); }
+
+        /* Remove Button */
+        .remove-btn {
+            margin-top: 15px;
+            background: rgba(200, 50, 50, 0.2);
+            border: 1px solid rgba(200, 50, 50, 0.4);
+            color: #ff9999;
+            padding: 10px;
+            width: 100%;
+            border-radius: 2px;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
     <div class="hud-container">
-        
         <!-- MAIN MENU -->
-        <!-- Row 1: Nude prioritized first -->
         <div class="menu-row">
-            <button class="menu-btn active">Nude</button>
-            <button class="menu-btn">Dresser</button>
-            <button class="menu-btn">Closet</button>
+            <button class="btn active">Nude</button>
+            <button class="btn">Dresser</button>
+            <button class="btn">Closet</button>
         </div>
-        <!-- Row 2: Alt prioritized last -->
         <div class="menu-row">
-            <button class="menu-btn">Wardrobe</button>
-            <button class="menu-btn">Minimize</button>
-            <button class="menu-btn">Alt</button>
+            <button class="btn">Wardrobe</button>
+            <button class="btn">Minimize</button>
+            <button class="btn">Alt</button>
         </div>
 
-        <!-- NUDE SUBMENU -->
-        <div class="submenu hidden" id="menu-nude">
-            <div class="category"><span class="category-label">Nude</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <button class="remove-btn">Remove Last Detach</button>
-        </div>
-
-        <!-- DRESSER SUBMENU (Currently visible for preview) -->
+        <!-- DRESSER SUBMENU -->
         <div class="submenu" id="menu-dresser">
-            <div class="category"><span class="category-label">Undies: Bra's</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Undies: Panties</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Undies: Boxers</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Undies: Briefs</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Undies: Lingerie</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Undies: Stocking & Socks</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Pj's</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Lounge</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Swim</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
+            <div class="category"><span class="category-label">Bra's</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span class="category-label">Panties</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span class="category-label">Boxers</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span class="category-label">Briefs</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span class="category-label">Lingerie</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span class="category-label">Socks</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span class="category-label">Pj's</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span class="category-label">Lounge</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span class="category-label">Swim</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
             <button class="remove-btn">Remove Last Detach</button>
         </div>
-
-        <!-- CLOSET SUBMENU -->
-        <div class="submenu hidden" id="menu-closet">
-            <div class="category"><span class="category-label">Dresses</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Shirts: Long Sleeve</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Shirts: Short Sleeve</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Shirts: Tanks</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Pants</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Skirts</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Shorts</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <button class="remove-btn">Remove Last Detach</button>
-        </div>
-
-        <!-- WARDROBE SUBMENU -->
-        <div class="submenu hidden" id="menu-wardrobe">
-            <div class="category"><span class="category-label">Casual</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Club</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Formal</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Sleep</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Roleplay</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Shopping</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Swimwear</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Seasons: Spring</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Seasons: Summer</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Seasons: Winter</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <div class="category"><span class="category-label">Seasons: Autumn</span>
-                <div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div>
-            </div>
-            <button class="remove-btn">Remove Last Detach</button>
-        </div>
-
     </div>
 
+    <script>
+        // Tab switching logic
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
