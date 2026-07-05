@@ -5,29 +5,31 @@
     <title>COREX // SYNC UI</title>
     <style>
         body { margin: 0; padding: 15px; display: flex; justify-content: center; background: transparent; font-family: 'Segoe UI', sans-serif; }
-        .hud-container { background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; padding: 15px; width: 380px; color: #E8E8E8; }
+        .hud-container { background: rgba(40, 40, 40, 0.95); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 2px; padding: 15px; width: 380px; color: #E8E8E8; }
         
         /* Main Navigation */
         .nav-row { display: flex; gap: 5px; margin-bottom: 5px; }
-        .nav-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #E8E8E8; padding: 10px; flex: 1; text-transform: uppercase; font-weight: bold; font-size: 11px; cursor: pointer; }
+        .nav-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #E8E8E8; padding: 12px; flex: 1; text-transform: uppercase; font-weight: bold; font-size: 11px; cursor: pointer; }
         .nav-btn:hover { background: rgba(255, 255, 255, 0.2); }
 
         /* Folders & Items */
         .folder { margin-top: 10px; }
-        .header { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px; cursor: pointer; text-transform: uppercase; font-weight: bold; font-size: 12px; margin-bottom: 4px; }
-        .content { display: none; padding-left: 15px; }
+        .header { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px; cursor: pointer; text-transform: uppercase; font-weight: bold; font-size: 12px; margin-bottom: 5px; }
+        .content { display: none; padding-left: 10px; }
         .show { display: block; }
         
-        .category { display: flex; align-items: center; justify-content: space-between; padding: 4px 0; font-size: 13px; }
-        .slot-group { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; }
-        .style-slot { width: 16px; height: 16px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
+        .category { display: flex; align-items: center; justify-content: space-between; padding: 4px 0; font-size: 12px; gap: 10px; }
+        .slot-group { display: flex; flex: 1; gap: 3px; }
+        .style-btn { flex: 1; height: 22px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
+        .style-btn:hover { background: rgba(255, 255, 255, 0.25); }
         
-        .remove-btn { margin-top: 10px; background: rgba(200, 50, 50, 0.2); border: 1px solid rgba(200, 50, 50, 0.4); color: #ff9999; padding: 8px; width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; }
+        .remove-btn { margin-top: 15px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(200, 50, 50, 0.4); color: #ffcccc; padding: 10px; width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="hud-container">
+    <!-- Main Menu: Two Rows, No Alt -->
     <div class="nav-row">
         <button class="nav-btn">Nude</button>
         <button class="nav-btn" onclick="toggle('dresser-f')">Dresser</button>
@@ -38,50 +40,53 @@
         <button class="nav-btn">Minimize</button>
     </div>
 
+    <!-- DRESSER -->
     <div id="dresser-f" class="folder content">
         <div class="header" onclick="toggle('undies-f')">Undies ▼</div>
         <div id="undies-f" class="content">
-            <div class="category"><span>Bra's</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <div class="category"><span>Panties</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <div class="category"><span>Boxers</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <div class="category"><span>Briefs</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <div class="category"><span>Lingerie</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <div class="category"><span>Socks</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span>Bra's</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category"><span>Panties</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category"><span>Boxers</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category"><span>Briefs</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category"><span>Lingerie</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category"><span>Socks</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
         </div>
-        <div class="category"><span>Pj's</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-        <div class="category"><span>Lounge</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-        <div class="category"><span>Swim</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+        <div class="category"><span>Pj's</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+        <div class="category"><span>Lounge</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+        <div class="category"><span>Swim</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
         <button class="remove-btn">Remove Last Detach</button>
     </div>
 
+    <!-- CLOSET -->
     <div id="closet-f" class="folder content">
-        <div class="category"><span>Dresses</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+        <div class="category"><span>Dresses</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
         <div class="header" onclick="toggle('shirts-f')">Shirts ▼</div>
         <div id="shirts-f" class="content">
-            <div class="category"><span>Long Sleeve</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <div class="category"><span>Short Sleeve</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <div class="category"><span>Tanks</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span>Long Sleeve</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category"><span>Short Sleeve</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category"><span>Tanks</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
         </div>
-        <div class="category"><span>Pants</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-        <div class="category"><span>Skirts</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-        <div class="category"><span>Shorts</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+        <div class="category"><span>Pants</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+        <div class="category"><span>Skirts</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+        <div class="category"><span>Shorts</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
         <button class="remove-btn">Remove Last Detach</button>
     </div>
 
+    <!-- WARDROBE -->
     <div id="wardrobe-f" class="folder content">
-        <div class="category"><span>Casual</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-        <div class="category"><span>Club</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-        <div class="category"><span>Formal</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-        <div class="category"><span>Sleep</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-        <div class="category"><span>Roleplay</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-        <div class="category"><span>Shopping</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-        <div class="category"><span>Swimwear</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+        <div class="category"><span>Casual</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+        <div class="category"><span>Club</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+        <div class="category"><span>Formal</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+        <div class="category"><span>Sleep</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+        <div class="category"><span>Roleplay</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+        <div class="category"><span>Shopping</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+        <div class="category"><span>Swimwear</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
         <div class="header" onclick="toggle('seasons-f')">Seasons ▼</div>
         <div id="seasons-f" class="content">
-            <div class="category"><span>Spring</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <div class="category"><span>Summer</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <div class="category"><span>Winter</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
-            <div class="category"><span>Autumn</span><div class="slot-group"><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div><div class="style-slot"></div></div></div>
+            <div class="category"><span>Spring</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category"><span>Summer</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category"><span>Winter</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category"><span>Autumn</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
         </div>
         <button class="remove-btn">Remove Last Detach</button>
     </div>
