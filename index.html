@@ -4,52 +4,51 @@
     <meta charset="UTF-8">
     <title>COREX // SYNC UI</title>
     <style>
-        /* Force full page coverage without warping */
         html, body { 
             margin: 0; padding: 0; 
             width: 100%; height: 100vh;
             background: url('closet.jpg') no-repeat center center !important; 
-            background-size: cover !important; /* This scales the image to fit without warping */
+            background-size: cover !important;
             font-family: 'Segoe UI', sans-serif; 
             overflow: hidden;
         }
 
-        /* HUD Centered perfectly in the middle of the screen */
         .hud-container { 
             position: absolute;
-            top: 50%; 
-            left: 50%;
-            transform: translate(-50%, -50%); /* Perfectly centers the HUD */
-            background: rgba(40, 40, 40, 0.65); 
-            backdrop-filter: blur(10px); 
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(40, 40, 40, 0.75); 
+            backdrop-filter: blur(15px); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 4px; 
-            padding: 30px; 
-            width: 500px; 
-            max-height: 80vh; 
-            overflow-y: auto; 
-            color: #E8E8E8; 
+            border-radius: 8px; 
+            padding: 40px; 
+            width: 80%; height: 80%;
+            overflow-y: auto; color: #E8E8E8; 
+            display: flex; flex-direction: column;
         }
 
-        /* Hide scrollbars */
         .hud-container::-webkit-scrollbar { display: none; }
-        .hud-container { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .nav-row { display: flex; gap: 10px; margin-bottom: 15px; }
-        .nav-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #E8E8E8; padding: 20px; flex: 1; text-transform: uppercase; font-weight: bold; font-size: 13px; cursor: pointer; }
-        .nav-btn.active { background: rgba(255, 255, 255, 0.25); border-color: #fff; }
+        .nav-row { display: flex; gap: 15px; margin-bottom: 25px; }
+        .nav-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #E8E8E8; padding: 25px; flex: 1; text-transform: uppercase; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .nav-btn.active { background: rgba(255, 255, 255, 0.3); border-color: #fff; }
         
-        .folder { margin-top: 15px; display: none; }
+        .folder { margin-top: 10px; display: none; }
         .folder.show { display: block; }
         
-        .header { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px; cursor: pointer; text-transform: uppercase; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
-        .content { display: none; padding-left: 20px; }
-        .content.show { display: block; }
+        /* Each category row */
+        .category-item { margin-bottom: 5px; }
+        .header { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px; cursor: pointer; text-transform: uppercase; font-weight: bold; font-size: 16px; display: flex; justify-content: space-between; }
         
-        .category { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; font-size: 14px; gap: 15px; }
-        .slot-group { display: flex; gap: 5px; }
-        .style-btn { width: 22px; height: 22px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
-        .remove-btn { margin-top: 20px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(200, 50, 50, 0.4); color: #ffcccc; padding: 15px; width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; }
+        /* The sub-content that opens directly under the header */
+        .sub-content { display: none; padding: 10px 0 10px 20px; background: rgba(0,0,0,0.1); }
+        .sub-content.show { display: block; }
+        
+        .slot-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; font-size: 14px; }
+        .slot-group { display: flex; gap: 8px; }
+        .style-btn { width: 30px; height: 30px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
+        
+        .remove-btn { margin-top: 25px; background: rgba(180, 60, 60, 0.4); border: 1px solid rgba(200, 50, 50, 0.4); color: #ffcccc; padding: 15px; width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -65,63 +64,23 @@
             <button class="nav-btn">Minimize</button>
         </div>
 
-        <!-- NUDE -->
-        <div id="nude-f" class="folder">
-            <div class="category"><span>Style Slots</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <button class="remove-btn">Remove Last Attachment</button>
-        </div>
-
-        <!-- DRESSER -->
         <div id="dresser-f" class="folder">
-            <div class="header" onclick="toggleSub('undies-f')">Undies ▼</div>
-            <div id="undies-f" class="content">
-                <div class="category"><span>Bra's</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-                <div class="category"><span>Panties</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-                <div class="category"><span>Boxers</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-                <div class="category"><span>Briefs</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-                <div class="category"><span>Lingerie</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-                <div class="category"><span>Stocking/Socks</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category-item">
+                <div class="header" onclick="toggleSub('undies-sub')">Undies ▼</div>
+                <div id="undies-sub" class="sub-content">
+                    <div class="slot-row"><span>Bra's</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+                    <div class="slot-row"><span>Panties</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+                </div>
             </div>
-            <div class="category"><span>Pj's</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="category"><span>Lounge</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="category"><span>Swim</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <button class="remove-btn">Remove Last Attachment</button>
-        </div>
-
-        <!-- CLOSET -->
-        <div id="closet-f" class="folder">
-            <div class="category"><span>Dresses</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="header" onclick="toggleSub('shirts-f')">Shirts ▼</div>
-            <div id="shirts-f" class="content">
-                <div class="category"><span>Long Sleeve</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-                <div class="category"><span>Short Sleeve</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-                <div class="category"><span>Tanks</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            </div>
-            <div class="category"><span>Pants</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="category"><span>Skirts</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="category"><span>Shorts</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <button class="remove-btn">Remove Last Attachment</button>
-        </div>
-
-        <!-- WARDROBE -->
-        <div id="wardrobe-f" class="folder">
-            <div class="category"><span>Casual</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="category"><span>Club</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="category"><span>Formal</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="category"><span>Sleep</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="category"><span>Roleplay</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="category"><span>Shopping</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="category"><span>Swimwear</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-            <div class="header" onclick="toggleSub('seasons-f')">Seasons ▼</div>
-            <div id="seasons-f" class="content">
-                <div class="category"><span>Spring</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-                <div class="category"><span>Summer</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-                <div class="category"><span>Winter</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
-                <div class="category"><span>Autumn</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+            <div class="category-item">
+                <div class="header" onclick="toggleSub('pj-sub')">Pj's ▼</div>
+                <div id="pj-sub" class="sub-content">
+                    <div class="slot-row"><span>Silk Set</span><div class="slot-group"><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button><button class="style-btn"></button></div></div>
+                </div>
             </div>
             <button class="remove-btn">Remove Last Attachment</button>
         </div>
-    </div>
+        </div>
 
     <script>
         function toggleFolder(id, btn) {
