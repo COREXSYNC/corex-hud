@@ -11,42 +11,47 @@
             background-size: cover !important;
             font-family: 'Segoe UI', sans-serif; 
             overflow: hidden;
+            color: #ffffff;
         }
 
         .hud-container { 
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(30, 30, 30, 0.35); 
+            background: rgba(147, 109, 65, 0.45); 
             backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
             border-radius: 8px; 
-            padding: 40px; 
-            width: 90%; height: 90%;
-            overflow-y: auto; color: #936d41;
+            padding: 30px; 
+            width: 85%; height: 85%;
+            overflow-y: auto;
             display: flex; flex-direction: column;
         }
 
         .hud-container::-webkit-scrollbar { display: none; }
 
-        .nav-row { display: flex; gap: 15px; margin-bottom: 25px; }
-        .nav-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #fcfbfa; padding: 25px; flex: 1; text-transform: uppercase; font-weight: bold; font-size: 16px; cursor: pointer; }
-        .nav-btn.active { background: rgba(255, 255, 255, 0.25); border-color: #fff; }
+        .nav-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .nav-btn { 
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: #ffffff; padding: 20px; flex: 1; text-transform: uppercase; 
+            font-weight: bold; cursor: pointer;
+        }
+        .nav-btn.glow-active { border: 2px solid #00ff00; box-shadow: 0 0 15px #00ff00; }
         
-        .folder { margin-top: 20px; display: none; }
+        .folder { margin-top: 15px; display: none; }
         .folder.show { display: block; }
         
-        .header { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; cursor: pointer; text-transform: uppercase; font-weight: bold; font-size: 16px; margin-bottom: 5px; }
-        .sub-content { display: none; padding-left: 30px; background: rgba(0,0,0,0.1); }
+        .header { background: rgba(255, 255, 255, 0.1); padding: 15px; cursor: pointer; margin-top: 5px; font-weight: bold; }
+        .sub-content { display: none; padding-left: 20px; }
         .sub-content.show { display: block; }
         
-        /* Style Slots container */
-        .style-slots { display: none; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); margin-top: 5px; }
-        .style-slots.active { display: flex; gap: 8px; }
+        .cat-row { padding: 10px 0; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between; }
+        
+        .style-slots { display: none; padding: 10px; background: rgba(0,0,0,0.2); margin-top: 5px; gap: 5px; }
+        .style-slots.active { display: flex; }
 
-        .cat-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; font-size: 16px; cursor: pointer; }
-        .rect-btn { width: 35px; height: 30px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; margin-left: 8px; }
-        .remove-btn { margin-top: 30px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(200, 50, 50, 0.4); color: #ffcccc; padding: 20px; width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; }
+        .rect-btn { width: 30px; height: 25px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
+        .remove-btn { margin-top: 20px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; padding: 15px; width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -59,23 +64,62 @@
         </div>
         <div class="nav-row">
             <button class="nav-btn" onclick="toggleFolder('wardrobe-f', this)">Wardrobe</button>
-            <button class="nav-btn">Minimize</button>
+            <button class="nav-btn" onclick="toggleGlow(this)">Minimize</button>
         </div>
 
-        <!-- CLOSET -->
+        <div id="nude-f" class="folder">
+            <div class="cat-row" onclick="moveSlots(this)"><span>Nude Style</span><div class="slots-box"><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div></div>
+        </div>
+
+        <div id="dresser-f" class="folder">
+            <div class="header" onclick="toggleSub('undies-sub')">Undies ▼</div>
+            <div id="undies-sub" class="sub-content">
+                <div class="cat-row" onclick="moveSlots(this)">Bra's</div>
+                <div class="cat-row" onclick="moveSlots(this)">Panties</div>
+                <div class="cat-row" onclick="moveSlots(this)">Boxers</div>
+                <div class="cat-row" onclick="moveSlots(this)">Briefs</div>
+                <div class="cat-row" onclick="moveSlots(this)">Lingerie</div>
+                <div class="cat-row" onclick="moveSlots(this)">Stocking/Socks</div>
+            </div>
+            <div class="cat-row" onclick="moveSlots(this)">Pj's</div>
+            <div class="cat-row" onclick="moveSlots(this)">Lounge</div>
+            <div class="cat-row" onclick="moveSlots(this)">Swim</div>
+            <button class="remove-btn">Remove Last Attachment</button>
+        </div>
+
         <div id="closet-f" class="folder">
+            <div class="cat-row" onclick="moveSlots(this)">Dresses</div>
             <div class="header" onclick="toggleSub('shirts-sub')">Shirts ▼</div>
             <div id="shirts-sub" class="sub-content">
-                <div class="cat-row" onclick="moveSlots(this)"><span>Long Sleeve</span></div>
-                <div class="cat-row" onclick="moveSlots(this)"><span>Short Sleeve</span></div>
+                <div class="cat-row" onclick="moveSlots(this)">Long Sleeve</div>
+                <div class="cat-row" onclick="moveSlots(this)">Short Sleeve</div>
+                <div class="cat-row" onclick="moveSlots(this)">Tanks</div>
             </div>
-            <div class="cat-row" onclick="moveSlots(this)"><span>Dresses</span></div>
-            
+            <div class="cat-row" onclick="moveSlots(this)">Pants</div>
+            <div class="cat-row" onclick="moveSlots(this)">Skirts</div>
+            <div class="cat-row" onclick="moveSlots(this)">Shorts</div>
+            <button class="remove-btn">Remove Last Attachment</button>
+        </div>
+
+        <div id="wardrobe-f" class="folder">
+            <div class="cat-row" onclick="moveSlots(this)">Casual</div>
+            <div class="cat-row" onclick="moveSlots(this)">Club</div>
+            <div class="cat-row" onclick="moveSlots(this)">Formal</div>
+            <div class="cat-row" onclick="moveSlots(this)">Sleep</div>
+            <div class="cat-row" onclick="moveSlots(this)">Roleplay</div>
+            <div class="cat-row" onclick="moveSlots(this)">Shopping</div>
+            <div class="cat-row" onclick="moveSlots(this)">Swimwear</div>
+            <div class="header" onclick="toggleSub('seasons-sub')">Seasons ▼</div>
+            <div id="seasons-sub" class="sub-content">
+                <div class="cat-row" onclick="moveSlots(this)">Spring</div>
+                <div class="cat-row" onclick="moveSlots(this)">Summer</div>
+                <div class="cat-row" onclick="moveSlots(this)">Winter</div>
+                <div class="cat-row" onclick="moveSlots(this)">Autumn</div>
+            </div>
             <button class="remove-btn">Remove Last Attachment</button>
         </div>
     </div>
 
-    <!-- The single slot area that moves dynamically -->
     <div id="style-slots-area" class="style-slots">
         <button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button>
     </div>
@@ -83,13 +127,12 @@
     <script>
         function toggleFolder(id, btn) {
             document.getElementById(id).classList.toggle('show');
-            btn.classList.toggle('active');
+            toggleGlow(btn);
         }
+        function toggleGlow(btn) { btn.classList.toggle('glow-active'); }
         function toggleSub(id) { document.getElementById(id).classList.toggle('show'); }
-        
         function moveSlots(element) {
             const slots = document.getElementById('style-slots-area');
-            // Move the slots right after the clicked category
             element.after(slots);
             slots.classList.add('active');
         }
