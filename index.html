@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>COREX // SYNC UI</title>
     <style>
+        /* Force total page coverage */
         html, body { 
             margin: 0; padding: 0; 
             width: 100%; height: 100vh;
@@ -13,37 +14,41 @@
             overflow: hidden;
         }
 
+        /* HUD resized to cover full image area proportionally */
         .hud-container { 
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            /* Increased transparency to 0.45 for a lighter smokey look */
             background: rgba(40, 40, 40, 0.45); 
             backdrop-filter: blur(15px); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             border-radius: 8px; 
-            padding: 30px; 
-            width: 500px; max-height: 80vh; 
+            padding: 40px; 
+            width: 90%; height: 90%;
             overflow-y: auto; color: #E8E8E8;
+            display: flex; flex-direction: column;
         }
 
         .hud-container::-webkit-scrollbar { display: none; }
 
-        .nav-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .nav-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #E8E8E8; padding: 20px; flex: 1; text-transform: uppercase; font-weight: bold; font-size: 13px; cursor: pointer; }
+        .nav-row { display: flex; gap: 15px; margin-bottom: 25px; }
+        .nav-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #E8E8E8; padding: 25px; flex: 1; text-transform: uppercase; font-weight: bold; font-size: 16px; cursor: pointer; }
         .nav-btn.active { background: rgba(255, 255, 255, 0.25); border-color: #fff; }
         
-        .folder { margin-top: 15px; display: none; }
+        .folder { margin-top: 20px; display: none; }
         .folder.show { display: block; }
         
-        .header { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px; cursor: pointer; text-transform: uppercase; font-weight: bold; font-size: 14px; margin-bottom: 5px; }
-        .sub-content { display: none; padding-left: 20px; background: rgba(0,0,0,0.1); }
+        .header { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; cursor: pointer; text-transform: uppercase; font-weight: bold; font-size: 16px; margin-bottom: 5px; }
+        .sub-content { display: none; padding-left: 30px; background: rgba(0,0,0,0.1); }
         .sub-content.show { display: block; }
         
-        .cat-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; font-size: 14px; }
-        /* Rectangular buttons instead of boxes */
-        .rect-btn { flex: 1; height: 30px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; margin-left: 5px; }
-        .remove-btn { margin-top: 20px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(200, 50, 50, 0.4); color: #ffcccc; padding: 15px; width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; }
+        /* Style Slots container (hidden by default) */
+        .style-slots { display: none; padding: 15px; background: rgba(255,255,255,0.05); margin: 10px 0 10px 30px; border: 1px solid rgba(255,255,255,0.1); }
+        .style-slots.show { display: flex; gap: 8px; }
+
+        .cat-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; font-size: 16px; cursor: pointer; }
+        .rect-btn { width: 35px; height: 30px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; margin-left: 8px; }
+        .remove-btn { margin-top: 30px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(200, 50, 50, 0.4); color: #ffcccc; padding: 20px; width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -59,55 +64,18 @@
             <button class="nav-btn">Minimize</button>
         </div>
 
-        <div id="nude-f" class="folder">
-            <div class="cat-row"><span>Slots</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <button class="remove-btn">Remove Last Attachment</button>
-        </div>
-
-        <div id="dresser-f" class="folder">
-            <div class="header" onclick="toggleSub('undies-sub')">Undies ▼</div>
-            <div id="undies-sub" class="sub-content">
-                <div class="cat-row"><span>Bra's</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-                <div class="cat-row"><span>Panties</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-                <div class="cat-row"><span>Boxers</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-                <div class="cat-row"><span>Briefs</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-                <div class="cat-row"><span>Lingerie</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-                <div class="cat-row"><span>Stocking/Socks</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            </div>
-            <div class="cat-row"><span>Pj's</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <div class="cat-row"><span>Lounge</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <div class="cat-row"><span>Swim</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <button class="remove-btn">Remove Last Attachment</button>
-        </div>
-
+        <!-- CLOSET (Shirts and Dresses swapped) -->
         <div id="closet-f" class="folder">
-            <div class="cat-row"><span>Dresses</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
             <div class="header" onclick="toggleSub('shirts-sub')">Shirts ▼</div>
             <div id="shirts-sub" class="sub-content">
-                <div class="cat-row"><span>Long Sleeve</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-                <div class="cat-row"><span>Short Sleeve</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-                <div class="cat-row"><span>Tanks</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
+                <div class="cat-row" onclick="showSlots()"><span>Long Sleeve</span></div>
+                <div class="cat-row" onclick="showSlots()"><span>Short Sleeve</span></div>
             </div>
-            <div class="cat-row"><span>Pants</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <div class="cat-row"><span>Skirts</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <div class="cat-row"><span>Shorts</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <button class="remove-btn">Remove Last Attachment</button>
-        </div>
-
-        <div id="wardrobe-f" class="folder">
-            <div class="cat-row"><span>Casual</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <div class="cat-row"><span>Club</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <div class="cat-row"><span>Formal</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <div class="cat-row"><span>Sleep</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <div class="cat-row"><span>Roleplay</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <div class="cat-row"><span>Shopping</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <div class="cat-row"><span>Swimwear</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-            <div class="header" onclick="toggleSub('seasons-sub')">Seasons ▼</div>
-            <div id="seasons-sub" class="sub-content">
-                <div class="cat-row"><span>Spring</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-                <div class="cat-row"><span>Summer</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-                <div class="cat-row"><span>Winter</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
-                <div class="cat-row"><span>Autumn</span><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button></div>
+            <div class="cat-row" onclick="showSlots()"><span>Dresses</span></div>
+            
+            <!-- Style Slots Area (Populates when category is clicked) -->
+            <div id="style-slots-area" class="style-slots">
+                <button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button>
             </div>
             <button class="remove-btn">Remove Last Attachment</button>
         </div>
@@ -119,6 +87,12 @@
             btn.classList.toggle('active');
         }
         function toggleSub(id) { document.getElementById(id).classList.toggle('show'); }
+        
+        // Function to show slots when sub category is picked
+        function showSlots() {
+            const slotArea = document.getElementById('style-slots-area');
+            slotArea.classList.add('show');
+        }
     </script>
 </body>
 </html>
