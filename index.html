@@ -36,13 +36,13 @@
             font-weight: 300; cursor: pointer; width: 100%; 
             font-size: 22px; letter-spacing: 3px; font-family: 'Montserrat', sans-serif;
         }
-        .nav-btn.glow-active { border: 2px solid #ffffff; box-shadow: 0 0 10px #ffffff; }
+        
+        .glow-active { border: 2px solid #ffffff !important; box-shadow: 0 0 15px #ffffff !important; }
         
         .content-column { flex: 2; padding-top: 80px; }
         .folder { display: none; margin-top: 5px; }
         .folder.show { display: block; }
         
-        /* Submenu font size increased to 24px */
         .header { 
             background: rgba(255, 255, 255, 0.05); padding: 15px; cursor: pointer; margin-top: 5px; 
             text-transform: uppercase; font-weight: 300; letter-spacing: 1px; font-size: 24px;
@@ -54,11 +54,6 @@
             padding: 12px; cursor: pointer; border: 1px solid transparent; 
             font-weight: 300; letter-spacing: 1px; font-size: 24px;
         }
-        .cat-row.glow-active { border: 1px solid #ffffff; box-shadow: 0 0 8px #ffffff; }
-        
-        .style-slots { display: none; padding: 5px; background: rgba(0,0,0,0.2); margin: 5px 0; gap: 5px; }
-        .style-slots.active { display: flex; }
-        .rect-btn { width: 35px; height: 25px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
         
         .remove-btn { 
             margin-top: 20px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); 
@@ -73,11 +68,12 @@
     <div class="hud-title">COREX // SYNC</div>
     
     <div class="nav-column">
-        <button class="nav-btn" onclick="toggleFolder('dresser-f', this)">Dresser</button>
-        <button class="nav-btn" onclick="toggleFolder('closet-f', this)">Closet</button>
-        <button class="nav-btn" onclick="toggleFolder('wardrobe-f', this)">Wardrobe</button>
-        <button class="nav-btn" onclick="toggleFolder('nude-f', this)">Nude</button>
-        <button class="nav-btn" onclick="toggleGlow(this)" style="margin-top: auto;">Minimize</button>
+        <button class="nav-btn" onclick="handleNavClick('dresser-f', this)">Dresser</button>
+        <button class="nav-btn" onclick="handleNavClick('closet-f', this)">Closet</button>
+        <button class="nav-btn" onclick="handleNavClick('wardrobe-f', this)">Wardrobe</button>
+        <button class="nav-btn" onclick="handleNavClick('nude-f', this)">Nude</button>
+        <!-- Updated to Remove HUD -->
+        <button class="nav-btn" onclick="toggleGlow(this)" style="margin-top: auto;">Remove HUD</button>
     </div>
 
     <div class="content-column">
@@ -95,7 +91,7 @@
             <div class="cat-row" onclick="toggleGlow(this)">Pj's</div>
             <div class="cat-row" onclick="toggleGlow(this)">Lounge</div>
             <div class="cat-row" onclick="toggleGlow(this)">Swim</div>
-            <button class="remove-btn">Remove Last Attachment</button>
+            <button class="remove-btn" onclick="toggleGlow(this)">Remove Last Attachment</button>
         </div>
         <div id="closet-f" class="folder">
             <div class="header" onclick="toggleSub('shirts-sub')">Shirts ▼</div>
@@ -108,7 +104,9 @@
             <div class="cat-row" onclick="toggleGlow(this)">Pants</div>
             <div class="cat-row" onclick="toggleGlow(this)">Skirts</div>
             <div class="cat-row" onclick="toggleGlow(this)">Shorts</div>
-            <button class="remove-btn">Remove Last Attachment</button>
+            <div class="cat-row" onclick="toggleGlow(this)">Stockings</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Socks</div>
+            <button class="remove-btn" onclick="toggleGlow(this)">Remove Last Attachment</button>
         </div>
         <div id="wardrobe-f" class="folder">
             <div class="cat-row" onclick="toggleGlow(this)">Casual</div>
@@ -125,27 +123,32 @@
                 <div class="cat-row" onclick="toggleGlow(this)">Winter</div>
                 <div class="cat-row" onclick="toggleGlow(this)">Autumn</div>
             </div>
-            <button class="remove-btn">Remove Last Attachment</button>
+            <button class="remove-btn" onclick="toggleGlow(this)">Remove Last Attachment</button>
         </div>
     </div>
 </div>
 
-<div id="style-slots-area" class="style-slots">
-    <button class="rect-btn"></button><button class="rect-btn"></button>
-    <button class="rect-btn"></button><button class="rect-btn"></button>
-    <button class="rect-btn"></button><button class="rect-btn"></button>
-</div>
-
 <script>
-    function toggleFolder(id, btn) {
+    function handleNavClick(id, btn) {
+        const folder = document.getElementById(id);
+        const isCurrentlyActive = btn.classList.contains('glow-active');
+
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('glow-active'));
         document.querySelectorAll('.folder').forEach(f => f.classList.remove('show'));
-        document.getElementById(id).classList.add('show');
-        // Toggle glow on main menu btn
-        toggleGlow(btn);
+        
+        if (!isCurrentlyActive) {
+            btn.classList.add('glow-active');
+            folder.classList.add('show');
+        }
     }
-    function toggleSub(id) { document.getElementById(id).classList.toggle('show'); }
-    // Simple toggle for glow
-    function toggleGlow(btn) { btn.classList.toggle('glow-active'); }
+
+    function toggleSub(id) { 
+        document.getElementById(id).classList.toggle('show'); 
+    }
+
+    function toggleGlow(btn) { 
+        btn.classList.toggle('glow-active'); 
+    }
 </script>
 </body>
 </html>
