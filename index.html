@@ -20,7 +20,6 @@
         }
         .hud-container::-webkit-scrollbar { display: none; }
         
-        /* HUD title size increased further */
         .hud-title { 
             position: absolute; top: 20px; left: 0; right: 0;
             text-align: center; font-size: 42px; font-weight: 300; 
@@ -31,7 +30,6 @@
             flex: 1; display: flex; flex-direction: column; gap: 30px; padding-top: 80px;
         }
         
-        /* Main menu buttons now use unified Montserrat font */
         .nav-btn { 
             background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); 
             color: #ffffff; padding: 15px; text-transform: uppercase; 
@@ -44,16 +42,17 @@
         .folder { display: none; margin-top: 5px; }
         .folder.show { display: block; }
         
+        /* Submenu font size increased to 24px */
         .header { 
-            background: rgba(255, 255, 255, 0.05); padding: 12px; cursor: pointer; margin-top: 5px; 
-            text-transform: uppercase; font-weight: 300; letter-spacing: 1px; font-size: 20px;
+            background: rgba(255, 255, 255, 0.05); padding: 15px; cursor: pointer; margin-top: 5px; 
+            text-transform: uppercase; font-weight: 300; letter-spacing: 1px; font-size: 24px;
         }
         .sub-content { display: none; padding-left: 20px; }
         .sub-content.show { display: block; }
         
         .cat-row { 
-            padding: 10px; cursor: pointer; border: 1px solid transparent; 
-            font-weight: 300; letter-spacing: 1px; font-size: 20px;
+            padding: 12px; cursor: pointer; border: 1px solid transparent; 
+            font-weight: 300; letter-spacing: 1px; font-size: 24px;
         }
         .cat-row.glow-active { border: 1px solid #ffffff; box-shadow: 0 0 8px #ffffff; }
         
@@ -64,7 +63,7 @@
         .remove-btn { 
             margin-top: 20px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); 
             color: white; padding: 12px; width: 100%; text-transform: uppercase; 
-            font-weight: 300; cursor: pointer; letter-spacing: 1px; font-size: 20px;
+            font-weight: 300; cursor: pointer; letter-spacing: 1px; font-size: 24px;
         }
     </style>
 </head>
@@ -82,49 +81,49 @@
     </div>
 
     <div class="content-column">
-        <div id="nude-f" class="folder"><div class="cat-row" onclick="selectRow(this)">Nude Options</div></div>
+        <div id="nude-f" class="folder"><div class="cat-row" onclick="toggleGlow(this)">Nude Options</div></div>
         <div id="dresser-f" class="folder">
             <div class="header" onclick="toggleSub('undies-sub')">Undies ▼</div>
             <div id="undies-sub" class="sub-content">
-                <div class="cat-row" onclick="selectRow(this)">Bra's</div>
-                <div class="cat-row" onclick="selectRow(this)">Panties</div>
-                <div class="cat-row" onclick="selectRow(this)">Boxers</div>
-                <div class="cat-row" onclick="selectRow(this)">Briefs</div>
-                <div class="cat-row" onclick="selectRow(this)">Lingerie</div>
-                <div class="cat-row" onclick="selectRow(this)">Stocking and Socks</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Bra's</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Panties</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Boxers</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Briefs</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Lingerie</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Stocking and Socks</div>
             </div>
-            <div class="cat-row" onclick="selectRow(this)">Pj's</div>
-            <div class="cat-row" onclick="selectRow(this)">Lounge</div>
-            <div class="cat-row" onclick="selectRow(this)">Swim</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Pj's</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Lounge</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Swim</div>
             <button class="remove-btn">Remove Last Attachment</button>
         </div>
         <div id="closet-f" class="folder">
             <div class="header" onclick="toggleSub('shirts-sub')">Shirts ▼</div>
             <div id="shirts-sub" class="sub-content">
-                <div class="cat-row" onclick="selectRow(this)">Long Sleeve</div>
-                <div class="cat-row" onclick="selectRow(this)">Short Sleeve</div>
-                <div class="cat-row" onclick="selectRow(this)">Tanks</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Long Sleeve</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Short Sleeve</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Tanks</div>
             </div>
-            <div class="cat-row" onclick="selectRow(this)">Dresses</div>
-            <div class="cat-row" onclick="selectRow(this)">Pants</div>
-            <div class="cat-row" onclick="selectRow(this)">Skirts</div>
-            <div class="cat-row" onclick="selectRow(this)">Shorts</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Dresses</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Pants</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Skirts</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Shorts</div>
             <button class="remove-btn">Remove Last Attachment</button>
         </div>
         <div id="wardrobe-f" class="folder">
-            <div class="cat-row" onclick="selectRow(this)">Casual</div>
-            <div class="cat-row" onclick="selectRow(this)">Club</div>
-            <div class="cat-row" onclick="selectRow(this)">Formal</div>
-            <div class="cat-row" onclick="selectRow(this)">Sleep</div>
-            <div class="cat-row" onclick="selectRow(this)">Roleplay</div>
-            <div class="cat-row" onclick="selectRow(this)">Shopping</div>
-            <div class="cat-row" onclick="selectRow(this)">Swimwear</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Casual</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Club</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Formal</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Sleep</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Roleplay</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Shopping</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Swimwear</div>
             <div class="header" onclick="toggleSub('seasons-sub')">Seasons ▼</div>
             <div id="seasons-sub" class="sub-content">
-                <div class="cat-row" onclick="selectRow(this)">Spring</div>
-                <div class="cat-row" onclick="selectRow(this)">Summer</div>
-                <div class="cat-row" onclick="selectRow(this)">Winter</div>
-                <div class="cat-row" onclick="selectRow(this)">Autumn</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Spring</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Summer</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Winter</div>
+                <div class="cat-row" onclick="toggleGlow(this)">Autumn</div>
             </div>
             <button class="remove-btn">Remove Last Attachment</button>
         </div>
@@ -141,16 +140,12 @@
     function toggleFolder(id, btn) {
         document.querySelectorAll('.folder').forEach(f => f.classList.remove('show'));
         document.getElementById(id).classList.add('show');
+        // Toggle glow on main menu btn
+        toggleGlow(btn);
     }
     function toggleSub(id) { document.getElementById(id).classList.toggle('show'); }
+    // Simple toggle for glow
     function toggleGlow(btn) { btn.classList.toggle('glow-active'); }
-    function selectRow(element) {
-        document.querySelectorAll('.cat-row').forEach(row => row.classList.remove('glow-active'));
-        element.classList.add('glow-active');
-        const slots = document.getElementById('style-slots-area');
-        element.after(slots);
-        slots.classList.add('active');
-    }
 </script>
 </body>
 </html>
