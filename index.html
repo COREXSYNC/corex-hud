@@ -5,43 +5,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <title>COREX // SYNC</title>
     <style>
-        html, body { 
-            margin: 0; padding: 0; width: 100%; height: 100vh;
-            background: url('closet.jpg') no-repeat center center !important; 
-            background-size: cover !important;
-            font-family: 'Montserrat', sans-serif; overflow: hidden; color: #ffffff;
-        }
-        .hud-container { 
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        html, body { margin: 0; padding: 0; width: 100%; height: 100vh; background: url('closet.jpg') no-repeat center center !important; background-size: cover !important; font-family: 'Montserrat', sans-serif; overflow: hidden; color: #ffffff; }
+        
+        .hud-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
             /* Dark grey with 25% opacity (75% transparency) */
             background: rgba(30, 30, 30, 0.25) !important; backdrop-filter: blur(20px); 
             border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; 
-            padding: 30px; width: 85%; height: 85%; overflow-y: auto;
-            display: flex; gap: 40px;
-        }
+            padding: 30px; width: 85%; height: 85%; overflow-y: auto; display: flex; gap: 40px; }
+        
         .hud-container::-webkit-scrollbar { display: none; }
         
-        .hud-title { 
-            position: absolute; top: 20px; left: 0; right: 0;
-            text-align: center; font-size: 42px; font-weight: 300; 
-            text-transform: uppercase; letter-spacing: 8px;
-        }
-
-        .nav-column { 
-            flex: 1; display: flex; flex-direction: column; gap: 30px; padding-top: 80px;
-        }
+        .hud-title { position: absolute; top: 20px; left: 0; right: 0; text-align: center; font-size: 42px; font-weight: 300; text-transform: uppercase; letter-spacing: 8px; }
         
-        .nav-btn { 
-            background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); 
-            color: #ffffff; padding: 15px; text-transform: uppercase; 
-            font-weight: 300; cursor: pointer; width: 100%; 
-            font-size: 22px; letter-spacing: 3px; font-family: 'Montserrat', sans-serif;
-        }
+        .nav-column { flex: 1; display: flex; flex-direction: column; gap: 30px; padding-top: 80px; }
         
-        .remove-hud-btn { 
-            margin-top: auto; background: rgba(180, 60, 60, 0.3) !important; 
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        }
+        .nav-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; padding: 15px; text-transform: uppercase; font-weight: 300; cursor: pointer; width: 100%; font-size: 22px; letter-spacing: 3px; font-family: 'Montserrat', sans-serif; }
+        
+        .remove-hud-btn { margin-top: auto; background: rgba(180, 60, 60, 0.3) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
         
         .glow-active { border: 2px solid #ffffff !important; box-shadow: 0 0 15px #ffffff !important; }
         
@@ -49,23 +29,16 @@
         .folder { display: none; margin-top: 5px; }
         .folder.show { display: block; }
         
-        .header { 
-            background: rgba(255, 255, 255, 0.05); padding: 15px; cursor: pointer; margin-top: 5px; 
-            text-transform: uppercase; font-weight: 300; letter-spacing: 1px; font-size: 24px;
-        }
+        .header { background: rgba(255, 255, 255, 0.05); padding: 15px; cursor: pointer; margin-top: 5px; text-transform: uppercase; font-weight: 300; letter-spacing: 1px; font-size: 24px; }
         .sub-content { display: none; padding-left: 20px; }
         .sub-content.show { display: block; }
         
-        .cat-row { 
-            padding: 12px; cursor: pointer; border: 1px solid transparent; 
-            font-weight: 300; letter-spacing: 1px; font-size: 24px;
-        }
+        /* Category row and slots */
+        .cat-container { display: flex; align-items: center; gap: 15px; margin: 10px 0; }
+        .cat-row { padding: 12px; cursor: pointer; border: 1px solid transparent; font-weight: 300; letter-spacing: 1px; font-size: 24px; min-width: 150px; }
+        .slot-small { width: 40px; height: 40px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
         
-        .remove-btn { 
-            margin-top: 20px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); 
-            color: white; padding: 12px; width: 100%; text-transform: uppercase; 
-            font-weight: 300; cursor: pointer; letter-spacing: 1px; font-size: 24px;
-        }
+        .remove-btn { margin-top: 20px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding: 12px; width: 100%; text-transform: uppercase; font-weight: 300; cursor: pointer; letter-spacing: 1px; font-size: 24px; }
     </style>
 </head>
 <body>
@@ -82,19 +55,18 @@
     </div>
 
     <div class="content-column">
-        <div id="nude-f" class="folder"><div class="cat-row" onclick="toggleGlow(this)">Nude Options</div></div>
+        <div id="nude-f" class="folder">
+            <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Nude Options</div><div class="slot-small" onclick="toggleGlow(this)"></div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
+        </div>
         
         <div id="dresser-f" class="folder">
-            <div class="cat-row" onclick="toggleGlow(this)">Pj's</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Lounge</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Swim</div>
+            <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Pj's</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
+            <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Lounge</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
+            <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Swim</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
             <div class="header" onclick="toggleSub('undies-sub', this)">Undies ▼</div>
             <div id="undies-sub" class="sub-content">
-                <div class="cat-row" onclick="toggleGlow(this)">Bra's</div>
-                <div class="cat-row" onclick="toggleGlow(this)">Panties</div>
-                <div class="cat-row" onclick="toggleGlow(this)">Boxers</div>
-                <div class="cat-row" onclick="toggleGlow(this)">Briefs</div>
-                <div class="cat-row" onclick="toggleGlow(this)">Lingerie</div>
+                <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Bra's</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
+                <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Panties</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
             </div>
             <button class="remove-btn" onclick="flashGlow(this)">Remove Last Attachment</button>
         </div>
@@ -102,68 +74,33 @@
         <div id="closet-f" class="folder">
             <div class="header" onclick="toggleSub('shirts-sub', this)">Shirts ▼</div>
             <div id="shirts-sub" class="sub-content">
-                <div class="cat-row" onclick="toggleGlow(this)">Long Sleeve</div>
-                <div class="cat-row" onclick="toggleGlow(this)">Short Sleeve</div>
-                <div class="cat-row" onclick="toggleGlow(this)">Tanks</div>
+                <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Long Sleeve</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
+                <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Short Sleeve</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
             </div>
-            <div class="cat-row" onclick="toggleGlow(this)">Dresses</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Pants</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Skirts</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Shorts</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Stockings</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Socks</div>
+            <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Dresses</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
+            <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Pants</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
+            <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Skirts</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
             <button class="remove-btn" onclick="flashGlow(this)">Remove Last Attachment</button>
         </div>
         
         <div id="wardrobe-f" class="folder">
             <div class="header" onclick="toggleSub('seasons-sub', this)">Seasons ▼</div>
             <div id="seasons-sub" class="sub-content">
-                <div class="cat-row" onclick="toggleGlow(this)">Spring</div>
-                <div class="cat-row" onclick="toggleGlow(this)">Summer</div>
-                <div class="cat-row" onclick="toggleGlow(this)">Winter</div>
-                <div class="cat-row" onclick="toggleGlow(this)">Autumn</div>
+                <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Spring</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
+                <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Summer</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
             </div>
-            <div class="cat-row" onclick="toggleGlow(this)">Casual</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Club</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Formal</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Sleep</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Roleplay</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Shopping</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Swimwear</div>
+            <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Casual</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
+            <div class="cat-container"><div class="cat-row" onclick="toggleGlow(this)">Club</div><div class="slot-small" onclick="toggleGlow(this)"></div></div>
             <button class="remove-btn" onclick="flashGlow(this)">Remove Last Attachment</button>
         </div>
     </div>
 </div>
 
 <script>
-    function handleNavClick(id, btn) {
-        const folder = document.getElementById(id);
-        const isCurrentlyActive = btn.classList.contains('glow-active');
-
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('glow-active'));
-        document.querySelectorAll('.folder').forEach(f => f.classList.remove('show'));
-        
-        if (!isCurrentlyActive) {
-            btn.classList.add('glow-active');
-            folder.classList.add('show');
-        }
-    }
-
-    function toggleSub(id, headerElement) { 
-        document.getElementById(id).classList.toggle('show'); 
-        toggleGlow(headerElement);
-    }
-
-    function toggleGlow(btn) { 
-        btn.classList.toggle('glow-active'); 
-    }
-
-    function flashGlow(btn) {
-        btn.classList.add('glow-active');
-        setTimeout(() => {
-            btn.classList.remove('glow-active');
-        }, 1000);
-    }
+    function handleNavClick(id, btn) { const folder = document.getElementById(id); const isCurrentlyActive = btn.classList.contains('glow-active'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('glow-active')); document.querySelectorAll('.folder').forEach(f => f.classList.remove('show')); if (!isCurrentlyActive) { btn.classList.add('glow-active'); folder.classList.add('show'); } }
+    function toggleSub(id, headerElement) { document.getElementById(id).classList.toggle('show'); toggleGlow(headerElement); }
+    function toggleGlow(btn) { btn.classList.toggle('glow-active'); }
+    function flashGlow(btn) { btn.classList.add('glow-active'); setTimeout(() => { btn.classList.remove('glow-active'); }, 1000); }
 </script>
 </body>
 </html>
