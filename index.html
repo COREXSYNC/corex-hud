@@ -77,7 +77,8 @@
         <button class="nav-btn" onclick="handleNavClick('closet-f', this)">Closet</button>
         <button class="nav-btn" onclick="handleNavClick('wardrobe-f', this)">Wardrobe</button>
         <button class="nav-btn" onclick="handleNavClick('nude-f', this)">Nude</button>
-        <button class="nav-btn remove-hud-btn" onclick="toggleGlow(this)">Remove HUD</button>
+        <!-- Removed glow toggle for Remove HUD -->
+        <button class="nav-btn remove-hud-btn">Remove HUD</button>
     </div>
 
     <div class="content-column">
@@ -95,7 +96,8 @@
                 <div class="cat-row" onclick="toggleGlow(this)">Briefs</div>
                 <div class="cat-row" onclick="toggleGlow(this)">Lingerie</div>
             </div>
-            <button class="remove-btn" onclick="toggleGlow(this)">Remove Last Attachment</button>
+            <!-- Removed glow toggle for remove button -->
+            <button class="remove-btn">Remove Last Attachment</button>
         </div>
         
         <div id="closet-f" class="folder">
@@ -111,17 +113,11 @@
             <div class="cat-row" onclick="toggleGlow(this)">Shorts</div>
             <div class="cat-row" onclick="toggleGlow(this)">Stockings</div>
             <div class="cat-row" onclick="toggleGlow(this)">Socks</div>
-            <button class="remove-btn" onclick="toggleGlow(this)">Remove Last Attachment</button>
+            <button class="remove-btn">Remove Last Attachment</button>
         </div>
         
         <div id="wardrobe-f" class="folder">
-            <div class="cat-row" onclick="toggleGlow(this)">Casual</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Club</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Formal</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Sleep</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Roleplay</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Shopping</div>
-            <div class="cat-row" onclick="toggleGlow(this)">Swimwear</div>
+            <!-- Seasons moved to top -->
             <div class="header" onclick="toggleSub('seasons-sub', this)">Seasons ▼</div>
             <div id="seasons-sub" class="sub-content">
                 <div class="cat-row" onclick="toggleGlow(this)">Spring</div>
@@ -129,7 +125,14 @@
                 <div class="cat-row" onclick="toggleGlow(this)">Winter</div>
                 <div class="cat-row" onclick="toggleGlow(this)">Autumn</div>
             </div>
-            <button class="remove-btn" onclick="toggleGlow(this)">Remove Last Attachment</button>
+            <div class="cat-row" onclick="toggleGlow(this)">Casual</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Club</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Formal</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Sleep</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Roleplay</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Shopping</div>
+            <div class="cat-row" onclick="toggleGlow(this)">Swimwear</div>
+            <button class="remove-btn">Remove Last Attachment</button>
         </div>
     </div>
 </div>
