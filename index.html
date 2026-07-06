@@ -37,7 +37,6 @@
             color: #ffffff; padding: 25px; flex: 1; text-transform: uppercase; 
             font-weight: bold; cursor: pointer; font-size: 18px;
         }
-        /* Updated to white glow */
         .nav-btn.glow-active { border: 2px solid #ffffff; box-shadow: 0 0 15px #ffffff; }
         
         .folder { margin-top: 20px; display: none; }
@@ -48,13 +47,13 @@
         .sub-content.show { display: block; }
         
         .cat-row { padding: 10px; cursor: pointer; border: 1px solid transparent; font-size: 18px; }
-        /* Updated to white glow */
         .cat-row.glow-active { border: 1px solid #ffffff; box-shadow: 0 0 10px #ffffff; }
         
-        .style-slots { display: none; padding: 10px; background: rgba(0,0,0,0.2); margin-top: 5px; gap: 5px; }
+        /* Updated: Slots now have a fixed width and do not stretch */
+        .style-slots { display: none; padding: 10px; background: rgba(0,0,0,0.2); margin-top: 5px; gap: 5px; width: fit-content; }
         .style-slots.active { display: flex; }
 
-        .rect-btn { width: 100px; height: 30px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
+        .rect-btn { width: 50px; height: 30px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
         .remove-btn { margin-top: 20px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; padding: 15px; width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; font-size: 18px; }
     </style>
 </head>
@@ -73,26 +72,6 @@
             </div>
         </div>
 
-        <div id="nude-f" class="folder">
-            <div class="cat-row" onclick="selectRow(this)">Nude Style</div>
-        </div>
-
-        <div id="dresser-f" class="folder">
-            <div class="header" onclick="toggleSub('undies-sub')">Undies ▼</div>
-            <div id="undies-sub" class="sub-content">
-                <div class="cat-row" onclick="selectRow(this)">Bra's</div>
-                <div class="cat-row" onclick="selectRow(this)">Panties</div>
-                <div class="cat-row" onclick="selectRow(this)">Boxers</div>
-                <div class="cat-row" onclick="selectRow(this)">Briefs</div>
-                <div class="cat-row" onclick="selectRow(this)">Lingerie</div>
-                <div class="cat-row" onclick="selectRow(this)">Stocking and Socks</div>
-            </div>
-            <div class="cat-row" onclick="selectRow(this)">Pj's</div>
-            <div class="cat-row" onclick="selectRow(this)">Lounge</div>
-            <div class="cat-row" onclick="selectRow(this)">Swim</div>
-            <button class="remove-btn">Remove Last Attachment</button>
-        </div>
-
         <div id="closet-f" class="folder">
             <div class="header" onclick="toggleSub('shirts-sub')">Shirts ▼</div>
             <div id="shirts-sub" class="sub-content">
@@ -104,24 +83,6 @@
             <div class="cat-row" onclick="selectRow(this)">Pants</div>
             <div class="cat-row" onclick="selectRow(this)">Skirts</div>
             <div class="cat-row" onclick="selectRow(this)">Shorts</div>
-            <button class="remove-btn">Remove Last Attachment</button>
-        </div>
-
-        <div id="wardrobe-f" class="folder">
-            <div class="cat-row" onclick="selectRow(this)">Casual</div>
-            <div class="cat-row" onclick="selectRow(this)">Club</div>
-            <div class="cat-row" onclick="selectRow(this)">Formal</div>
-            <div class="cat-row" onclick="selectRow(this)">Sleep</div>
-            <div class="cat-row" onclick="selectRow(this)">Roleplay</div>
-            <div class="cat-row" onclick="selectRow(this)">Shopping</div>
-            <div class="cat-row" onclick="selectRow(this)">Swimwear</div>
-            <div class="header" onclick="toggleSub('seasons-sub')">Seasons ▼</div>
-            <div id="seasons-sub" class="sub-content">
-                <div class="cat-row" onclick="selectRow(this)">Spring</div>
-                <div class="cat-row" onclick="selectRow(this)">Summer</div>
-                <div class="cat-row" onclick="selectRow(this)">Winter</div>
-                <div class="cat-row" onclick="selectRow(this)">Autumn</div>
-            </div>
             <button class="remove-btn">Remove Last Attachment</button>
         </div>
     </div>
