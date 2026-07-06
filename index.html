@@ -19,8 +19,9 @@
         }
         .hud-container::-webkit-scrollbar { display: none; }
         
-        /* Two-column layout */
-        .nav-column { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        /* Updated gap to 20px for more space between buttons */
+        .nav-column { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+        
         .nav-btn { 
             background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); 
             color: #ffffff; padding: 15px; text-transform: uppercase; 
@@ -58,8 +59,8 @@
     </div>
 
     <div class="content-column">
+        <!-- Folders remain unchanged -->
         <div id="nude-f" class="folder"><div class="cat-row" onclick="selectRow(this)">Nude Options</div></div>
-
         <div id="dresser-f" class="folder">
             <div class="header" onclick="toggleSub('undies-sub')">Undies ▼</div>
             <div id="undies-sub" class="sub-content">
@@ -75,7 +76,6 @@
             <div class="cat-row" onclick="selectRow(this)">Swim</div>
             <button class="remove-btn">Remove Last Attachment</button>
         </div>
-
         <div id="closet-f" class="folder">
             <div class="header" onclick="toggleSub('shirts-sub')">Shirts ▼</div>
             <div id="shirts-sub" class="sub-content">
@@ -89,7 +89,6 @@
             <div class="cat-row" onclick="selectRow(this)">Shorts</div>
             <button class="remove-btn">Remove Last Attachment</button>
         </div>
-
         <div id="wardrobe-f" class="folder">
             <div class="cat-row" onclick="selectRow(this)">Casual</div>
             <div class="cat-row" onclick="selectRow(this)">Club</div>
