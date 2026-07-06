@@ -50,13 +50,25 @@
         <button class="nav-btn" onclick="handleNavClick('dresser-f', this)">Dresser</button>
         <button class="nav-btn" onclick="handleNavClick('closet-f', this)">Closet</button>
         <button class="nav-btn" onclick="handleNavClick('nude-f', this)">Nude</button>
-        <button class="nav-btn remove-hud-btn" onclick="flashGlow(this)">Remove HUD</button>
+        <!-- Notice the command 'remove_hud' passed to the function here -->
+        <button class="nav-btn remove-hud-btn" onclick="flashGlow(this, 'remove_hud')">Remove HUD</button>
     </div>
 
     <div class="content-column">
         <!-- Nude -->
         <div id="nude-f" class="folder">
-            <div class="cat-container"><div class="cat-row">Nude Options</div><div class="slot-grid"><div class="slot-small" onclick="flashGlow(this)"></div><div class="slot-small" onclick="flashGlow(this)"></div><div class="slot-small" onclick="flashGlow(this)"></div><div class="slot-small" onclick="flashGlow(this)"></div><div class="slot-small" onclick="flashGlow(this)"></div><div class="slot-small" onclick="flashGlow(this)"></div></div></div>
+            <div class="cat-container">
+                <div class="cat-row">Nude Options</div>
+                <div class="slot-grid">
+                    <!-- Notice the example commands passed to these first two slots -->
+                    <div class="slot-small" onclick="flashGlow(this, 'apply|hairbase|uuid_goes_here')"></div>
+                    <div class="slot-small" onclick="flashGlow(this, 'apply|blush|uuid_goes_here')"></div>
+                    <div class="slot-small" onclick="flashGlow(this)"></div>
+                    <div class="slot-small" onclick="flashGlow(this)"></div>
+                    <div class="slot-small" onclick="flashGlow(this)"></div>
+                    <div class="slot-small" onclick="flashGlow(this)"></div>
+                </div>
+            </div>
         </div>
         
         <!-- Dresser -->
@@ -113,9 +125,51 @@
 </div>
 
 <script>
-    function handleNavClick(id, btn) { const folder = document.getElementById(id); const isCurrentlyActive = btn.classList.contains('glow-active'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('glow-active')); document.querySelectorAll('.folder').forEach(f => f.classList.remove('show')); if (!isCurrentlyActive) { btn.classList.add('glow-active'); folder.classList.add('show'); } }
-    function toggleSub(id, headerElement) { document.getElementById(id).classList.toggle('show'); }
-    function flashGlow(btn) { btn.classList.add('glow-active'); setTimeout(() => { btn.classList.remove('glow-active'); }, 1000); }
+    // Grab the temporary Second Life URL from the address bar
+    const urlParams = new URLSearchParams(window.location.search);
+    const sl_url = urlParams.get('slurl');
+
+    // This function sends the click data back to the LSL script
+    function sendToSL(command) {
+        if (sl_url) {
+            fetch(sl_url, {
+                method: 'POST',
+                body: command
+            }).catch(error => console.error('Error sending to SL:', error));
+        } else {
+            console.log("Not in SL. Would send command:", command);
+        }
+    }
+
+    function handleNavClick(id, btn) { 
+        const folder = document.getElementById(id); 
+        const isCurrentlyActive = btn.classList.contains('glow-active'); 
+        
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('glow-active')); 
+        document.querySelectorAll('.folder').forEach(f => f.classList.remove('show')); 
+        
+        if (!isCurrentlyActive) { 
+            btn.classList.add('glow-active'); 
+            folder.classList.add('show'); 
+        } 
+    }
+    
+    function toggleSub(id, headerElement) { 
+        document.getElementById(id).classList.toggle('show'); 
+    }
+    
+    // Trigger the white glow and send the command
+    function flashGlow(btn, command) { 
+        btn.classList.add('glow-active'); 
+        
+        if(command) {
+             sendToSL(command);
+        }
+
+        setTimeout(() => { 
+            btn.classList.remove('glow-active'); 
+        }, 1000); 
+    }
 </script>
 </body>
-</html> 
+</html>
