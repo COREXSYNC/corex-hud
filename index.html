@@ -2,23 +2,110 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-    <title>COREX // SYNC</title>
+    <title>COREX // SYNC UI</title>
+    <style>
+        html, body { 
+            margin: 0; padding: 0; 
+            width: 100%; height: 100vh;
+            background: url('closet.jpg') no-repeat center center !important; 
+            background-size: cover !important;
+            font-family: 'Segoe UI', sans-serif; 
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        .hud-container { 
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(147, 109, 65, 0.35); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            border-radius: 8px; 
+            padding: 30px; 
+            width: 85%; height: 85%;
+            overflow-y: auto;
+            display: flex; flex-direction: column;
+        }
+
+        .hud-container::-webkit-scrollbar { display: none; }
+
+        /* The Two-Row Grid Structure */
+        .nav-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
+        .row { display: flex; gap: 15px; width: 100%; }
+        
+        .nav-btn { 
+            background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: #ffffff; padding: 25px; flex: 1; text-transform: uppercase; 
+            font-weight: bold; cursor: pointer; font-size: 18px;
+        }
+        .nav-btn.glow-active { border: 2px solid #ffffff; box-shadow: 0 0 15px #ffffff; }
+        
+        .folder { margin-top: 20px; display: none; }
+        .folder.show { display: block; }
+        
+        .header { background: rgba(255, 255, 255, 0.05); padding: 15px; cursor: pointer; margin-top: 5px; font-weight: bold; text-transform: uppercase; font-size: 18px; }
+        .sub-content { display: none; padding-left: 20px; }
+        .sub-content.show { display: block; }
+        
+        .cat-row { padding: 10px; cursor: pointer; border: 1px solid transparent; font-size: 18px; }
+        .cat-row.glow-active { border: 1px solid #ffffff; box-shadow: 0 0 10px #ffffff; }
+        
+        .style-slots { display: none; padding: 10px; background: rgba(0,0,0,0.2); margin-top: 5px; gap: 5px; width: fit-content; }
+        .style-slots.active { display: flex; }
+
+        .rect-btn { width: 50px; height: 30px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
+        .remove-btn { margin-top: 20px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; padding: 15px; width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; font-size: 18px; }
+    </style>
 </head>
 <body>
+
     <div class="hud-container">
-        <h1>COREX // SYNC</h1>
-        
-        <div class="menu-group">
-            <button class="btn">Shirts</button>
-            <button class="btn">Dresses</button>
-            <button class="btn">Pj's</button>
-            <button class="btn">Alt</button>
+        <div class="nav-grid">
+            <div class="row">
+                <button class="nav-btn" onclick="toggleFolder('nude-f', this)">Nude</button>
+                <button class="nav-btn" onclick="toggleFolder('dresser-f', this)">Dresser</button>
+                <button class="nav-btn" onclick="toggleFolder('closet-f', this)">Closet</button>
+            </div>
+            <div class="row">
+                <button class="nav-btn" onclick="toggleFolder('wardrobe-f', this)">Wardrobe</button>
+                <button class="nav-btn" onclick="toggleGlow(this)">Minimize</button>
+            </div>
         </div>
 
-        <div class="utility-group">
-            <button class="btn remove-btn">Remove Last Attachment</button>
+        <div id="closet-f" class="folder">
+            <div class="header" onclick="toggleSub('shirts-sub')">Shirts ▼</div>
+            <div id="shirts-sub" class="sub-content">
+                <div class="cat-row" onclick="selectRow(this)">Long Sleeve</div>
+                <div class="cat-row" onclick="selectRow(this)">Short Sleeve</div>
+                <div class="cat-row" onclick="selectRow(this)">Tanks</div>
+            </div>
+            <div class="cat-row" onclick="selectRow(this)">Dresses</div>
+            <div class="cat-row" onclick="selectRow(this)">Pants</div>
+            <div class="cat-row" onclick="selectRow(this)">Skirts</div>
+            <div class="cat-row" onclick="selectRow(this)">Shorts</div>
+            <button class="remove-btn">Remove Last Attachment</button>
         </div>
     </div>
+
+    <div id="style-slots-area" class="style-slots">
+        <button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button><button class="rect-btn"></button>
+    </div>
+
+    <script>
+        function toggleFolder(id, btn) {
+            document.getElementById(id).classList.toggle('show');
+            toggleGlow(btn);
+        }
+        function toggleGlow(btn) { btn.classList.toggle('glow-active'); }
+        function toggleSub(id) { document.getElementById(id).classList.toggle('show'); }
+        function selectRow(element) {
+            document.querySelectorAll('.cat-row').forEach(row => row.classList.remove('glow-active'));
+            element.classList.add('glow-active');
+            const slots = document.getElementById('style-slots-area');
+            element.after(slots);
+            slots.classList.add('active');
+        }
+    </script>
 </body>
 </html>
