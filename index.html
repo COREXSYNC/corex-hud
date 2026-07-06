@@ -54,20 +54,21 @@
         </div>
         <div class="row">
             <button class="nav-btn" onclick="toggleFolder('wardrobe-f', this)">Wardrobe</button>
+            <button class="nav-btn" onclick="toggleGlow(this)">Nude</button>
             <button class="nav-btn" onclick="toggleGlow(this)">Minimize</button>
         </div>
     </div>
 
-    <div id="nude-f" class="folder"><div class="cat-row" onclick="selectRow(this)">Nude Options</div></div>
-
     <div id="dresser-f" class="folder">
-        <div class="cat-row" onclick="selectRow(this)">Undies</div>
-        <div class="cat-row" onclick="selectRow(this)">Bra's</div>
-        <div class="cat-row" onclick="selectRow(this)">Panties</div>
-        <div class="cat-row" onclick="selectRow(this)">Boxers</div>
-        <div class="cat-row" onclick="selectRow(this)">Briefs</div>
-        <div class="cat-row" onclick="selectRow(this)">Lingerie</div>
-        <div class="cat-row" onclick="selectRow(this)">Stocking and Socks</div>
+        <div class="header" onclick="toggleSub('undies-sub')">Undies ▼</div>
+        <div id="undies-sub" class="sub-content">
+            <div class="cat-row" onclick="selectRow(this)">Bra's</div>
+            <div class="cat-row" onclick="selectRow(this)">Panties</div>
+            <div class="cat-row" onclick="selectRow(this)">Boxers</div>
+            <div class="cat-row" onclick="selectRow(this)">Briefs</div>
+            <div class="cat-row" onclick="selectRow(this)">Lingerie</div>
+            <div class="cat-row" onclick="selectRow(this)">Stocking and Socks</div>
+        </div>
         <div class="cat-row" onclick="selectRow(this)">Pj's</div>
         <div class="cat-row" onclick="selectRow(this)">Lounge</div>
         <div class="cat-row" onclick="selectRow(this)">Swim</div>
@@ -75,13 +76,13 @@
     </div>
 
     <div id="closet-f" class="folder">
-        <div class="cat-row" onclick="selectRow(this)">Dresses</div>
         <div class="header" onclick="toggleSub('shirts-sub')">Shirts ▼</div>
         <div id="shirts-sub" class="sub-content">
             <div class="cat-row" onclick="selectRow(this)">Long Sleeve</div>
             <div class="cat-row" onclick="selectRow(this)">Short Sleeve</div>
             <div class="cat-row" onclick="selectRow(this)">Tanks</div>
         </div>
+        <div class="cat-row" onclick="selectRow(this)">Dresses</div>
         <div class="cat-row" onclick="selectRow(this)">Pants</div>
         <div class="cat-row" onclick="selectRow(this)">Skirts</div>
         <div class="cat-row" onclick="selectRow(this)">Shorts</div>
