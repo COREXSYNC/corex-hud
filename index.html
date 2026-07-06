@@ -77,8 +77,8 @@
         <button class="nav-btn" onclick="handleNavClick('closet-f', this)">Closet</button>
         <button class="nav-btn" onclick="handleNavClick('wardrobe-f', this)">Wardrobe</button>
         <button class="nav-btn" onclick="handleNavClick('nude-f', this)">Nude</button>
-        <!-- Removed glow toggle for Remove HUD -->
-        <button class="nav-btn remove-hud-btn">Remove HUD</button>
+        <!-- Updated to use flashGlow -->
+        <button class="nav-btn remove-hud-btn" onclick="flashGlow(this)">Remove HUD</button>
     </div>
 
     <div class="content-column">
@@ -96,8 +96,8 @@
                 <div class="cat-row" onclick="toggleGlow(this)">Briefs</div>
                 <div class="cat-row" onclick="toggleGlow(this)">Lingerie</div>
             </div>
-            <!-- Removed glow toggle for remove button -->
-            <button class="remove-btn">Remove Last Attachment</button>
+            <!-- Updated to use flashGlow -->
+            <button class="remove-btn" onclick="flashGlow(this)">Remove Last Attachment</button>
         </div>
         
         <div id="closet-f" class="folder">
@@ -113,11 +113,11 @@
             <div class="cat-row" onclick="toggleGlow(this)">Shorts</div>
             <div class="cat-row" onclick="toggleGlow(this)">Stockings</div>
             <div class="cat-row" onclick="toggleGlow(this)">Socks</div>
-            <button class="remove-btn">Remove Last Attachment</button>
+            <!-- Updated to use flashGlow -->
+            <button class="remove-btn" onclick="flashGlow(this)">Remove Last Attachment</button>
         </div>
         
         <div id="wardrobe-f" class="folder">
-            <!-- Seasons moved to top -->
             <div class="header" onclick="toggleSub('seasons-sub', this)">Seasons ▼</div>
             <div id="seasons-sub" class="sub-content">
                 <div class="cat-row" onclick="toggleGlow(this)">Spring</div>
@@ -132,7 +132,8 @@
             <div class="cat-row" onclick="toggleGlow(this)">Roleplay</div>
             <div class="cat-row" onclick="toggleGlow(this)">Shopping</div>
             <div class="cat-row" onclick="toggleGlow(this)">Swimwear</div>
-            <button class="remove-btn">Remove Last Attachment</button>
+            <!-- Updated to use flashGlow -->
+            <button class="remove-btn" onclick="flashGlow(this)">Remove Last Attachment</button>
         </div>
     </div>
 </div>
@@ -159,6 +160,14 @@
     function toggleGlow(btn) { 
         btn.classList.toggle('glow-active'); 
     }
+
+    // New function to flash for 1 second
+    function flashGlow(btn) {
+        btn.classList.add('glow-active');
+        setTimeout(() => {
+            btn.classList.remove('glow-active');
+        }, 1000);
+    }
 </script>
 </body>
-</html> 
+</html>
