@@ -42,18 +42,29 @@
         .folder { display: none; margin-top: 5px; }
         .folder.show { display: block; }
         
-        .header { background: rgba(255, 255, 255, 0.05); padding: 10px; cursor: pointer; margin-top: 5px; text-transform: uppercase; font-weight: 300; }
+        /* Updated font settings for submenu elements */
+        .header { 
+            background: rgba(255, 255, 255, 0.05); padding: 10px; cursor: pointer; margin-top: 5px; 
+            text-transform: uppercase; font-weight: 300; letter-spacing: 1px;
+        }
         .sub-content { display: none; padding-left: 15px; }
         .sub-content.show { display: block; }
         
-        .cat-row { padding: 8px; cursor: pointer; border: 1px solid transparent; font-weight: 300; }
+        .cat-row { 
+            padding: 8px; cursor: pointer; border: 1px solid transparent; 
+            font-weight: 300; letter-spacing: 1px;
+        }
         .cat-row.glow-active { border: 1px solid #ffffff; box-shadow: 0 0 8px #ffffff; }
         
         .style-slots { display: none; padding: 5px; background: rgba(0,0,0,0.2); margin: 5px 0; gap: 5px; }
         .style-slots.active { display: flex; }
         .rect-btn { width: 35px; height: 25px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
         
-        .remove-btn { margin-top: 15px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding: 10px; width: 100%; text-transform: uppercase; font-weight: 300; cursor: pointer; }
+        .remove-btn { 
+            margin-top: 15px; background: rgba(180, 60, 60, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: white; padding: 10px; width: 100%; text-transform: uppercase; 
+            font-weight: 300; cursor: pointer; letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
@@ -103,7 +114,7 @@
             <div class="cat-row" onclick="selectRow(this)">Casual</div>
             <div class="cat-row" onclick="selectRow(this)">Club</div>
             <div class="cat-row" onclick="selectRow(this)">Formal</div>
-            <div class="cat-row" onclick="selectRow(this)">Sleep</div>
+            <div class="cat-row" onclick="sub-menu-glow(this)">Sleep</div>
             <div class="cat-row" onclick="selectRow(this)">Roleplay</div>
             <div class="cat-row" onclick="selectRow(this)">Shopping</div>
             <div class="cat-row" onclick="selectRow(this)">Swimwear</div>
