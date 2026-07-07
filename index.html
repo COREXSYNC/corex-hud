@@ -38,58 +38,44 @@
         <button class="nav-btn" onclick="handleNavClick('dresser-f', this)">Dresser</button>
         <button class="nav-btn" onclick="handleNavClick('closet-f', this)">Closet</button>
         <button class="nav-btn" onclick="handleNavClick('nude-f', this)">Nude</button>
-        <button class="nav-btn remove-hud-btn" onclick="sendToHUD('REMOVE', 'ALL')">Remove HUD</button>
+        <button class="nav-btn remove-hud-btn" onclick="flashGlow(this, 'remove_hud')">Remove HUD</button>
     </div>
 
     <div class="content-column">
         <!-- Nude -->
         <div id="nude-f" class="folder">
             <div class="cat-container"><div class="cat-row">Nude Options</div><div class="slot-grid">
-                <div class="slot-small" onclick="sendToHUD('WEAR', 'Nude')"></div>
+                <div class="slot-small" onclick="flashGlow(this, 'load_style|nude|1')"></div>
+                <div class="slot-small" onclick="flashGlow(this, 'load_style|nude|2')"></div>
+                <div class="slot-small" onclick="flashGlow(this, 'load_style|nude|3')"></div>
+                <div class="slot-small" onclick="flashGlow(this, 'load_style|nude|4')"></div>
+                <div class="slot-small" onclick="flashGlow(this, 'load_style|nude|5')"></div>
+                <div class="slot-small" onclick="flashGlow(this, 'load_style|nude|6')"></div>
             </div></div>
         </div>
         
         <!-- Dresser -->
         <div id="dresser-f" class="folder">
+            <!-- Add Pj's, Lounge, Swimwear buttons here using 'load_style|category|number' -->
             <div class="header" onclick="toggleSub('undies-sub', this)">Undies ▼</div>
             <div id="undies-sub" class="sub-content">
-                <div class="cat-container"><div class="cat-row">Bra's</div><div class="slot-grid"><div class="slot-small" onclick="sendToHUD('WEAR', 'Bra')"></div></div></div>
+                <div class="cat-container"><div class="cat-row">Bra's</div><div class="slot-grid"><div class="slot-small" onclick="flashGlow(this, 'load_style|bras|1')"></div></div></div>
             </div>
-            <button class="remove-btn" onclick="sendToHUD('REMOVE', 'Undies')">Remove Undies</button>
+            <button class="remove-btn" onclick="flashGlow(this, 'remove_last')">Remove Last Attachment</button>
         </div>
         
-        <!-- Closet -->
-        <div id="closet-f" class="folder">
-            <div class="header" onclick="toggleSub('shirts-sub', this)">Shirts ▼</div>
-            <div id="shirts-sub" class="sub-content">
-                <div class="cat-container"><div class="cat-row">Long Sleeve</div><div class="slot-grid"><div class="slot-small" onclick="sendToHUD('WEAR', 'LongSleeve')"></div></div></div>
-            </div>
-            <button class="remove-btn" onclick="sendToHUD('REMOVE', 'Shirts')">Remove Shirts</button>
-        </div>
-        
-        <!-- Wardrobe -->
-        <div id="wardrobe-f" class="folder">
-            <div class="header" onclick="toggleSub('seasons-sub', this)">Seasons ▼</div>
-            <div id="seasons-sub" class="sub-content">
-                <div class="cat-container"><div class="cat-row">Spring</div><div class="slot-grid"><div class="slot-small" onclick="sendToHUD('WEAR', 'Spring')"></div></div></div>
-            </div>
-            <button class="remove-btn" onclick="sendToHUD('REMOVE', 'Seasons')">Remove Seasons</button>
-        </div>
+        <!-- Closet & Wardrobe categories follow the same pattern -->
     </div>
 </div>
 
 <script>
-    // UPDATE THIS URL AFTER REZZING HUD
     const HUD_URL = "INSERT_YOUR_HUD_URL_HERE"; 
 
-    function sendToHUD(action, category) {
+    function sendToHUD(command) {
         fetch(HUD_URL, {
             method: 'POST',
-            body: 'SYNC:' + action + ':' + category
+            body: 'SYNC:' + command
         });
-        // Visual feedback
-        event.target.classList.add('glow-active');
-        setTimeout(() => event.target.classList.remove('glow-active'), 1000);
     }
 
     function handleNavClick(id, btn) { 
@@ -101,6 +87,12 @@
     }
     
     function toggleSub(id, headerElement) { document.getElementById(id).classList.toggle('show'); }
+
+    function flashGlow(btn, command) { 
+        btn.classList.add('glow-active'); 
+        if(command) sendToHUD(command);
+        setTimeout(() => { btn.classList.remove('glow-active'); }, 1000); 
+    }
 </script>
 </body>
 </html>
