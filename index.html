@@ -4,62 +4,93 @@
     <meta charset="UTF-8">
     <title>COREX // SYNC</title>
     <style>
-        body { margin: 0; background: url('closet.jpg') no-repeat center center fixed; background-size: cover; font-family: 'Montserrat', sans-serif; color: #fff; }
-        .hud-container { width: 90%; margin: 20px auto; background: rgba(30, 30, 30, 0.4); backdrop-filter: blur(20px); padding: 20px; border-radius: 10px; }
-        .folder { margin-bottom: 5px; }
-        .header { cursor: pointer; padding: 10px; background: rgba(255, 255, 255, 0.05); text-transform: uppercase; font-size: 18px; }
-        .sub-content { padding: 5px 20px; display: none; }
+        body { margin: 0; background: #000; font-family: 'Montserrat', sans-serif; color: #fff; }
+        .hud-container { width: 90%; margin: 20px auto; }
+        .folder { margin-bottom: 5px; border: 1px solid #333; }
+        .header { cursor: pointer; padding: 12px; background: #222; text-transform: uppercase; letter-spacing: 1px; }
+        .sub-content { padding: 10px 20px; display: none; background: #111; }
         .sub-content.show { display: block; }
-        .cat-container { display: flex; align-items: center; gap: 10px; margin: 5px 0; }
+        .cat-container { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+        .label { width: 120px; font-size: 14px; }
+        .slot-grid { display: flex; gap: 4px; }
         .slot-small { width: 25px; height: 25px; background: #333; cursor: pointer; border: 1px solid #555; }
+        .remove-btn { margin: 10px 0; padding: 8px; width: 100%; background: #400; color: #fff; cursor: pointer; border: none; }
     </style>
 </head>
 <body>
 
 <div class="hud-container">
     <h1>COREX // SYNC</h1>
-
-    <!-- CLOSET FOLDER -->
+    
     <div class="folder">
-        <div class="header" onclick="toggle('closet-sub')">Closet ▼</div>
-        <div id="closet-sub" class="sub-content">
-            <div class="cat-container"><div>Dresses</div><div class="slot-small" onclick="sendToHUD('Dresses|1')"></div></div>
-            <div class="cat-container"><div>Pants</div><div class="slot-small" onclick="sendToHUD('Pants|1')"></div></div>
-            <div class="cat-container"><div>Shirts</div><div class="slot-small" onclick="sendToHUD('Shirts|1')"></div></div>
-            <div class="cat-container"><div>Shorts</div><div class="slot-small" onclick="sendToHUD('Shorts|1')"></div></div>
-            <div class="cat-container"><div>Skirts</div><div class="slot-small" onclick="sendToHUD('Skirts|1')"></div></div>
-            <div class="cat-container"><div>Socks</div><div class="slot-small" onclick="sendToHUD('Socks|1')"></div></div>
-            <div class="cat-container"><div>Stockings</div><div class="slot-small" onclick="sendToHUD('Stockings|1')"></div></div>
+        <div class="header" onclick="toggle('nude-sub')">Nude ▼</div>
+        <div id="nude-sub" class="sub-content">
+            <div class="cat-container"><div class="label">Style</div>
+                <div class="slot-grid">
+                    <script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Nude|${i}')"></div>`);</script>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- DRESSER FOLDER -->
     <div class="folder">
         <div class="header" onclick="toggle('dresser-sub')">Dresser ▼</div>
         <div id="dresser-sub" class="sub-content">
-            <div class="cat-container"><div>Lounge</div><div class="slot-small" onclick="sendToHUD('Lounge|1')"></div></div>
-            <div class="cat-container"><div>Pj's</div><div class="slot-small" onclick="sendToHUD('Pj\'s|1')"></div></div>
-            <div class="cat-container"><div>Swimwear</div><div class="slot-small" onclick="sendToHUD('Swimwear|1')"></div></div>
-            <div class="cat-container"><div>Undies</div><div class="slot-small" onclick="sendToHUD('Undies|1')"></div></div>
+            <div class="cat-container"><div class="label">Pj's</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Pjs|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Lounge</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Lounge|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Swim</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Swim|${i}')"></div>`);</script></div></div>
+            
+            <div class="header" onclick="toggle('undies-sub')">Undies ▼</div>
+            <div id="undies-sub" class="sub-content">
+                <div class="cat-container"><div class="label">Bra's</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Bras|${i}')"></div>`);</script></div></div>
+                <div class="cat-container"><div class="label">Panties</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Panties|${i}')"></div>`);</script></div></div>
+                <div class="cat-container"><div class="label">Boxers</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Boxers|${i}')"></div>`);</script></div></div>
+                <div class="cat-container"><div class="label">Briefs</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Briefs|${i}')"></div>`);</script></div></div>
+                <div class="cat-container"><div class="label">Lingerie</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Lingerie|${i}')"></div>`);</script></div></div>
+            </div>
+            <div class="cat-container"><div class="label">Stockings</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Stockings|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Socks</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Socks|${i}')"></div>`);</script></div></div>
+            <button class="remove-btn" onclick="sendToHUD('Detach|Last')">Remove Last</button>
         </div>
     </div>
 
-    <!-- NUDE FOLDER -->
     <div class="folder">
-        <div class="header" onclick="sendToHUD('Nude|1')">Nude</div>
+        <div class="header" onclick="toggle('closet-sub')">Closet ▼</div>
+        <div id="closet-sub" class="sub-content">
+            <div class="cat-container"><div class="label">Dresses</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Dresses|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Pants</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Pants|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Skirts</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Skirts|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Shorts</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Shorts|${i}')"></div>`);</script></div></div>
+            
+            <div class="header" onclick="toggle('shirts-sub')">Shirts ▼</div>
+            <div id="shirts-sub" class="sub-content">
+                <div class="cat-container"><div class="label">Long Sleeve</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('LongSleeve|${i}')"></div>`);</script></div></div>
+                <div class="cat-container"><div class="label">Short Sleeve</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('ShortSleeve|${i}')"></div>`);</script></div></div>
+                <div class="cat-container"><div class="label">Tanks</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Tanks|${i}')"></div>`);</script></div></div>
+            </div>
+            <button class="remove-btn" onclick="sendToHUD('Detach|Last')">Remove Last</button>
+        </div>
     </div>
 
-    <!-- WARDROBE FOLDER -->
     <div class="folder">
         <div class="header" onclick="toggle('wardrobe-sub')">Wardrobe ▼</div>
         <div id="wardrobe-sub" class="sub-content">
-            <div class="cat-container"><div>Casual</div><div class="slot-small" onclick="sendToHUD('Casual|1')"></div></div>
-            <div class="cat-container"><div>Club</div><div class="slot-small" onclick="sendToHUD('Club|1')"></div></div>
-            <div class="cat-container"><div>Formal</div><div class="slot-small" onclick="sendToHUD('Formal|1')"></div></div>
-            <div class="cat-container"><div>Roleplay</div><div class="slot-small" onclick="sendToHUD('Roleplay|1')"></div></div>
-            <div class="cat-container"><div>Seasons</div><div class="slot-small" onclick="sendToHUD('Seasons|1')"></div></div>
-            <div class="cat-container"><div>Shopping</div><div class="slot-small" onclick="sendToHUD('Shopping|1')"></div></div>
-            <div class="cat-container"><div>Sleep</div><div class="slot-small" onclick="sendToHUD('Sleep|1')"></div></div>
+            <div class="cat-container"><div class="label">Casual</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Casual|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Club</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Club|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Formal</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Formal|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Sleep</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Sleep|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Roleplay</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Roleplay|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Shopping</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Shopping|${i}')"></div>`);</script></div></div>
+            <div class="cat-container"><div class="label">Swimwear</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Swimwear|${i}')"></div>`);</script></div></div>
+            
+            <div class="header" onclick="toggle('seasons-sub')">Seasons ▼</div>
+            <div id="seasons-sub" class="sub-content">
+                <div class="cat-container"><div class="label">Spring</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Spring|${i}')"></div>`);</script></div></div>
+                <div class="cat-container"><div class="label">Summer</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Summer|${i}')"></div>`);</script></div></div>
+                <div class="cat-container"><div class="label">Winter</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Winter|${i}')"></div>`);</script></div></div>
+                <div class="cat-container"><div class="label">Autumn</div><div class="slot-grid"><script>for(let i=1;i<=6;i++) document.write(`<div class="slot-small" onclick="sendToHUD('Autumn|${i}')"></div>`);</script></div></div>
+            </div>
+            <button class="remove-btn" onclick="sendToHUD('Detach|Last')">Remove Last</button>
         </div>
     </div>
 </div>
