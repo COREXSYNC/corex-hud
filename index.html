@@ -2,80 +2,67 @@
 <html lang="en">
 <head>
     <style>
-        /* Minimalist Smokey Glass Aesthetics */
-        body { 
-            background: rgba(0, 0, 0, 0.4); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white; 
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0; padding: 15px; border-radius: 10px;
-        }
-        h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; border-bottom: 1px solid #444; }
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        
-        button { 
-            background: rgba(255, 255, 255, 0.05); 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            color: white; padding: 12px; cursor: pointer; border-radius: 4px;
-            font-size: 10px; transition: 0.3s;
-        }
-        button:hover { background: rgba(255, 255, 255, 0.2); box-shadow: 0 0 8px white; }
-        .remove-btn { grid-column: span 3; border-color: #ff4d4d; color: #ff4d4d; }
+        body { background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); color: white; font-family: sans-serif; padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); }
+        h2 { font-size: 14px; text-transform: uppercase; text-align: center; margin: 0 0 10px 0; border-bottom: 1px solid #444; padding-bottom: 5px; }
+        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; }
+        button { background: rgba(255,255,255,0.1); border: 1px solid white; color: white; padding: 10px; cursor: pointer; font-size: 11px; }
+        button:hover { background: rgba(255,255,255,0.3); }
+        .back-btn { background: rgba(255,0,0,0.2); }
     </style>
 </head>
 <body>
+    <div id="app">
+        <h2>COREX // SYNC</h2>
+        <div id="main-menu" class="menu-grid">
+            <button onclick="showMenu('dresser-menu')">DRESSER</button>
+            <button onclick="showMenu('closet-menu')">CLOSET</button>
+            <button onclick="showMenu('wardrobe-menu')">WARDROBE</button>
+            <button onclick="sendCmd('REMOVE|0|0')" class="back-btn">REMOVE ALL</button>
+        </div>
 
-    <h2>COREX // SYNC</h2>
-    <div class="grid">
-        <!-- Main Navigation -->
-        <button onclick="syncFolder('Dresser/Undies')">SYNC DRESSER</button>
-        <button onclick="syncFolder('Closet/Shirts')">SYNC CLOSET</button>
-        <button onclick="syncFolder('Wardrobe/Seasons')">SYNC WARDROBE</button>
+        <!-- Dresser Sub-Menu -->
+        <div id="dresser-menu" style="display:none;">
+            <button onclick="hideAll()">BACK</button>
+            <div class="menu-grid">
+                <button onclick="syncAndShow('Dresser/Pjs')">PJ'S</button>
+                <button onclick="syncAndShow('Dresser/Lounge')">LOUNGE</button>
+                <button onclick="syncAndShow('Dresser/Swim')">SWIM</button>
+                <button onclick="showMenu('undies-menu')">UNDIES</button>
+            </div>
+        </div>
+
+        <!-- Undies Sub-Sub-Menu -->
+        <div id="undies-menu" style="display:none;">
+            <button onclick="showMenu('dresser-menu')">BACK</button>
+            <div class="menu-grid">
+                <button onclick="syncAndShow('Dresser/Bras')">BRA'S</button>
+                <button onclick="syncAndShow('Dresser/Panties')">PANTIES</button>
+                <button onclick="syncAndShow('Dresser/Lingerie')">LINGERIE</button>
+            </div>
+        </div>
+
+        <!-- Closet/Wardrobe would follow this same pattern... -->
     </div>
-
-    <hr>
-
-    <div id="slot-grid" class="grid">
-        <!-- 6 Dynamic Slots will appear here -->
-        <script>
-            for(let i=1; i<=6; i++) {
-                document.write(`<button id="slot${i}" onclick="wearItem(${i})">Empty</button>`);
-            }
-        </script>
-    </div>
-
-    <button class="remove-btn" onclick="removeItem()">REMOVE ALL</button>
 
     <script>
-        let currentFolder = "";
-
-        // Trigger the Sync
-        function syncFolder(path) {
-            currentFolder = path;
-            llMessageLinked(LINK_THIS, 0, "SYNC|" + path, "");
+        function sendCmd(msg) {
+            window.location.href = "secondlife:///app/chat/-999/" + msg;
         }
 
-        // Trigger the Attach
-        function wearItem(slot) {
-            llMessageLinked(LINK_THIS, 0, "ATTACH|" + slot + "|" + currentFolder, "");
+        function showMenu(id) {
+            document.querySelectorAll('#app > div').forEach(div => div.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
         }
 
-        // Trigger Remove
-        function removeItem() {
-            llMessageLinked(LINK_THIS, 0, "REMOVE|0|0", "");
+        function hideAll() {
+            document.querySelectorAll('#app > div').forEach(div => div.style.display = 'none');
+            document.getElementById('main-menu').style.display = 'grid';
         }
 
-        // Listener for the LSL script to update labels
-        window.addEventListener('message', (event) => {
-            if (event.data.type === "UI_UPDATE") {
-                const items = event.data.value.split(',');
-                for(let i=0; i<6; i++) {
-                    let btn = document.getElementById('slot' + (i+1));
-                    btn.innerText = items[i] ? items[i].substring(0, 10) + '...' : "Empty";
-                }
-            }
-        });
+        function syncAndShow(path) {
+            sendCmd('SYNC|' + path);
+            alert('Syncing ' + path + '...');
+        }
     </script>
 </body>
 </html>
