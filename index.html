@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        .slot { width: 100px; padding: 10px; margin: 5px; cursor: pointer; }
+    </style>
 </head>
 <body>
 
-    <div id="ui-container">
-        <h2 id="menu-title">Menu</h2>
-        <div class="grid">
-            <button id="slot1" class="slot">Empty</button>
-            <button id="slot2" class="slot">Empty</button>
-            <button id="slot3" class="slot">Empty</button>
-            <button id="slot4" class="slot">Empty</button>
-            <button id="slot5" class="slot">Empty</button>
-            <button id="slot6" class="slot">Empty</button>
-        </div>
-    </div>
+    <button id="slot1" class="slot" onclick="updateItem(1)">Empty</button>
+    <button id="slot2" class="slot" onclick="updateItem(2)">Empty</button>
+    <!-- ... repeat for 6 slots ... -->
 
-    <script src="script.js"></script>
+    <script>
+        // In SL, you usually update the UI by having the LSL script 
+        // refresh the page or by using a WebSocket/polling mechanism.
+        // For buttons, you use location.href to send commands to LSL.
+        function updateItem(slotIndex) {
+            // This URL structure is a common way to trigger LSL-side scripts 
+            // via the Second Life protocol.
+            window.location.href = "secondlife:///app/chat/1000/COREX_COMMAND_" + slotIndex;
+        }
+    </script>
 </body>
 </html>
