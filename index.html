@@ -1,25 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <style>
-        .slot { width: 100px; padding: 10px; margin: 5px; cursor: pointer; }
+        /* Minimalist Smokey Glass Aesthetics */
+        body { 
+            background: rgba(0, 0, 0, 0.4); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white; 
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0; padding: 15px; border-radius: 10px;
+        }
+        h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; border-bottom: 1px solid #444; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        
+        button { 
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: white; padding: 12px; cursor: pointer; border-radius: 4px;
+            font-size: 10px; transition: 0.3s;
+        }
+        button:hover { background: rgba(255, 255, 255, 0.2); box-shadow: 0 0 8px white; }
+        .remove-btn { grid-column: span 3; border-color: #ff4d4d; color: #ff4d4d; }
     </style>
 </head>
 <body>
 
-    <button id="slot1" class="slot" onclick="updateItem(1)">Empty</button>
-    <button id="slot2" class="slot" onclick="updateItem(2)">Empty</button>
-    <!-- ... repeat for 6 slots ... -->
+    <h2>COREX // SYNC</h2>
+    <div class="grid">
+        <!-- Main Navigation -->
+        <button onclick="syncFolder('Dresser/Undies')">SYNC DRESSER</button>
+        <button onclick="syncFolder('Closet/Shirts')">SYNC CLOSET</button>
+        <button onclick="syncFolder('Wardrobe/Seasons')">SYNC WARDROBE</button>
+    </div>
+
+    <hr>
+
+    <div id="slot-grid" class="grid">
+        <!-- 6 Dynamic Slots will appear here -->
+        <script>
+            for(let i=1; i<=6; i++) {
+                document.write(`<button id="slot${i}" onclick="wearItem(${i})">Empty</button>`);
+            }
+        </script>
+    </div>
+
+    <button class="remove-btn" onclick="removeItem()">REMOVE ALL</button>
 
     <script>
-        // In SL, you usually update the UI by having the LSL script 
-        // refresh the page or by using a WebSocket/polling mechanism.
-        // For buttons, you use location.href to send commands to LSL.
-        function updateItem(slotIndex) {
-            // This URL structure is a common way to trigger LSL-side scripts 
-            // via the Second Life protocol.
-            window.location.href = "secondlife:///app/chat/1000/COREX_COMMAND_" + slotIndex;
+        let currentFolder = "";
+
+        // Trigger the Sync
+        function syncFolder(path) {
+            currentFolder = path;
+            llMessageLinked(LINK_THIS, 0, "SYNC|" + path, "");
         }
+
+        // Trigger the Attach
+        function wearItem(slot) {
+            llMessageLinked(LINK_THIS, 0, "ATTACH|" + slot + "|" + currentFolder, "");
+        }
+
+        // Trigger Remove
+        function removeItem() {
+            llMessageLinked(LINK_THIS, 0, "REMOVE|0|0", "");
+        }
+
+        // Listener for the LSL script to update labels
+        window.addEventListener('message', (event) => {
+            if (event.data.type === "UI_UPDATE") {
+                const items = event.data.value.split(',');
+                for(let i=0; i<6; i++) {
+                    let btn = document.getElementById('slot' + (i+1));
+                    btn.innerText = items[i] ? items[i].substring(0, 10) + '...' : "Empty";
+                }
+            }
+        });
     </script>
 </body>
 </html>
