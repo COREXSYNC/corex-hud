@@ -2,103 +2,57 @@
 <html lang="en">
 <head>
     <style>
-        body { background: rgba(0,0,0,0.5); backdrop-filter: blur(15px); color: white; font-family: sans-serif; padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); }
-        h2 { font-size: 13px; text-transform: uppercase; text-align: center; margin: 0 0 10px 0; border-bottom: 1px solid #444; padding-bottom: 5px; }
+        body { 
+            background: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(15px); 
+            color: white; 
+            font-family: sans-serif; 
+            padding: 10px; 
+            border-radius: 10px; 
+            border: 1px solid rgba(255,255,255,0.2); 
+            /* Disable user selection for a 'pro' look */
+            user-select: none; 
+        }
+        h2 { 
+            font-size: 14px; 
+            text-transform: uppercase; 
+            text-align: center; 
+            margin: 0 0 10px 0; 
+            border-bottom: 1px solid #444; 
+            padding-bottom: 5px; 
+        }
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; }
-        button { background: rgba(255,255,255,0.1); border: 1px solid white; color: white; padding: 8px; cursor: pointer; font-size: 9px; }
-        button:hover { background: rgba(255,255,255,0.3); }
-        .remove-btn { border-color: #ff4d4d; color: #ff4d4d; }
+        /* Style the 'buttons' to look like UI elements without needing interactivity */
+        .ui-box { 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.2); 
+            color: rgba(255,255,255,0.7); 
+            padding: 8px; 
+            font-size: 9px; 
+            text-align: center;
+        }
+        .header-text { font-size: 11px; font-weight: bold; margin-bottom: 10px; color: #fff; }
     </style>
 </head>
 <body>
 
 <div id="app">
     <h2>COREX // SYNC</h2>
-
-    <div id="main" class="grid">
-        <button onclick="show('nude')">NUDE</button>
-        <button onclick="show('dresser')">DRESSER</button>
-        <button onclick="show('closet')">CLOSET</button>
-        <button onclick="show('wardrobe')">WARDROBE</button>
-        <button onclick="send('REMOVE', 'none')" class="remove-btn">REMOVE</button>
+    <div class="header-text">Current Selection:</div>
+    
+    <div class="grid">
+        <div class="ui-box">SLOT 1</div>
+        <div class="ui-box">SLOT 2</div>
+        <div class="ui-box">SLOT 3</div>
+        <div class="ui-box">SLOT 4</div>
+        <div class="ui-box">SLOT 5</div>
+        <div class="ui-box">SLOT 6</div>
     </div>
-
-    <div id="dresser" style="display:none;" class="grid">
-        <button onclick="show('main')">BACK</button>
-        <button onclick="sync('Dresser/Pjs')">PJ'S</button>
-        <button onclick="sync('Dresser/Lounge')">LOUNGE</button>
-        <button onclick="sync('Dresser/Swim')">SWIM</button>
-        <button onclick="show('undies')">UNDIES</button>
-    </div>
-
-    <div id="undies" style="display:none;" class="grid">
-        <button onclick="show('dresser')">BACK</button>
-        <button onclick="sync('Dresser/Undies/Bra\'s')">BRA'S</button>
-        <button onclick="sync('Dresser/Undies/Panties')">PANTIES</button>
-        <button onclick="sync('Dresser/Undies/Boxers')">BOXERS</button>
-        <button onclick="sync('Dresser/Undies/Briefs')">BRIEFS</button>
-        <button onclick="sync('Dresser/Undies/Lingerie')">LINGERIE</button>
-        <button onclick="sync('Dresser/Undies/Stockings')">STOCKINGS</button>
-        <button onclick="sync('Dresser/Undies/Socks')">SOCKS</button>
-        <button onclick="send('REMOVE', 'none')" class="remove-btn">REMOVE</button>
-    </div>
-
-    <div id="closet" style="display:none;" class="grid">
-        <button onclick="show('main')">BACK</button>
-        <button onclick="sync('Closet/Dresses')">DRESSES</button>
-        <button onclick="sync('Closet/Pants')">PANTS</button>
-        <button onclick="sync('Closet/Skirts')">SKIRTS</button>
-        <button onclick="sync('Closet/Shorts')">SHORTS</button>
-        <button onclick="show('shirts')">SHIRTS</button>
-    </div>
-
-    <div id="shirts" style="display:none;" class="grid">
-        <button onclick="show('closet')">BACK</button>
-        <button onclick="sync('Closet/Shirts/LongSleeve')">LONG SLEEVE</button>
-        <button onclick="sync('Closet/Shirts/ShortSleeve')">SHORT SLEEVE</button>
-        <button onclick="sync('Closet/Shirts/Tanks')">TANKS</button>
-        <button onclick="send('REMOVE', 'none')" class="remove-btn">REMOVE</button>
-    </div>
-
-    <div id="wardrobe" style="display:none;" class="grid">
-        <button onclick="show('main')">BACK</button>
-        <button onclick="sync('Wardrobe/Casual')">CASUAL</button>
-        <button onclick="sync('Wardrobe/Club')">CLUB</button>
-        <button onclick="sync('Wardrobe/Formal')">FORMAL</button>
-        <button onclick="sync('Wardrobe/Sleep')">SLEEP</button>
-        <button onclick="sync('Wardrobe/Roleplay')">ROLEPLAY</button>
-        <button onclick="sync('Wardrobe/Shopping')">SHOPPING</button>
-        <button onclick="sync('Wardrobe/Swimwear')">SWIMWEAR</button>
-        <button onclick="show('seasons')">SEASONS</button>
-    </div>
-
-    <div id="seasons" style="display:none;" class="grid">
-        <button onclick="show('wardrobe')">BACK</button>
-        <button onclick="sync('Wardrobe/Seasons/Spring')">SPRING</button>
-        <button onclick="sync('Wardrobe/Seasons/Summer')">SUMMER</button>
-        <button onclick="sync('Wardrobe/Seasons/Winter')">WINTER</button>
-        <button onclick="sync('Wardrobe/Seasons/Autumn')">AUTUMN</button>
-        <button onclick="send('REMOVE', 'none')" class="remove-btn">REMOVE</button>
+    
+    <div style="margin-top:15px; font-size: 8px; color: #888; text-align: center;">
+        COREX // SYSTEM READY
     </div>
 </div>
 
-<script>
-    // HUD Server URL provided by your LSL script
-    const HUD_URL = "http://simhost-02397f5275ddfe841.agni.secondlife.io:12046/cap/8600b228-0df5-0083-f556-4d54515ca39f";
-
-    function send(cmd, path) {
-        // Sends the request directly to the HUD's web server
-        fetch(`${HUD_URL}?cmd=${cmd}&path=${encodeURIComponent(path)}`);
-    }
-
-    function sync(path) {
-        send('SYNC', path);
-    }
-
-    function show(id) {
-        document.querySelectorAll('#app > div').forEach(d => d.style.display = 'none');
-        document.getElementById(id).style.display = 'grid';
-    }
-</script>
 </body>
 </html>
