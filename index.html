@@ -2,111 +2,93 @@
 <html lang="en">
 <head>
     <style>
-        body { background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); color: white; font-family: sans-serif; padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); }
-        h2 { font-size: 14px; text-transform: uppercase; text-align: center; margin: 0 0 10px 0; border-bottom: 1px solid #444; padding-bottom: 5px; }
-        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; }
-        button { background: rgba(255,255,255,0.1); border: 1px solid white; color: white; padding: 10px; cursor: pointer; font-size: 10px; }
+        body { background: rgba(0,0,0,0.5); backdrop-filter: blur(15px); color: white; font-family: sans-serif; padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); }
+        h2 { font-size: 13px; text-transform: uppercase; text-align: center; margin: 0 0 10px 0; border-bottom: 1px solid #444; padding-bottom: 5px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; }
+        button { background: rgba(255,255,255,0.1); border: 1px solid white; color: white; padding: 8px; cursor: pointer; font-size: 9px; }
         button:hover { background: rgba(255,255,255,0.3); }
-        .back-btn { background: rgba(255,0,0,0.2); }
+        .remove-btn { border-color: #ff4d4d; color: #ff4d4d; }
     </style>
 </head>
 <body>
-    <div id="app">
-        <h2>COREX // SYNC</h2>
-        
-        <div id="main-menu" class="menu-grid">
-            <button onclick="showMenu('dresser-menu')">DRESSER</button>
-            <button onclick="showMenu('closet-menu')">CLOSET</button>
-            <button onclick="showMenu('wardrobe-menu')">WARDROBE</button>
-            <button onclick="sendCmd('REMOVE|0|0')" class="back-btn">REMOVE ALL</button>
-        </div>
 
-        <div id="dresser-menu" style="display:none;">
-            <button onclick="hideAll()">BACK</button>
-            <div class="menu-grid">
-                <button onclick="sync('Dresser/Pjs')">PJ'S</button>
-                <button onclick="sync('Dresser/Lounge')">LOUNGE</button>
-                <button onclick="sync('Dresser/Swim')">SWIM</button>
-                <button onclick="showMenu('undies-menu')">UNDIES</button>
-            </div>
-        </div>
+<div id="app">
+    <h2>COREX // SYNC</h2>
 
-        <div id="undies-menu" style="display:none;">
-            <button onclick="showMenu('dresser-menu')">BACK</button>
-            <div class="menu-grid">
-                <button onclick="sync('Dresser/Bras')">BRA'S</button>
-                <button onclick="sync('Dresser/Panties')">PANTIES</button>
-                <button onclick="sync('Dresser/Boxers')">BOXERS</button>
-                <button onclick="sync('Dresser/Briefs')">BRIEFS</button>
-                <button onclick="sync('Dresser/Lingerie')">LINGERIE</button>
-                <button onclick="sync('Dresser/Stockings')">STOCKINGS</button>
-                <button onclick="sync('Dresser/Socks')">SOCKS</button>
-            </div>
-        </div>
-
-        <div id="closet-menu" style="display:none;">
-            <button onclick="hideAll()">BACK</button>
-            <div class="menu-grid">
-                <button onclick="sync('Closet/Dresses')">DRESSES</button>
-                <button onclick="sync('Closet/Pants')">PANTS</button>
-                <button onclick="sync('Closet/Skirts')">SKIRTS</button>
-                <button onclick="sync('Closet/Shorts')">SHORTS</button>
-                <button onclick="showMenu('shirts-menu')">SHIRTS</button>
-            </div>
-        </div>
-
-        <div id="shirts-menu" style="display:none;">
-            <button onclick="showMenu('closet-menu')">BACK</button>
-            <div class="menu-grid">
-                <button onclick="sync('Closet/LongSleeve')">LONG SLEEVE</button>
-                <button onclick="sync('Closet/ShortSleeve')">SHORT SLEEVE</button>
-                <button onclick="sync('Closet/Tanks')">TANKS</button>
-            </div>
-        </div>
-
-        <div id="wardrobe-menu" style="display:none;">
-            <button onclick="hideAll()">BACK</button>
-            <div class="menu-grid">
-                <button onclick="sync('Wardrobe/Casual')">CASUAL</button>
-                <button onclick="sync('Wardrobe/Club')">CLUB</button>
-                <button onclick="sync('Wardrobe/Formal')">FORMAL</button>
-                <button onclick="sync('Wardrobe/Sleep')">SLEEP</button>
-                <button onclick="sync('Wardrobe/Roleplay')">ROLEPLAY</button>
-                <button onclick="sync('Wardrobe/Shopping')">SHOPPING</button>
-                <button onclick="sync('Wardrobe/Swimwear')">SWIMWEAR</button>
-                <button onclick="showMenu('seasons-menu')">SEASONS</button>
-            </div>
-        </div>
-
-        <div id="seasons-menu" style="display:none;">
-            <button onclick="showMenu('wardrobe-menu')">BACK</button>
-            <div class="menu-grid">
-                <button onclick="sync('Wardrobe/Spring')">SPRING</button>
-                <button onclick="sync('Wardrobe/Summer')">SUMMER</button>
-                <button onclick="sync('Wardrobe/Winter')">WINTER</button>
-                <button onclick="sync('Wardrobe/Autumn')">AUTUMN</button>
-            </div>
-        </div>
+    <div id="main" class="grid">
+        <button onclick="show('nude')">NUDE</button>
+        <button onclick="show('dresser')">DRESSER</button>
+        <button onclick="show('closet')">CLOSET</button>
+        <button onclick="show('wardrobe')">WARDROBE</button>
+        <button onclick="send('REMOVE')" class="remove-btn">REMOVE</button>
     </div>
 
-    <script>
-        function sendCmd(msg) {
-            window.location.href = "secondlife:///app/chat/-999/" + msg;
-        }
+    <div id="dresser" style="display:none;" class="grid">
+        <button onclick="show('main')">BACK</button>
+        <button onclick="sync('Dresser/Pjs')">PJ'S</button>
+        <button onclick="sync('Dresser/Lounge')">LOUNGE</button>
+        <button onclick="sync('Dresser/Swim')">SWIM</button>
+        <button onclick="show('undies')">UNDIES</button>
+    </div>
 
-        function showMenu(id) {
-            document.querySelectorAll('#app > div').forEach(div => div.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
-        }
+    <div id="undies" style="display:none;" class="grid">
+        <button onclick="show('dresser')">BACK</button>
+        <button onclick="sync('Dresser/Undies/Bra\'s')">BRA'S</button>
+        <button onclick="sync('Dresser/Undies/Panties')">PANTIES</button>
+        <button onclick="sync('Dresser/Undies/Boxers')">BOXERS</button>
+        <button onclick="sync('Dresser/Undies/Briefs')">BRIEFS</button>
+        <button onclick="sync('Dresser/Undies/Lingerie')">LINGERIE</button>
+        <button onclick="sync('Dresser/Undies/Stockings')">STOCKINGS</button>
+        <button onclick="sync('Dresser/Undies/Socks')">SOCKS</button>
+        <button onclick="send('REMOVE')" class="remove-btn">REMOVE</button>
+    </div>
 
-        function hideAll() {
-            document.querySelectorAll('#app > div').forEach(div => div.style.display = 'none');
-            document.getElementById('main-menu').style.display = 'grid';
-        }
+    <div id="closet" style="display:none;" class="grid">
+        <button onclick="show('main')">BACK</button>
+        <button onclick="sync('Closet/Dresses')">DRESSES</button>
+        <button onclick="sync('Closet/Pants')">PANTS</button>
+        <button onclick="sync('Closet/Skirts')">SKIRTS</button>
+        <button onclick="sync('Closet/Shorts')">SHORTS</button>
+        <button onclick="show('shirts')">SHIRTS</button>
+    </div>
 
-        function sync(path) {
-            sendCmd('SYNC|' + path);
-        }
-    </script>
+    <div id="shirts" style="display:none;" class="grid">
+        <button onclick="show('closet')">BACK</button>
+        <button onclick="sync('Closet/Shirts/LongSleeve')">LONG SLEEVE</button>
+        <button onclick="sync('Closet/Shirts/ShortSleeve')">SHORT SLEEVE</button>
+        <button onclick="sync('Closet/Shirts/Tanks')">TANKS</button>
+        <button onclick="send('REMOVE')" class="remove-btn">REMOVE</button>
+    </div>
+
+    <div id="wardrobe" style="display:none;" class="grid">
+        <button onclick="show('main')">BACK</button>
+        <button onclick="sync('Wardrobe/Casual')">CASUAL</button>
+        <button onclick="sync('Wardrobe/Club')">CLUB</button>
+        <button onclick="sync('Wardrobe/Formal')">FORMAL</button>
+        <button onclick="sync('Wardrobe/Sleep')">SLEEP</button>
+        <button onclick="sync('Wardrobe/Roleplay')">ROLEPLAY</button>
+        <button onclick="sync('Wardrobe/Shopping')">SHOPPING</button>
+        <button onclick="sync('Wardrobe/Swimwear')">SWIMWEAR</button>
+        <button onclick="show('seasons')">SEASONS</button>
+    </div>
+
+    <div id="seasons" style="display:none;" class="grid">
+        <button onclick="show('wardrobe')">BACK</button>
+        <button onclick="sync('Wardrobe/Seasons/Spring')">SPRING</button>
+        <button onclick="sync('Wardrobe/Seasons/Summer')">SUMMER</button>
+        <button onclick="sync('Wardrobe/Seasons/Winter')">WINTER</button>
+        <button onclick="sync('Wardrobe/Seasons/Autumn')">AUTUMN</button>
+        <button onclick="send('REMOVE')" class="remove-btn">REMOVE</button>
+    </div>
+</div>
+
+<script>
+    function send(msg) { window.location.href = "secondlife:///app/chat/-999/" + msg; }
+    function sync(path) { send('SYNC|' + path); }
+    function show(id) {
+        document.querySelectorAll('#app > div').forEach(d => d.style.display = 'none');
+        document.getElementById(id).style.display = 'grid';
+    }
+</script>
 </body>
 </html>
