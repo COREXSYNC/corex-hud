@@ -5,7 +5,7 @@
         body { background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); color: white; font-family: sans-serif; padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); }
         h2 { font-size: 14px; text-transform: uppercase; text-align: center; margin: 0 0 10px 0; border-bottom: 1px solid #444; padding-bottom: 5px; }
         .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; }
-        button { background: rgba(255,255,255,0.1); border: 1px solid white; color: white; padding: 10px; cursor: pointer; font-size: 11px; }
+        button { background: rgba(255,255,255,0.1); border: 1px solid white; color: white; padding: 10px; cursor: pointer; font-size: 10px; }
         button:hover { background: rgba(255,255,255,0.3); }
         .back-btn { background: rgba(255,0,0,0.2); }
     </style>
@@ -13,6 +13,7 @@
 <body>
     <div id="app">
         <h2>COREX // SYNC</h2>
+        
         <div id="main-menu" class="menu-grid">
             <button onclick="showMenu('dresser-menu')">DRESSER</button>
             <button onclick="showMenu('closet-menu')">CLOSET</button>
@@ -20,28 +21,72 @@
             <button onclick="sendCmd('REMOVE|0|0')" class="back-btn">REMOVE ALL</button>
         </div>
 
-        <!-- Dresser Sub-Menu -->
         <div id="dresser-menu" style="display:none;">
             <button onclick="hideAll()">BACK</button>
             <div class="menu-grid">
-                <button onclick="syncAndShow('Dresser/Pjs')">PJ'S</button>
-                <button onclick="syncAndShow('Dresser/Lounge')">LOUNGE</button>
-                <button onclick="syncAndShow('Dresser/Swim')">SWIM</button>
+                <button onclick="sync('Dresser/Pjs')">PJ'S</button>
+                <button onclick="sync('Dresser/Lounge')">LOUNGE</button>
+                <button onclick="sync('Dresser/Swim')">SWIM</button>
                 <button onclick="showMenu('undies-menu')">UNDIES</button>
             </div>
         </div>
 
-        <!-- Undies Sub-Sub-Menu -->
         <div id="undies-menu" style="display:none;">
             <button onclick="showMenu('dresser-menu')">BACK</button>
             <div class="menu-grid">
-                <button onclick="syncAndShow('Dresser/Bras')">BRA'S</button>
-                <button onclick="syncAndShow('Dresser/Panties')">PANTIES</button>
-                <button onclick="syncAndShow('Dresser/Lingerie')">LINGERIE</button>
+                <button onclick="sync('Dresser/Bras')">BRA'S</button>
+                <button onclick="sync('Dresser/Panties')">PANTIES</button>
+                <button onclick="sync('Dresser/Boxers')">BOXERS</button>
+                <button onclick="sync('Dresser/Briefs')">BRIEFS</button>
+                <button onclick="sync('Dresser/Lingerie')">LINGERIE</button>
+                <button onclick="sync('Dresser/Stockings')">STOCKINGS</button>
+                <button onclick="sync('Dresser/Socks')">SOCKS</button>
             </div>
         </div>
 
-        <!-- Closet/Wardrobe would follow this same pattern... -->
+        <div id="closet-menu" style="display:none;">
+            <button onclick="hideAll()">BACK</button>
+            <div class="menu-grid">
+                <button onclick="sync('Closet/Dresses')">DRESSES</button>
+                <button onclick="sync('Closet/Pants')">PANTS</button>
+                <button onclick="sync('Closet/Skirts')">SKIRTS</button>
+                <button onclick="sync('Closet/Shorts')">SHORTS</button>
+                <button onclick="showMenu('shirts-menu')">SHIRTS</button>
+            </div>
+        </div>
+
+        <div id="shirts-menu" style="display:none;">
+            <button onclick="showMenu('closet-menu')">BACK</button>
+            <div class="menu-grid">
+                <button onclick="sync('Closet/LongSleeve')">LONG SLEEVE</button>
+                <button onclick="sync('Closet/ShortSleeve')">SHORT SLEEVE</button>
+                <button onclick="sync('Closet/Tanks')">TANKS</button>
+            </div>
+        </div>
+
+        <div id="wardrobe-menu" style="display:none;">
+            <button onclick="hideAll()">BACK</button>
+            <div class="menu-grid">
+                <button onclick="sync('Wardrobe/Casual')">CASUAL</button>
+                <button onclick="sync('Wardrobe/Club')">CLUB</button>
+                <button onclick="sync('Wardrobe/Formal')">FORMAL</button>
+                <button onclick="sync('Wardrobe/Sleep')">SLEEP</button>
+                <button onclick="sync('Wardrobe/Roleplay')">ROLEPLAY</button>
+                <button onclick="sync('Wardrobe/Shopping')">SHOPPING</button>
+                <button onclick="sync('Wardrobe/Swimwear')">SWIMWEAR</button>
+                <button onclick="showMenu('seasons-menu')">SEASONS</button>
+            </div>
+        </div>
+
+        <div id="seasons-menu" style="display:none;">
+            <button onclick="showMenu('wardrobe-menu')">BACK</button>
+            <div class="menu-grid">
+                <button onclick="sync('Wardrobe/Spring')">SPRING</button>
+                <button onclick="sync('Wardrobe/Summer')">SUMMER</button>
+                <button onclick="sync('Wardrobe/Winter')">WINTER</button>
+                <button onclick="sync('Wardrobe/Autumn')">AUTUMN</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -59,9 +104,8 @@
             document.getElementById('main-menu').style.display = 'grid';
         }
 
-        function syncAndShow(path) {
+        function sync(path) {
             sendCmd('SYNC|' + path);
-            alert('Syncing ' + path + '...');
         }
     </script>
 </body>
