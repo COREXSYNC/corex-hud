@@ -20,7 +20,7 @@
         <button onclick="show('dresser')">DRESSER</button>
         <button onclick="show('closet')">CLOSET</button>
         <button onclick="show('wardrobe')">WARDROBE</button>
-        <button onclick="send('REMOVE')" class="remove-btn">REMOVE</button>
+        <button onclick="send('REMOVE', 'none')" class="remove-btn">REMOVE</button>
     </div>
 
     <div id="dresser" style="display:none;" class="grid">
@@ -40,7 +40,7 @@
         <button onclick="sync('Dresser/Undies/Lingerie')">LINGERIE</button>
         <button onclick="sync('Dresser/Undies/Stockings')">STOCKINGS</button>
         <button onclick="sync('Dresser/Undies/Socks')">SOCKS</button>
-        <button onclick="send('REMOVE')" class="remove-btn">REMOVE</button>
+        <button onclick="send('REMOVE', 'none')" class="remove-btn">REMOVE</button>
     </div>
 
     <div id="closet" style="display:none;" class="grid">
@@ -57,7 +57,7 @@
         <button onclick="sync('Closet/Shirts/LongSleeve')">LONG SLEEVE</button>
         <button onclick="sync('Closet/Shirts/ShortSleeve')">SHORT SLEEVE</button>
         <button onclick="sync('Closet/Shirts/Tanks')">TANKS</button>
-        <button onclick="send('REMOVE')" class="remove-btn">REMOVE</button>
+        <button onclick="send('REMOVE', 'none')" class="remove-btn">REMOVE</button>
     </div>
 
     <div id="wardrobe" style="display:none;" class="grid">
@@ -78,13 +78,23 @@
         <button onclick="sync('Wardrobe/Seasons/Summer')">SUMMER</button>
         <button onclick="sync('Wardrobe/Seasons/Winter')">WINTER</button>
         <button onclick="sync('Wardrobe/Seasons/Autumn')">AUTUMN</button>
-        <button onclick="send('REMOVE')" class="remove-btn">REMOVE</button>
+        <button onclick="send('REMOVE', 'none')" class="remove-btn">REMOVE</button>
     </div>
 </div>
 
 <script>
-    function send(msg) { window.location.href = "secondlife:///app/chat/-999/" + msg; }
-    function sync(path) { send('SYNC|' + path); }
+    // HUD Server URL provided by your LSL script
+    const HUD_URL = "http://simhost-02397f5275ddfe841.agni.secondlife.io:12046/cap/8600b228-0df5-0083-f556-4d54515ca39f";
+
+    function send(cmd, path) {
+        // Sends the request directly to the HUD's web server
+        fetch(`${HUD_URL}?cmd=${cmd}&path=${encodeURIComponent(path)}`);
+    }
+
+    function sync(path) {
+        send('SYNC', path);
+    }
+
     function show(id) {
         document.querySelectorAll('#app > div').forEach(d => d.style.display = 'none');
         document.getElementById(id).style.display = 'grid';
