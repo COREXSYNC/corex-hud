@@ -1,58 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <style>
-        body { 
-            background: rgba(0,0,0,0.5); 
-            backdrop-filter: blur(15px); 
-            color: white; 
-            font-family: sans-serif; 
-            padding: 10px; 
-            border-radius: 10px; 
-            border: 1px solid rgba(255,255,255,0.2); 
-            /* Disable user selection for a 'pro' look */
-            user-select: none; 
-        }
-        h2 { 
-            font-size: 14px; 
-            text-transform: uppercase; 
-            text-align: center; 
-            margin: 0 0 10px 0; 
-            border-bottom: 1px solid #444; 
-            padding-bottom: 5px; 
-        }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; }
-        /* Style the 'buttons' to look like UI elements without needing interactivity */
-        .ui-box { 
-            background: rgba(255,255,255,0.05); 
-            border: 1px solid rgba(255,255,255,0.2); 
-            color: rgba(255,255,255,0.7); 
-            padding: 8px; 
-            font-size: 9px; 
-            text-align: center;
-        }
-        .header-text { font-size: 11px; font-weight: bold; margin-bottom: 10px; color: #fff; }
-    </style>
-</head>
-<body>
+integer HUD_FACE = 0;
+integer CHANNEL = -888999;
+string generated_url = "";
+string current_page = "main";
+string BRAND_FOLDER = "COREX_SYNC/Wardrobe"; 
 
-<div id="app">
-    <h2>COREX // SYNC</h2>
-    <div class="header-text">Current Selection:</div>
-    
-    <div class="grid">
-        <div class="ui-box">SLOT 1</div>
-        <div class="ui-box">SLOT 2</div>
-        <div class="ui-box">SLOT 3</div>
-        <div class="ui-box">SLOT 4</div>
-        <div class="ui-box">SLOT 5</div>
-        <div class="ui-box">SLOT 6</div>
-    </div>
-    
-    <div style="margin-top:15px; font-size: 8px; color: #888; text-align: center;">
-        COREX // SYSTEM READY
-    </div>
-</div>
+// --- Helper Functions ---
+string btn(string nav_or_cmd, string value, string label) {
+    return "<button class='btn' name='" + nav_or_cmd + "' value='" + value + "'>" + label + "</button>";
+}
 
-</body>
-</html>
+string get_parent_folder(string category) {
+    if (category == "Casual" || category == "Formal" || category == "Active") return "Outfits/";
+    if (category == "Pj's" || category == "Lounge") return "Sleepwear/";
+    if (category == "Shoes" || category == "Accessories") return "Extras/";
+    return ""; 
+}
+
+string get_html(string page) {
+    string body = "<!DOCTYPE html><html><head><style>body{background:#1f1f1f;color:#fff;font-family:sans-serif;text-align:center;}.btn{width:200px;padding:10px;margin:5px;}</style></head><body>";
+    body += "<h2>Corex_Sync Wardrobe</h2>";
+    if (page == "main") {
+        body += btn("nav", "outfits", "Outfits") + btn("nav", "sleepwear", "Sleepwear");
+    } else {
+        body += btn("nav", "main", "BACK");
+    }
+    return body + "</body></html>";
+}
+
+// --- Main Logic ---
+default {
+    state_entry() { llRequestSecureURL(); }
+    on_rez(integer start_param) { llResetScript(); }
+
+    http_request(key id, string method, string body) {
+        if (method == "URL_REQUEST_GRANTED") { 
+            generated_url = body; 
+            llClearPrimMedia(HUD_FACE); 
+            llSetPrimMediaParams(HUD_FACE, [2, (string)generated_url, 5, 1, 9, 512, 10, 512, 13, 0, 14, 0]); 
+        }
+        else if (method == "POST") {
+            string clean = llUnescapeURL(body);
+            if (llSubStringIndex(clean, "nav=") == 0) {
+                current_page = llGetSubString(clean, 4, -1);
+            }
+            else if (llSubStringIndex(clean, "cmd=") == 0) {
+                list p = llParseString2List(llGetSubString(clean, 4, -1), [","], []);
+                string cat = llList2String(p, 0); 
+                string action = llList2String(p, 1); 
+                
+                string parent_folder = get_parent_folder(cat); 
+                string rlv_path = BRAND_FOLDER + "/" + parent_folder + cat; 
+                
+                if (action == "remove") {
+                    integer i;
+                    for(i = 1; i <= 6; i++) {
+                        llOwnerSay("@detach:" + rlv_path + "/style" + (string)i + "=force");
+                    }
+                } else {
+                    llOwnerSay("@attachall:" + rlv_path + "/" + action + "=force");
+                }
+            }
+            llHTTPResponse(id, 200, get_html(current_page));
+        } 
+        else if (method == "GET") {
+            llHTTPResponse(id, 200, get_html(current_page));
+        }
+    }
+}
