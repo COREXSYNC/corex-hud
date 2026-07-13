@@ -2,57 +2,42 @@
 <html>
 <head>
     <style>
-        body {
-            background: linear-gradient(135deg, #1f1f1f 0%, #0a0a0a 100%);
-            color: #E8E8E8;
-            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-            height: 100vh;
-            margin: 0;
-            box-sizing: border-box;
-        }
-        .btn {
-            background: #242424;
-            color: #E8E8E8;
-            border: 1px solid #333;
-            border-radius: 4px;
-            padding: 12px 20px;
-            margin: 6px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 260px;
-            font-size: 13px;
-            display: block;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-        h2 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 20px;
-            font-weight: 300;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            width: 75%;
-            text-align: center;
-            color: #fff;
-        }
+        body { background: #111; color: #fff; font-family: sans-serif; text-align: center; padding: 10px; }
+        h2 { border-bottom: 1px solid #444; padding-bottom: 10px; }
+        h3 { color: #aaa; margin-top: 20px; }
+        .btn { display: block; width: 90%; margin: 5px auto; padding: 12px; background: #222; color: #fff; border: 1px solid #444; text-transform: uppercase; cursor: pointer; font-weight: bold; }
+        .btn:hover { background: #333; }
     </style>
 </head>
 <body>
+
     <h2>Corex_Sync Wardrobe</h2>
-    <form method='POST'>
-        <!-- These buttons trigger the navigation or RLV commands -->
-        <button class='btn' name='nav' value='dresser'>Dresser</button>
-        <button class='btn' name='nav' value='closet'>Closet</button>
-        <button class='btn' name='nav' value='wardrobe'>Wardrobe</button>
-        <button class='btn' name='cmd' value='HUD,remove'>REMOVE HUD</button>
+
+    <form action="" method="POST">
+        <button type="submit" class="btn" name="cmd" value="Nude,remove">Nude</button>
     </form>
+
+    <h3>Dresser</h3>
+    <form action="" method="POST">
+        <button type="submit" class="btn" name="cmd" value="Dresser/Lounge,style1">Lounge</button>
+        <button type="submit" class="btn" name="cmd" value="Dresser/Pj's,style1">Pj's</button>
+        <button type="submit" class="btn" name="cmd" value="Dresser/Swimwear,style1">Swimwear</button>
+        <button type="submit" class="btn" name="cmd" value="Dresser/Undies,style1">Undies</button>
+    </form>
+
+    <h3>Closet</h3>
+    <form action="" method="POST">
+        <button type="submit" class="btn" name="cmd" value="Closet/Dresses,style1">Dresses</button>
+        <button type="submit" class="btn" name="cmd" value="Closet/Pants,style1">Pants</button>
+        <button type="submit" class="btn" name="cmd" value="Closet/Skirts,style1">Skirts</button>
+    </form>
+
+    <h3>Wardrobe</h3>
+    <form action="" method="POST">
+        <button type="submit" class="btn" name="cmd" value="Wardrobe/Casual,style1">Casual</button>
+        <button type="submit" class="btn" name="cmd" value="Wardrobe/Club,style1">Club</button>
+        <button type="submit" class="btn" name="cmd" value="Wardrobe/Formal,style1">Formal</button>
+    </form>
+
 </body>
 </html>
