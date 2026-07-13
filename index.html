@@ -1,69 +1,58 @@
-integer HUD_FACE = 0;
-integer CHANNEL = -888999;
-string generated_url = "";
-string current_page = "main";
-string BRAND_FOLDER = "COREX_SYNC/Wardrobe"; 
-
-// --- Helper Functions ---
-string btn(string nav_or_cmd, string value, string label) {
-    return "<button class='btn' name='" + nav_or_cmd + "' value='" + value + "'>" + label + "</button>";
-}
-
-string get_parent_folder(string category) {
-    if (category == "Casual" || category == "Formal" || category == "Active") return "Outfits/";
-    if (category == "Pj's" || category == "Lounge") return "Sleepwear/";
-    if (category == "Shoes" || category == "Accessories") return "Extras/";
-    return ""; 
-}
-
-string get_html(string page) {
-    string body = "<!DOCTYPE html><html><head><style>body{background:#1f1f1f;color:#fff;font-family:sans-serif;text-align:center;}.btn{width:200px;padding:10px;margin:5px;}</style></head><body>";
-    body += "<h2>Corex_Sync Wardrobe</h2>";
-    if (page == "main") {
-        body += btn("nav", "outfits", "Outfits") + btn("nav", "sleepwear", "Sleepwear");
-    } else {
-        body += btn("nav", "main", "BACK");
-    }
-    return body + "</body></html>";
-}
-
-// --- Main Logic ---
-default {
-    state_entry() { llRequestSecureURL(); }
-    on_rez(integer start_param) { llResetScript(); }
-
-    http_request(key id, string method, string body) {
-        if (method == "URL_REQUEST_GRANTED") { 
-            generated_url = body; 
-            llClearPrimMedia(HUD_FACE); 
-            llSetPrimMediaParams(HUD_FACE, [2, (string)generated_url, 5, 1, 9, 512, 10, 512, 13, 0, 14, 0]); 
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1f1f1f 0%, #0a0a0a 100%);
+            color: #E8E8E8;
+            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
         }
-        else if (method == "POST") {
-            string clean = llUnescapeURL(body);
-            if (llSubStringIndex(clean, "nav=") == 0) {
-                current_page = llGetSubString(clean, 4, -1);
-            }
-            else if (llSubStringIndex(clean, "cmd=") == 0) {
-                list p = llParseString2List(llGetSubString(clean, 4, -1), [","], []);
-                string cat = llList2String(p, 0); 
-                string action = llList2String(p, 1); 
-                
-                string parent_folder = get_parent_folder(cat); 
-                string rlv_path = BRAND_FOLDER + "/" + parent_folder + cat; 
-                
-                if (action == "remove") {
-                    integer i;
-                    for(i = 1; i <= 6; i++) {
-                        llOwnerSay("@detach:" + rlv_path + "/style" + (string)i + "=force");
-                    }
-                } else {
-                    llOwnerSay("@attachall:" + rlv_path + "/" + action + "=force");
-                }
-            }
-            llHTTPResponse(id, 200, get_html(current_page));
-        } 
-        else if (method == "GET") {
-            llHTTPResponse(id, 200, get_html(current_page));
+        .btn {
+            background: #242424;
+            color: #E8E8E8;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 12px 20px;
+            margin: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 260px;
+            font-size: 13px;
+            display: block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
-    }
-}
+        h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 20px;
+            font-weight: 300;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            width: 75%;
+            text-align: center;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h2>Corex_Sync Wardrobe</h2>
+    <form method='POST'>
+        <!-- These buttons trigger the navigation or RLV commands -->
+        <button class='btn' name='nav' value='outfits'>Outfits</button>
+        <button class='btn' name='nav' value='sleepwear'>Sleepwear</button>
+        <button class='btn' name='nav' value='extras'>Extras</button>
+        <button class='btn' name='cmd' value='HUD,remove'>REMOVE HUD</button>
+    </form>
+</body>
+</html>
