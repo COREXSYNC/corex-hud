@@ -11,7 +11,6 @@
             min-height: 100vh;
         }
 
-        /* Increased max-width for a larger HUD feel */
         .container { 
             position: relative; z-index: 1; 
             max-width: 800px; margin: 2% auto; 
@@ -21,9 +20,8 @@
 
         h1 { font-size: 20px; text-align: center; color: #fff; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 35px; text-shadow: 0 3px 6px rgba(0,0,0,0.7); }
         
-        /* Larger Taller Buttons */
         .menu-btn { width: 100%; background: var(--glass); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 20px; margin-bottom: 12px; text-transform: uppercase; font-size: 14px; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; }
-        .menu-btn:hover, .active { border-color: #fff; box-shadow: var(--glow); background: rgba(255,255,255,0.15); }
+        .menu-btn:hover, .menu-btn.active { border-color: #fff; box-shadow: var(--glow); background: rgba(255,255,255,0.15); }
         
         .nude-btn { width: 100%; background: #500; border: 1px solid #900; color: #fff; padding: 15px; margin-bottom: 15px; text-transform: uppercase; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 6px; }
         
@@ -40,15 +38,15 @@
     <div class="container">
         <h1>COREX_SYNC</h1>
         
-        <button class="menu-btn" onclick="toggle(this, 'dresser')">Dresser</button>
+        <button class="menu-btn" onclick="showSection(this, 'dresser')">Dresser</button>
+        <button class="menu-btn" onclick="showSection(this, 'closet')">Closet</button>
+        <button class="menu-btn" onclick="showSection(this, 'wardrobe')">Wardrobe</button>
+        
         <div id="dresser" class="content"></div>
-
-        <button class="menu-btn" onclick="toggle(this, 'closet')">Closet</button>
         <div id="closet" class="content"></div>
-
-        <button class="menu-btn" onclick="toggle(this, 'wardrobe')">Wardrobe</button>
-        <button class="nude-btn" onclick="send('Nude','remove')">Nude</button>
-        <div id="wardrobe" class="content"></div>
+        <div id="wardrobe" class="content">
+            <button class="nude-btn" onclick="send('Nude','remove')">Nude</button>
+        </div>
 
         <div class="controls">
             <button class="ctrl-btn" onclick="send('RemoveLast','detach')">Undo Last</button>
@@ -63,7 +61,19 @@
             addContent('wardrobe', [["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"], ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"], ["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"], ["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]);
         };
         function addContent(id, items) { var container = document.getElementById(id); items.forEach(function(item) { var html = '<div class="sub-cat">' + item[0] + '</div>'; for(var i=1; i<=6; i++) { html += `<button class="slot-btn" onclick="send('${item[1]}','style${i}')">${i}</button>`; } container.innerHTML += html; }); }
-        function toggle(btn, id) { var el = document.getElementById(id); var isVisible = el.style.display === 'block'; el.style.display = isVisible ? 'none' : 'block'; btn.classList.toggle('active', !isVisible); }
+        
+        // New exclusive toggle logic
+        function showSection(btn, id) { 
+            var contents = document.getElementsByClassName('content');
+            for(var i=0; i<contents.length; i++) { contents[i].style.display = 'none'; }
+            
+            var btns = document.getElementsByClassName('menu-btn');
+            for(var i=0; i<btns.length; i++) { btns[i].classList.remove('active'); }
+            
+            document.getElementById(id).style.display = 'block'; 
+            btn.classList.add('active');
+        }
+        
         function send(part, style) { var f = document.getElementById('sl_form'); f.action = window.location.hash.substring(1); document.getElementById('p_data').value = part + "," + style; f.submit(); }
     </script>
     <iframe name="secret_frame" style="display:none;"></iframe>
