@@ -4,7 +4,7 @@
     <style>
         :root { --glass: rgba(0, 0, 0, 0.7); --glow: 0 0 15px rgba(255, 255, 255, 0.6); }
         body { margin: 0; padding: 40px; font-family: 'Segoe UI', sans-serif; color: #fff; 
-               background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('closet.jpg'); 
+               background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://i.imgur.com/eBw0k7t.jpeg'); 
                background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh; }
         .container { position: relative; z-index: 1; max-width: 800px; margin: 2% auto; background: rgba(0, 0, 0, 0.5); padding: 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); }
         h1 { font-size: 20px; text-align: center; color: #fff; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 35px; text-shadow: 0 3px 6px rgba(0,0,0,0.7); cursor: pointer; }
@@ -20,7 +20,7 @@
         .content { display: none; }
         .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
         .ctrl-btn { background: rgba(0,0,0,0.7); border: 1px solid #666; color: #fff; padding: 18px; font-size: 12px; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
-        .nude-btn { width: 100%; background: #500; border: 1px solid #900; color: #fff; padding: 15px; margin-top: 15px; text-transform: uppercase; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 6px; }
+        .nude-btn { width: 100%; background: #500; border: 1px solid #900; color: #fff; padding: 20px; margin-bottom: 12px; text-transform: uppercase; font-size: 14px; font-weight: bold; cursor: pointer; border-radius: 6px; }
     </style>
 </head>
 <body>
@@ -30,12 +30,11 @@
             <button class="menu-btn" onclick="showCategory('dresser')">Dresser</button>
             <button class="menu-btn" onclick="showCategory('closet')">Closet</button>
             <button class="menu-btn" onclick="showCategory('wardrobe')">Wardrobe</button>
+            <button class="nude-btn" onclick="send('Nude','remove')">Nude</button>
         </div>
         <div id="dresser" class="content"></div>
         <div id="closet" class="content"></div>
-        <div id="wardrobe" class="content">
-            <button class="nude-btn" onclick="send('Nude','remove')">Nude</button>
-        </div>
+        <div id="wardrobe" class="content"></div>
         <div id="controls" class="controls">
             <button class="ctrl-btn" onclick="showHome()">Back to Home</button>
             <button class="ctrl-btn" onclick="send('RemoveLast','detach')">Remove Last Item</button>
@@ -60,7 +59,6 @@
                 ["Seasons", null, [["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]]
             ]);
         };
-
         function addCategory(id, items) { 
             var container = document.getElementById(id); 
             items.forEach(function(item) { 
@@ -83,15 +81,12 @@
                 } 
             }); 
         }
-
         function toggleSubmenu(btn) {
             var parent = btn.parentElement;
-            // Hide everything else in the container except the clicked submenu
-            Array.from(parent.children).forEach(child => { if(child !== btn && child.className !== 'nude-btn') child.style.display = 'none'; });
+            Array.from(parent.children).forEach(child => { if(child !== btn) child.style.display = 'none'; });
             btn.nextElementSibling.style.display = 'block';
             btn.classList.add('active-glow');
         }
-
         function toggleOnlySlots(btn) {
             var parent = btn.parentElement;
             parent.querySelectorAll('.slot-container').forEach(s => { if(s !== btn.nextElementSibling) s.style.display = 'none'; });
@@ -99,12 +94,10 @@
             slots.style.display = (slots.style.display === 'block') ? 'none' : 'block';
             btn.classList.toggle('active-glow');
         }
-
         function showCategory(id) { document.getElementById('home').style.display = 'none'; document.getElementById(id).style.display = 'block'; }
         function showHome() { 
             document.getElementById('home').style.display = 'block';
             document.querySelectorAll('.content').forEach(c => c.style.display = 'none');
-            location.reload(); // Simple way to reset state
         }
         function send(part, style) { var f = document.getElementById('sl_form'); f.action = window.location.hash.substring(1); document.getElementById('p_data').value = part + "," + style; f.submit(); }
     </script>
