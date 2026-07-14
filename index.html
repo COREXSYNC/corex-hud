@@ -2,36 +2,39 @@
 <html lang="en">
 <head>
     <style>
-        :root { --bg: #0f0f12; --panel: #1a1a1f; --accent: #00d4ff; --text: #e0e0e0; }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; padding: 10px; margin: 0; }
-        h1 { font-size: 12px; text-align: center; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
+        :root { --glass: rgba(255, 255, 255, 0.05); --glow: 0 0 10px rgba(255, 255, 255, 0.5); }
+        body { background: #050505; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 10px; margin: 0; }
         
-        /* Compact Main Buttons */
-        .menu-btn { width: 100%; background: var(--panel); border: 1px solid #333; color: var(--text); padding: 6px; margin-bottom: 4px; text-transform: uppercase; font-size: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; border-radius: 2px; }
-        .menu-btn:hover { border-color: var(--accent); background: #222; }
+        /* Smokey Glass Effect */
+        .glass { background: var(--glass); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; }
         
-        /* Compact Bottom Controls */
-        .controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; margin-top: 10px; }
-        .ctrl-btn { background: #1a1a1f; border: 1px solid #333; color: #888; padding: 6px; font-size: 9px; text-transform: uppercase; cursor: pointer; border-radius: 2px; }
+        h1 { font-size: 12px; text-align: center; color: #fff; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; }
         
-        /* Content Panels */
-        .content { display: none; padding: 8px; background: #141417; border-left: 2px solid var(--accent); margin: 5px 0; font-size: 9px; }
-        .sub-cat { color: var(--accent); margin-bottom: 4px; margin-top: 8px; font-weight: bold; }
-        .slot-btn { width: 28px; height: 20px; font-size: 9px; background: #222; color: #aaa; border: 1px solid #333; cursor: pointer; margin: 1px; }
+        /* Rectangle Buttons */
+        .menu-btn { width: 100%; background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px; margin-bottom: 5px; text-transform: uppercase; font-size: 9px; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+        .menu-btn:hover, .active { border-color: #fff; box-shadow: var(--glow); }
+        
+        .content { display: none; padding: 10px; margin-bottom: 10px; }
+        .sub-cat { font-size: 9px; color: #ccc; margin: 8px 0 3px 0; text-transform: uppercase; }
+        .slot-btn { width: 28px; height: 20px; font-size: 9px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid #444; cursor: pointer; margin: 1px; }
+        .slot-btn:hover { border-color: #fff; box-shadow: var(--glow); }
+
+        .controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-top: 10px; }
+        .ctrl-btn { background: rgba(255,255,255,0.05); border: 1px solid #333; color: #fff; padding: 6px; font-size: 8px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <h1>Corex_Sync</h1>
     
-    <button class="menu-btn" onclick="toggle('dresser')">Dresser</button>
-    <div id="dresser" class="content"></div>
+    <button class="menu-btn" onclick="toggle(this, 'dresser')">Dresser</button>
+    <div id="dresser" class="content glass"></div>
 
-    <button class="menu-btn" onclick="toggle('closet')">Closet</button>
-    <div id="closet" class="content"></div>
+    <button class="menu-btn" onclick="toggle(this, 'closet')">Closet</button>
+    <div id="closet" class="content glass"></div>
 
-    <button class="menu-btn" onclick="toggle('wardrobe')">Wardrobe</button>
-    <div id="wardrobe" class="content"></div>
+    <button class="menu-btn" onclick="toggle(this, 'wardrobe')">Wardrobe</button>
+    <div id="wardrobe" class="content glass"></div>
 
     <div class="controls">
         <button class="ctrl-btn" onclick="send('Nude','remove')">Nude</button>
@@ -56,9 +59,11 @@
                 container.innerHTML += html;
             });
         }
-        function toggle(id) { 
+        function toggle(btn, id) { 
             var el = document.getElementById(id);
-            el.style.display = (el.style.display === 'block') ? 'none' : 'block'; 
+            var isVisible = el.style.display === 'block';
+            el.style.display = isVisible ? 'none' : 'block';
+            btn.classList.toggle('active', !isVisible);
         }
         function send(part, style) { 
             var f = document.getElementById('sl_form');
