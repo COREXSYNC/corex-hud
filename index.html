@@ -5,73 +5,55 @@
     <title>Corex_Sync HUD</title>
     <style>
         body { background: #121212; color: #fff; font-family: sans-serif; padding: 10px; margin: 0; }
-        h1 { text-align: center; font-size: 14px; color: #00d4ff; text-transform: uppercase; margin: 5px 0 15px; }
         .main-nav { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; margin-bottom: 20px; }
-        .main-btn { background: #333; color: #fff; border: 1px solid #555; padding: 10px; cursor: pointer; text-transform: uppercase; font-size: 10px; font-weight: bold; }
-        .section { display: none; margin-bottom: 10px; border-top: 1px solid #333; padding-top: 10px; }
-        h3 { font-size: 11px; color: #aaa; text-align: center; margin: 0 0 10px 0; }
+        .main-btn { background: #333; color: #fff; border: 1px solid #555; padding: 10px; cursor: pointer; font-size: 10px; font-weight: bold; }
+        .section { display: none; margin-top: 10px; border-top: 1px solid #444; padding-top: 10px; }
         .btn-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 5px; }
         .slot-btn { width: 30px; font-size: 8px; padding: 5px; background: #222; color: #fff; border: 1px solid #444; cursor: pointer; margin-right: 2px; }
     </style>
 </head>
 <body>
-
-    <h1>Corex_Sync</h1>
     <div class="main-nav">
-        <button class="main-btn" onclick="showSection('dresser')">Dresser</button>
-        <button class="main-btn" onclick="showSection('closet')">Closet</button>
-        <button class="main-btn" onclick="showSection('wardrobe')">Wardrobe</button>
-        <button class="main-btn" onclick="sendCustomData(this, 'Nude', 'remove')">Nude</button>
-        <button class="main-btn" style="grid-column: span 2;" onclick="sendCustomData(this, 'RemoveHud', 'detach')">Remove Hud</button>
-        <button class="main-btn" style="grid-column: span 2; border-color:#ffcc00; color:#ffcc00;" onclick="sendCustomData(this, 'RemoveLast', 'detach')">Undo Last</button>
+        <button class="main-btn" onclick="toggle('dresser')">Dresser</button>
+        <button class="main-btn" onclick="toggle('closet')">Closet</button>
+        <button class="main-btn" onclick="toggle('wardrobe')">Wardrobe</button>
+        <button class="main-btn" onclick="send('Nude', 'remove')">Nude</button>
     </div>
 
-    <!-- SECTIONS -->
-    <div id="dresser" class="section"><h3>Dresser</h3><div class="btn-grid"><script>
-        createSlots("Lounge", "Dresser/Lounge"); createSlots("Pj's", "Dresser/Pj's");
-        createSlots("Swimwear", "Dresser/Swimwear"); createSlots("Bra's", "Dresser/Undies/Bra's");
-        createSlots("Panties", "Dresser/Undies/Panties"); createSlots("Boxer/Briefs", "Dresser/Undies/BoxerBriefs");
-        createSlots("Lingerie", "Dresser/Undies/Lingerie"); createSlots("Stockings", "Dresser/Undies/Stockings");
-        createSlots("Socks", "Dresser/Undies/Socks");
-    </script></div></div>
+    <div id="dresser" class="section"><script>
+        create("Lounge", "Dresser/Lounge"); create("Pj's", "Dresser/Pj's");
+        create("Swimwear", "Dresser/Swimwear"); create("Bra's", "Dresser/Undies/Bra's");
+    </script></div>
 
-    <div id="closet" class="section"><h3>Closet</h3><div class="btn-grid"><script>
-        createSlots("Skirts", "Closet/Skirts"); createSlots("Shorts", "Closet/Shorts");
-        createSlots("Sweaters", "Closet/Sweaters"); createSlots("Long Dresses", "Closet/Dresses/Long");
-        createSlots("Short Dresses", "Closet/Dresses/Short"); createSlots("Dress Shirts", "Closet/Shirts/DressShirts");
-        createSlots("Long Sleeve", "Closet/Shirts/LongSleeve"); createSlots("Short Sleeve", "Closet/Shirts/ShortSleeve");
-        createSlots("Tanks/T's", "Closet/Shirts/TanksTs"); createSlots("Tube Tops", "Closet/Shirts/TubeTops");
-        createSlots("Dress Pants", "Closet/Pants/DressPants"); createSlots("Casual Pants", "Closet/Pants/Casual");
-        createSlots("Jeans", "Closet/Pants/Jeans"); createSlots("Leggings", "Closet/Pants/Leggings");
-    </script></div></div>
+    <div id="closet" class="section"><script>
+        create("Skirts", "Closet/Skirts"); create("Shorts", "Closet/Shorts");
+    </script></div>
 
-    <div id="wardrobe" class="section"><h3>Wardrobe</h3><div class="btn-grid"><script>
-        createSlots("Casual", "Wardrobe/Casual"); createSlots("Club", "Wardrobe/Club");
-        createSlots("Shopping", "Wardrobe/Shopping"); createSlots("Sleep", "Wardrobe/Sleep");
-        createSlots("Roleplay", "Wardrobe/Roleplay"); createSlots("Gowns", "Wardrobe/Formal/Gowns");
-        createSlots("Suits", "Wardrobe/Formal/Suits"); createSlots("Spring", "Wardrobe/Seasons/Spring");
-        createSlots("Summer", "Wardrobe/Seasons/Summer"); createSlots("Fall", "Wardrobe/Seasons/Fall");
-        createSlots("Winter", "Wardrobe/Seasons/Winter");
-    </script></div></div>
+    <div id="wardrobe" class="section"><script>
+        create("Casual", "Wardrobe/Casual"); create("Club", "Wardrobe/Club");
+    </script></div>
 
     <script>
-        function createSlots(n, p) { document.write('<div><small>'+n+'</small><br>'); for(let i=1; i<=6; i++) document.write(`<button class="slot-btn" onclick="sendCustomData(this,'${p}','style${i}')">${i}</button>`); document.write('</div>'); }
-        
-        // TOGGLE LOGIC: Open if closed, close if open
-        function showSection(id) {
-            let el = document.getElementById(id);
-            if (el.style.display === 'block') {
-                el.style.display = 'none';
-            } else {
-                // Optional: Close others first if you only want one open at a time
-                document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-                el.style.display = 'block';
-            }
+        function toggle(id) {
+            var el = document.getElementById(id);
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
         }
-        
-        function sendCustomData(btn, part, style) { let simUrl = window.location.hash.substring(1) || window.location.href.split('#')[1]; const form = document.getElementById('sl_form'); form.action = decodeURIComponent(simUrl); document.getElementById('payload_data').value = part + "," + style; form.submit(); }
+        function create(n, p) { 
+            document.write('<div><small>'+n+'</small><br>'); 
+            for(let i=1; i<=6; i++) document.write(`<button class="slot-btn" onclick="send('${p}','style${i}')">${i}</button>`); 
+            document.write('</div>'); 
+        }
+        function send(part, style) { 
+            var simUrl = window.location.hash.substring(1);
+            var f = document.getElementById('sl_form');
+            f.action = decodeURIComponent(simUrl);
+            document.getElementById('p_data').value = part + "," + style;
+            f.submit();
+        }
     </script>
     <iframe name="secret_frame" style="display:none;"></iframe>
-    <form id="sl_form" method="POST" target="secret_frame" style="display:none;"><input type="hidden" id="payload_data" name="cmd"></form>
+    <form id="sl_form" method="POST" target="secret_frame" style="display:none;">
+        <input type="hidden" id="p_data" name="cmd">
+    </form>
 </body>
 </html>
