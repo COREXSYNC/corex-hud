@@ -22,12 +22,14 @@
         .menu-btn { width: 100%; background: var(--glass); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 15px; margin-bottom: 10px; text-transform: uppercase; font-size: 11px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s; }
         .menu-btn:hover, .active { border-color: #fff; box-shadow: var(--glow); background: rgba(255,255,255,0.15); }
         
+        /* Specific Nude Button style */
+        .nude-btn { width: 100%; background: #400; border: 1px solid #800; color: #ffcccc; padding: 10px; margin-bottom: 10px; text-transform: uppercase; font-size: 10px; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        
         .content { display: none; padding: 15px; margin-bottom: 10px; background: rgba(0,0,0,0.5); border-radius: 4px; }
         .sub-cat { font-size: 10px; color: #ccc; margin: 10px 0 5px 0; text-transform: uppercase; letter-spacing: 1px; }
         .slot-btn { width: 35px; height: 28px; font-size: 10px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid #666; cursor: pointer; margin: 2px; }
         .slot-btn:hover { border-color: #fff; box-shadow: var(--glow); }
 
-        .nude-btn { width: 100%; background: #550000; border: 1px solid #ff4444; color: #fff; padding: 10px; margin-bottom: 15px; font-size: 10px; text-transform: uppercase; cursor: pointer; border-radius: 4px; }
         .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
         .ctrl-btn { background: rgba(0,0,0,0.6); border: 1px solid #555; color: #fff; padding: 12px; font-size: 9px; cursor: pointer; border-radius: 2px; text-transform: uppercase; }
     </style>
@@ -43,10 +45,9 @@
         <div id="closet" class="content"></div>
 
         <button class="menu-btn" onclick="toggle(this, 'wardrobe')">Wardrobe</button>
-        <div id="wardrobe" class="content">
-            <!-- Nude button placed inside Wardrobe -->
-            <button class="nude-btn" onclick="send('Nude','remove')">Remove All / Nude</button>
-        </div>
+        <!-- Nude button placed directly under Wardrobe menu -->
+        <button class="nude-btn" onclick="send('Nude','remove')">Nude</button>
+        <div id="wardrobe" class="content"></div>
 
         <div class="controls">
             <button class="ctrl-btn" onclick="send('RemoveLast','detach')">Undo Last</button>
