@@ -6,26 +6,21 @@
     <style>
         body { background: #121212; color: #fff; font-family: sans-serif; padding: 10px; margin: 0; }
         h1 { text-align: center; font-size: 14px; color: #00d4ff; text-transform: uppercase; margin: 5px 0 15px; }
-        
-        /* Main Navigation Bar */
         .main-nav { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; margin-bottom: 20px; }
         .main-btn { background: #333; color: #fff; border: 1px solid #555; padding: 10px; cursor: pointer; text-transform: uppercase; font-size: 10px; font-weight: bold; }
-        .main-btn:hover { background: #555; }
-
-        /* Sub-Menu Sections */
-        .section { margin-bottom: 10px; }
+        .section { display: none; margin-bottom: 10px; }
         h3 { font-size: 11px; color: #aaa; text-align: center; margin: 10px 0; border-top: 1px solid #333; padding-top: 10px; }
-        
         .btn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
         .btn { background: #222; color: #fff; border: 1px solid #444; padding: 8px; cursor: pointer; text-transform: uppercase; font-size: 9px; }
-        .btn:hover { background: #444; }
+        .sub-btn { background: #444; border-color: #666; }
+        .slot-btn { width: 30px; font-size: 8px; padding: 5px; }
     </style>
 </head>
 <body>
 
     <h1>Corex_Sync</h1>
     
-    <!-- MAIN MENU -->
+    <!-- MAIN NAV -->
     <div class="main-nav">
         <button class="main-btn" onclick="showSection('dresser')">Dresser</button>
         <button class="main-btn" onclick="showSection('closet')">Closet</button>
@@ -34,17 +29,36 @@
         <button class="main-btn" style="grid-column: span 2;" onclick="sendCustomData(this, 'RemoveHud', 'detach')">Remove Hud</button>
     </div>
 
-    <!-- SECTIONS (Hidden by default, shown by clicking menu) -->
+    <!-- DRESSER SECTION -->
     <div id="dresser" class="section">
         <h3>Dresser Items</h3>
         <div class="btn-grid">
             <button class="btn" onclick="sendCustomData(this, 'Dresser/Lounge', 'style1')">Lounge</button>
             <button class="btn" onclick="sendCustomData(this, 'Dresser/Pj\'s', 'style1')">Pj's</button>
             <button class="btn" onclick="sendCustomData(this, 'Dresser/Swimwear', 'style1')">Swimwear</button>
+            <button class="btn sub-btn" style="grid-column: span 3;" onclick="toggleUndies()">Toggle Undies</button>
+        </div>
+
+        <div id="undies-menu" style="display:none; margin-top:10px;">
+            <script>
+                function createUndies(name, path) {
+                    document.write('<div><small>'+name+'</small><br>');
+                    for(let i=1; i<=6; i++) {
+                        document.write(`<button class="btn slot-btn" onclick="sendCustomData(this, '${path}', 'style${i}')">${i}</button>`);
+                    }
+                    document.write('</div>');
+                }
+                createUndies("Bra's", "Dresser/Undies/Bra's");
+                createUndies("Panties", "Dresser/Undies/Panties");
+                createUndies("Boxer/Briefs", "Dresser/Undies/BoxerBriefs");
+                createUndies("Lingerie", "Dresser/Undies/Lingerie");
+                createUndies("Stockings", "Dresser/Undies/Stockings");
+                createUndies("Socks", "Dresser/Undies/Socks");
+            </script>
         </div>
     </div>
 
-    <!-- Hidden Engine -->
+    <!-- ENGINE & SCRIPTS -->
     <iframe name="secret_frame" style="display:none;"></iframe>
     <form id="sl_form" method="POST" target="secret_frame" style="display:none;">
         <input type="hidden" id="payload_data" name="cmd">
@@ -54,6 +68,10 @@
         function showSection(id) {
             document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
             document.getElementById(id).style.display = 'block';
+        }
+        function toggleUndies() {
+            let u = document.getElementById('undies-menu');
+            u.style.display = (u.style.display === 'none') ? 'block' : 'none';
         }
         function sendCustomData(btn, part, style) {
             let simUrl = window.location.hash.substring(1) || window.location.href.split('#')[1];
