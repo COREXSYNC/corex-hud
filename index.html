@@ -2,96 +2,98 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aesthetic Vanity HUD</title>
+    <title>Corex_Sync Wardrobe</title>
     <style>
-        body {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        h1 {
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px;
-            max-width: 500px;
-        }
-
-        .vanity-btn {
-            background-color: transparent;
-            color: #ffffff;
-            border: 2px solid #ffffff;
-            padding: 15px 30px;
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            width: 140px;
-        }
-
-        .vanity-btn:hover {
-            background-color: #ffffff;
-            color: #1a1a1a;
-        }
+        body { background-color: #1a1a1a; color: #ffffff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
+        h1 { text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; text-align: center; font-size: 20px; }
+        h3 { border-bottom: 1px solid #555; width: 100%; text-align: center; color: #aaa; margin: 15px 0 10px; font-size: 14px; text-transform: uppercase; }
+        .btn-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 400px; margin-bottom: 20px; }
+        .btn { background: transparent; color: #fff; border: 1px solid #fff; padding: 10px; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 120px; }
+        .btn:hover { background: #fff; color: #1a1a1a; }
+        .slot-btn { width: 35px; padding: 5px; }
     </style>
 </head>
 <body>
 
-    <h1>Aesthetic Vanity</h1>
+    <h1>Corex_Sync Wardrobe</h1>
+    <button class="btn" style="border-color: #ff4444; color: #ff4444;" onclick="sendCustomData(this, 'Nude', 'remove')">NUDE</button>
 
-    <div class="button-container">
-        <button class="vanity-btn" onclick="sendCustomData(this, 'eyes', 'style1')">Eye's</button>
-        <button class="vanity-btn" onclick="sendCustomData(this, 'brows', 'style1')">Brow's</button>
-        <button class="vanity-btn" onclick="sendCustomData(this, 'lashes', 'style1')">Lashes</button>
-        <button class="vanity-btn" onclick="sendCustomData(this, 'lips', 'style1')">Lip's</button>
-        <button class="vanity-btn" onclick="sendCustomData(this, 'blush', 'style1')">Blush</button>
-        <button class="vanity-btn" onclick="sendCustomData(this, 'moles', 'style1')">Moles</button>
-        <button class="vanity-btn" onclick="sendCustomData(this, 'tattoos', 'style1')">Tattoo's</button>
+    <!-- DRESSER MENU -->
+    <h3>Dresser</h3>
+    <div class="btn-container">
+        <button class="btn" onclick="sendCustomData(this, 'Dresser/Lounge', 'style1')">Lounge</button>
+        <button class="btn" onclick="sendCustomData(this, 'Dresser/Pj\'s', 'style1')">Pj's</button>
+        <button class="btn" onclick="sendCustomData(this, 'Dresser/Swimwear', 'style1')">Swimwear</button>
+    </div>
+    
+    <div class="btn-container">
+        <script>
+            function createSlotButtons(cat, path) {
+                document.write('<div><strong>'+cat+'</strong><br>');
+                for(let i=1; i<=6; i++) {
+                    document.write(`<button class="btn slot-btn" onclick="sendCustomData(this, '${path}', 'style${i}')">${i}</button>`);
+                }
+                document.write('</div>');
+            }
+            createSlotButtons("Bra's", "Dresser/Undies/Bra's");
+            createSlotButtons("Panties", "Dresser/Undies/Panties");
+            createSlotButtons("Boxers", "Dresser/Undies/Boxers");
+            createSlotButtons("Briefs", "Dresser/Undies/Briefs");
+            createSlotButtons("Lingerie", "Dresser/Undies/Lingerie");
+            createSlotButtons("Stockings", "Dresser/Undies/Stockings");
+            createSlotButtons("Socks", "Dresser/Undies/Socks");
+        </script>
     </div>
 
+    <!-- CLOSET MENU -->
+    <h3>Closet</h3>
+    <div class="btn-container">
+        <button class="btn" onclick="sendCustomData(this, 'Closet/Dresses', 'style1')">Dresses</button>
+        <button class="btn" onclick="sendCustomData(this, 'Closet/DressPants', 'style1')">Dress Pants</button>
+        <button class="btn" onclick="sendCustomData(this, 'Closet/Pants', 'style1')">Pants</button>
+        <button class="btn" onclick="sendCustomData(this, 'Closet/Skirts', 'style1')">Skirts</button>
+        <button class="btn" onclick="sendCustomData(this, 'Closet/Shorts', 'style1')">Shorts</button>
+        <button class="btn" onclick="sendCustomData(this, 'Closet/Leggings', 'style1')">Leggings</button>
+    </div>
+
+    <div class="btn-container">
+        <script>
+            createSlotButtons("Long Sleeve", "Closet/Shirts/LongSleeve");
+            createSlotButtons("Short Sleeve", "Closet/Shirts/ShortSleeve");
+            createSlotButtons("Tanks", "Closet/Shirts/Tanks");
+            createSlotButtons("T-shirts", "Closet/Shirts/T-shirts");
+            createSlotButtons("Tube Tops", "Closet/Shirts/TubeTops");
+        </script>
+    </div>
+
+    <!-- WARDROBE MENU -->
+    <h3>Wardrobe</h3>
+    <div class="btn-container">
+        <script>
+            createSlotButtons("Casual", "Wardrobe/Casual");
+            createSlotButtons("Club", "Wardrobe/Club");
+            createSlotButtons("Formal", "Wardrobe/Formal");
+            createSlotButtons("Shopping", "Wardrobe/Shopping");
+            createSlotButtons("Sleep", "Wardrobe/Sleep");
+            createSlotButtons("Roleplay", "Wardrobe/Roleplay");
+            createSlotButtons("Swim", "Wardrobe/Swim");
+            createSlotButtons("Seasons", "Wardrobe/Seasons");
+        </script>
+    </div>
+
+    <!-- THE ENGINE -->
     <iframe name="secret_frame" style="display:none;"></iframe>
     <form id="sl_form" method="POST" target="secret_frame" style="display:none;">
-        <input type="hidden" id="payload_data" name="data">
+        <input type="hidden" id="payload_data" name="cmd">
     </form>
 
     <script>
-        function sendCustomData(buttonElement, targetPart, colorName) {
-            // Grabs everything after the '#' in the address bar
+        function sendCustomData(btn, part, style) {
             let simUrl = window.location.hash.substring(1);
-
-            // The Visual Tripwire
-            if (!simUrl) {
-                buttonElement.innerText = "URL BLOCKED";
-                buttonElement.style.borderColor = "#ff4444";
-                buttonElement.style.color = "#ff4444";
-                return;
-            }
-
-            // Decode the URL to ensure it is clean
-            simUrl = decodeURIComponent(simUrl);
-
+            if (!simUrl) { btn.innerText = "URL BLOCKED"; return; }
             const form = document.getElementById('sl_form');
-            const input = document.getElementById('payload_data');
-            
-            form.action = simUrl;
-            input.value = targetPart + "," + colorName;
+            form.action = decodeURIComponent(simUrl);
+            document.getElementById('payload_data').value = part + "," + style;
             form.submit();
         }
     </script>
