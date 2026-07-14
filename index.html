@@ -3,14 +3,18 @@
 <head>
     <style>
         :root { --glass: rgba(255, 255, 255, 0.05); --glow: 0 0 10px rgba(255, 255, 255, 0.5); }
-        body { background: #050505; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 10px; margin: 0; }
+        body { 
+            /* REPLACE 'your-image-url.jpg' WITH YOUR ACTUAL IMAGE LINK */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://your-image-url.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff; font-family: 'Segoe UI', sans-serif; padding: 10px; margin: 0; 
+        }
         
-        /* Smokey Glass Effect */
         .glass { background: var(--glass); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; }
-        
         h1 { font-size: 12px; text-align: center; color: #fff; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; }
         
-        /* Rectangle Buttons */
         .menu-btn { width: 100%; background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px; margin-bottom: 5px; text-transform: uppercase; font-size: 9px; cursor: pointer; border-radius: 4px; transition: 0.3s; }
         .menu-btn:hover, .active { border-color: #fff; box-shadow: var(--glow); }
         
@@ -24,55 +28,5 @@
     </style>
 </head>
 <body>
-
-    <h1>Corex_Sync</h1>
-    
-    <button class="menu-btn" onclick="toggle(this, 'dresser')">Dresser</button>
-    <div id="dresser" class="content glass"></div>
-
-    <button class="menu-btn" onclick="toggle(this, 'closet')">Closet</button>
-    <div id="closet" class="content glass"></div>
-
-    <button class="menu-btn" onclick="toggle(this, 'wardrobe')">Wardrobe</button>
-    <div id="wardrobe" class="content glass"></div>
-
-    <div class="controls">
-        <button class="ctrl-btn" onclick="send('Nude','remove')">Nude</button>
-        <button class="ctrl-btn" onclick="send('RemoveLast','detach')">Undo</button>
-        <button class="ctrl-btn" onclick="send('RemoveHud','detach')">Exit</button>
-    </div>
-
-    <script>
-        window.onload = function() {
-            addContent('dresser', [["Lounge", "Dresser/Lounge"], ["Pj's", "Dresser/Pj's"], ["Swimwear", "Dresser/Swimwear"], ["Bra's", "Dresser/Undies/Bra's"], ["Panties", "Dresser/Undies/Panties"], ["Boxer/Briefs", "Dresser/Undies/BoxerBriefs"], ["Lingerie", "Dresser/Undies/Lingerie"], ["Stockings", "Dresser/Undies/Stockings"], ["Socks", "Dresser/Undies/Socks"]]);
-            addContent('closet', [["Skirts", "Closet/Skirts"], ["Shorts", "Closet/Shorts"], ["Sweaters", "Closet/Sweaters"], ["Long Dresses", "Closet/Dresses/Long"], ["Short Dresses", "Closet/Dresses/Short"], ["Dress Shirts", "Closet/Shirts/DressShirts"], ["Long Sleeve", "Closet/Shirts/LongSleeve"], ["Short Sleeve", "Closet/Shirts/ShortSleeve"], ["Tanks/T's", "Closet/Shirts/TanksTs"], ["Tube Tops", "Closet/Shirts/TubeTops"], ["Dress Pants", "Closet/Pants/DressPants"], ["Casual Pants", "Closet/Pants/Casual"], ["Jeans", "Closet/Pants/Jeans"], ["Leggings", "Closet/Pants/Leggings"]]);
-            addContent('wardrobe', [["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"], ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"], ["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"], ["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]);
-        };
-
-        function addContent(id, items) {
-            var container = document.getElementById(id);
-            items.forEach(function(item) {
-                var html = '<div class="sub-cat">' + item[0] + '</div>';
-                for(var i=1; i<=6; i++) {
-                    html += `<button class="slot-btn" onclick="send('${item[1]}','style${i}')">${i}</button>`;
-                }
-                container.innerHTML += html;
-            });
-        }
-        function toggle(btn, id) { 
-            var el = document.getElementById(id);
-            var isVisible = el.style.display === 'block';
-            el.style.display = isVisible ? 'none' : 'block';
-            btn.classList.toggle('active', !isVisible);
-        }
-        function send(part, style) { 
-            var f = document.getElementById('sl_form');
-            f.action = window.location.hash.substring(1);
-            document.getElementById('p_data').value = part + "," + style;
-            f.submit();
-        }
-    </script>
-    <iframe name="secret_frame" style="display:none;"></iframe>
-    <form id="sl_form" method="POST" target="secret_frame" style="display:none;"><input type="hidden" id="p_data" name="cmd"></form>
-</body>
+    </body>
 </html>
