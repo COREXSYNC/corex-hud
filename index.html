@@ -1,81 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aesthetic Vanity HUD</title>
     <style>
-        body { background: #111; color: #fff; font-family: sans-serif; text-align: center; padding: 10px; }
-        h2 { border-bottom: 2px solid #555; padding-bottom: 10px; color: #00d4ff; }
-        h3 { color: #aaa; margin: 15px 0 5px; font-size: 14px; text-transform: uppercase; }
-        .btn { display: block; width: 85%; margin: 3px auto; padding: 8px; background: #222; color: #fff; border: 1px solid #444; border-radius: 4px; cursor: pointer; font-size: 11px; }
-        .btn:hover { background: #444; }
-        details { background: #1a1a1a; margin: 10px 0; padding: 10px; border: 1px solid #333; border-radius: 5px; }
-        summary { cursor: pointer; font-weight: bold; padding: 5px; outline: none; }
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            max-width: 500px;
+        }
+
+        .vanity-btn {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 15px 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 140px;
+        }
+
+        .vanity-btn:hover {
+            background-color: #ffffff;
+            color: #1a1a1a;
+        }
     </style>
 </head>
 <body>
 
-    <h2>Corex_Sync Wardrobe</h2>
+    <h1>Aesthetic Vanity</h1>
 
-    <form action="" method="POST">
-        <button type="submit" class="btn" style="background:#500;" name="cmd" value="Nude,remove">Nude</button>
+    <div class="button-container">
+        <button class="vanity-btn" onclick="sendCustomData(this, 'eyes', 'style1')">Eye's</button>
+        <button class="vanity-btn" onclick="sendCustomData(this, 'brows', 'style1')">Brow's</button>
+        <button class="vanity-btn" onclick="sendCustomData(this, 'lashes', 'style1')">Lashes</button>
+        <button class="vanity-btn" onclick="sendCustomData(this, 'lips', 'style1')">Lip's</button>
+        <button class="vanity-btn" onclick="sendCustomData(this, 'blush', 'style1')">Blush</button>
+        <button class="vanity-btn" onclick="sendCustomData(this, 'moles', 'style1')">Moles</button>
+        <button class="vanity-btn" onclick="sendCustomData(this, 'tattoos', 'style1')">Tattoo's</button>
+    </div>
+
+    <iframe name="secret_frame" style="display:none;"></iframe>
+    <form id="sl_form" method="POST" target="secret_frame" style="display:none;">
+        <input type="hidden" id="payload_data" name="data">
     </form>
 
-    <details>
-        <summary>DRESSER</summary>
-        <h3>Lounge</h3>
-        <form action="" method="POST">
-            <button type="submit" class="btn" name="cmd" value="Dresser/Lounge,style1">Style 1</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Lounge,style2">Style 2</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Lounge,style3">Style 3</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Lounge,style4">Style 4</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Lounge,style5">Style 5</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Lounge,style6">Style 6</button>
-        </form>
+    <script>
+        function sendCustomData(buttonElement, targetPart, colorName) {
+            // Grabs everything after the '#' in the address bar
+            let simUrl = window.location.hash.substring(1);
 
-        <h3>Undies (Sub-menu)</h3>
-        <form action="" method="POST">
-            <p style="font-size:9px; color:#666; margin:10px 0 2px;">BRA'S</p>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Bra's,style1">1</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Bra's,style2">2</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Bra's,style3">3</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Bra's,style4">4</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Bra's,style5">5</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Bra's,style6">6</button>
+            // The Visual Tripwire
+            if (!simUrl) {
+                buttonElement.innerText = "URL BLOCKED";
+                buttonElement.style.borderColor = "#ff4444";
+                buttonElement.style.color = "#ff4444";
+                return;
+            }
+
+            // Decode the URL to ensure it is clean
+            simUrl = decodeURIComponent(simUrl);
+
+            const form = document.getElementById('sl_form');
+            const input = document.getElementById('payload_data');
             
-            <p style="font-size:9px; color:#666; margin:10px 0 2px;">PANTIES</p>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Panties,style1">1</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Panties,style2">2</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Panties,style3">3</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Panties,style4">4</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Panties,style5">5</button>
-            <button type="submit" class="btn" name="cmd" value="Dresser/Undies/Panties,style6">6</button>
-        </form>
-    </details>
-
-    <details>
-        <summary>CLOSET</summary>
-        <h3>Dresses</h3>
-        <form action="" method="POST">
-            <button type="submit" class="btn" name="cmd" value="Closet/Dresses,style1">1</button>
-            <button type="submit" class="btn" name="cmd" value="Closet/Dresses,style2">2</button>
-            <button type="submit" class="btn" name="cmd" value="Closet/Dresses,style3">3</button>
-            <button type="submit" class="btn" name="cmd" value="Closet/Dresses,style4">4</button>
-            <button type="submit" class="btn" name="cmd" value="Closet/Dresses,style5">5</button>
-            <button type="submit" class="btn" name="cmd" value="Closet/Dresses,style6">6</button>
-        </form>
-    </details>
-
-    <details>
-        <summary>WARDROBE</summary>
-        <h3>Casual</h3>
-        <form action="" method="POST">
-            <button type="submit" class="btn" name="cmd" value="Wardrobe/Casual,style1">1</button>
-            <button type="submit" class="btn" name="cmd" value="Wardrobe/Casual,style2">2</button>
-            <button type="submit" class="btn" name="cmd" value="Wardrobe/Casual,style3">3</button>
-            <button type="submit" class="btn" name="cmd" value="Wardrobe/Casual,style4">4</button>
-            <button type="submit" class="btn" name="cmd" value="Wardrobe/Casual,style5">5</button>
-            <button type="submit" class="btn" name="cmd" value="Wardrobe/Casual,style6">6</button>
-        </form>
-    </details>
-
+            form.action = simUrl;
+            input.value = targetPart + "," + colorName;
+            form.submit();
+        }
+    </script>
 </body>
 </html>
