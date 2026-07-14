@@ -4,21 +4,20 @@
     <meta charset="UTF-8">
     <title>Corex_Sync Wardrobe</title>
     <style>
-        body { background-color: #1a1a1a; color: #ffffff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
-        h1 { text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; text-align: center; font-size: 20px; }
-        h3 { border-bottom: 1px solid #555; width: 100%; text-align: center; color: #aaa; margin: 15px 0 10px; font-size: 14px; text-transform: uppercase; }
-        .btn-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 400px; margin-bottom: 20px; }
-        .btn { background: transparent; color: #fff; border: 1px solid #fff; padding: 10px; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 120px; }
-        .btn:hover { background: #fff; color: #1a1a1a; }
-        .slot-btn { width: 35px; padding: 5px; }
+        body { background-color: #1a1a1a; color: #ffffff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 15px; margin: 0; }
+        h1 { text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; font-size: 18px; color: #00d4ff; }
+        h3 { border-bottom: 1px solid #444; width: 100%; text-align: center; color: #888; margin: 15px 0 8px; font-size: 13px; text-transform: uppercase; }
+        .btn-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 15px; }
+        .btn { background: #222; color: #fff; border: 1px solid #555; padding: 8px 12px; cursor: pointer; text-transform: uppercase; font-size: 11px; }
+        .btn:hover { background: #444; }
+        .slot-btn { width: 30px; padding: 5px; }
     </style>
 </head>
 <body>
 
-    <h1>Corex_Sync Wardrobe</h1>
-    <button class="btn" style="border-color: #ff4444; color: #ff4444;" onclick="sendCustomData(this, 'Nude', 'remove')">NUDE</button>
+    <h1>Corex_Sync</h1>
+    <button class="btn" style="border-color:#ff4444; color:#ff4444;" onclick="sendCustomData(this, 'Nude', 'remove')">NUDE</button>
 
-    <!-- DRESSER MENU -->
     <h3>Dresser</h3>
     <div class="btn-container">
         <button class="btn" onclick="sendCustomData(this, 'Dresser/Lounge', 'style1')">Lounge</button>
@@ -29,7 +28,7 @@
     <div class="btn-container">
         <script>
             function createSlotButtons(cat, path) {
-                document.write('<div><strong>'+cat+'</strong><br>');
+                document.write('<div><small>'+cat+'</small><br>');
                 for(let i=1; i<=6; i++) {
                     document.write(`<button class="btn slot-btn" onclick="sendCustomData(this, '${path}', 'style${i}')">${i}</button>`);
                 }
@@ -45,7 +44,6 @@
         </script>
     </div>
 
-    <!-- CLOSET MENU -->
     <h3>Closet</h3>
     <div class="btn-container">
         <button class="btn" onclick="sendCustomData(this, 'Closet/Dresses', 'style1')">Dresses</button>
@@ -66,7 +64,6 @@
         </script>
     </div>
 
-    <!-- WARDROBE MENU -->
     <h3>Wardrobe</h3>
     <div class="btn-container">
         <script>
@@ -81,7 +78,6 @@
         </script>
     </div>
 
-    <!-- THE ENGINE -->
     <iframe name="secret_frame" style="display:none;"></iframe>
     <form id="sl_form" method="POST" target="secret_frame" style="display:none;">
         <input type="hidden" id="payload_data" name="cmd">
@@ -89,8 +85,15 @@
 
     <script>
         function sendCustomData(btn, part, style) {
-            let simUrl = window.location.hash.substring(1);
-            if (!simUrl) { btn.innerText = "URL BLOCKED"; return; }
+            // Robust URL finding: looks at hash, then falls back to current location
+            let simUrl = window.location.hash.substring(1) || window.location.href.split('#')[1];
+            
+            if (!simUrl) { 
+                btn.innerText = "WAITING..."; 
+                setTimeout(() => location.reload(), 1000); 
+                return; 
+            }
+            
             const form = document.getElementById('sl_form');
             form.action = decodeURIComponent(simUrl);
             document.getElementById('payload_data').value = part + "," + style;
