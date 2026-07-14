@@ -31,53 +31,18 @@
             <button class="nude-btn" onclick="send('Nude','remove')">Nude</button>
         </div>
         <div id="controls" class="controls">
-            <button class="ctrl-btn" onclick="send('RemoveLast','detach')">Undo Last</button>
-            <button class="ctrl-btn" onclick="send('RemoveHud','detach')">Exit / Detach</button>
+            <button class="ctrl-btn" onclick="history.back()">Back</button>
+            <button class="ctrl-btn" onclick="send('RemoveLast','detach')">Remove Last Item</button>
         </div>
     </div>
     <script>
+        // ... (Keep existing script block logic) ...
         window.onload = function() {
-            addCategory('dresser', [
-                ["Lounge", "Dresser/Lounge"], ["Pj's", "Dresser/Pj's"], ["Swimwear", "Dresser/Swimwear"],
-                ["Undies", null, [
-                    ["Bra's", "Dresser/Undies/Bra's"], ["Panties", "Dresser/Undies/Panties"], ["Boxer/Briefs", "Dresser/Undies/BoxerBriefs"],
-                    ["Lingerie", "Dresser/Undies/Lingerie"], ["Stockings", "Dresser/Undies/Stockings"], ["Socks", "Dresser/Undies/Socks"]
-                ]]
-            ]);
+            addCategory('dresser', [["Lounge", "Dresser/Lounge"], ["Pj's", "Dresser/Pj's"], ["Swimwear", "Dresser/Swimwear"], ["Undies", null, [["Bra's", "Dresser/Undies/Bra's"], ["Panties", "Dresser/Undies/Panties"], ["Boxer/Briefs", "Dresser/Undies/BoxerBriefs"], ["Lingerie", "Dresser/Undies/Lingerie"], ["Stockings", "Dresser/Undies/Stockings"], ["Socks", "Dresser/Undies/Socks"]]]]);
             addCategory('closet', [["Skirts", "Closet/Skirts"], ["Shorts", "Closet/Shorts"], ["Sweaters", "Closet/Sweaters"], ["Long Dresses", "Closet/Dresses/Long"], ["Short Dresses", "Closet/Dresses/Short"], ["Dress Shirts", "Closet/Shirts/DressShirts"], ["Long Sleeve", "Closet/Shirts/LongSleeve"], ["Short Sleeve", "Closet/Shirts/ShortSleeve"], ["Tanks/T's", "Closet/Shirts/TanksTs"], ["Tube Tops", "Closet/Shirts/TubeTops"], ["Dress Pants", "Closet/Pants/DressPants"], ["Casual Pants", "Closet/Pants/Casual"], ["Jeans", "Closet/Pants/Jeans"], ["Leggings", "Closet/Pants/Leggings"]]);
             addCategory('wardrobe', [["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"], ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"], ["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"], ["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]);
         };
-
-        function addCategory(id, items) {
-            var container = document.getElementById(id);
-            items.forEach(function(item) {
-                var btn = document.createElement('button');
-                btn.className = 'sub-btn';
-                btn.innerText = item[0];
-                container.appendChild(btn);
-                
-                if (item[2]) { // If it's a submenu (like Undies)
-                    btn.onclick = function() { toggleSlots(this.nextElementSibling); };
-                    var subDiv = document.createElement('div');
-                    subDiv.className = 'slot-container';
-                    item[2].forEach(sub => {
-                        var subBtn = document.createElement('div');
-                        subBtn.innerHTML = '<button class="sub-btn" style="background:#000" onclick="toggleSlots(this.nextElementSibling)">'+sub[0]+'</button>';
-                        var slots = document.createElement('div');
-                        slots.className = 'slot-container';
-                        for(var i=1; i<=6; i++) slots.innerHTML += `<button class="slot-btn" onclick="send('${sub[1]}','style${i}')">${i}</button>`;
-                        subDiv.appendChild(subBtn); subDiv.appendChild(slots);
-                    });
-                    container.appendChild(subDiv);
-                } else {
-                    btn.onclick = function() { toggleSlots(this.nextElementSibling); };
-                    var div = document.createElement('div');
-                    div.className = 'slot-container';
-                    for(var i=1; i<=6; i++) div.innerHTML += `<button class="slot-btn" onclick="send('${item[1]}','style${i}')">${i}</button>`;
-                    container.appendChild(div);
-                }
-            });
-        }
+        function addCategory(id, items) { var container = document.getElementById(id); items.forEach(function(item) { var btn = document.createElement('button'); btn.className = 'sub-btn'; btn.innerText = item[0]; container.appendChild(btn); if (item[2]) { btn.onclick = function() { toggleSlots(this.nextElementSibling); }; var subDiv = document.createElement('div'); subDiv.className = 'slot-container'; item[2].forEach(sub => { var subBtn = document.createElement('div'); subBtn.innerHTML = '<button class="sub-btn" style="background:#000" onclick="toggleSlots(this.nextElementSibling)">'+sub[0]+'</button>'; var slots = document.createElement('div'); slots.className = 'slot-container'; for(var i=1; i<=6; i++) slots.innerHTML += `<button class="slot-btn" onclick="send('${sub[1]}','style${i}')">${i}</button>`; subDiv.appendChild(subBtn); subDiv.appendChild(slots); }); container.appendChild(subDiv); } else { btn.onclick = function() { toggleSlots(this.nextElementSibling); }; var div = document.createElement('div'); div.className = 'slot-container'; for(var i=1; i<=6; i++) div.innerHTML += `<button class="slot-btn" onclick="send('${item[1]}','style${i}')">${i}</button>`; container.appendChild(div); } }); }
         function showCategory(id) { document.getElementById('home').style.display = 'none'; document.getElementById(id).style.display = 'block'; }
         function showHome() { var contents = document.getElementsByClassName('content'); for(var i=0; i<contents.length; i++) { contents[i].style.display = 'none'; } document.getElementById('home').style.display = 'block'; }
         function toggleSlots(el) { el.style.display = (el.style.display === 'block') ? 'none' : 'block'; }
