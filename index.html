@@ -4,7 +4,7 @@
     <style>
         :root { --glass: rgba(0, 0, 0, 0.7); --glow: 0 0 15px rgba(255, 255, 255, 0.6); }
         body { margin: 0; padding: 40px; font-family: 'Segoe UI', sans-serif; color: #fff; 
-               background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('closet.jpg'); 
+               background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://i.imgur.com/eBw0k7t.jpeg'); 
                background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh; }
         .container { position: relative; z-index: 1; max-width: 800px; margin: 2% auto; background: rgba(0, 0, 0, 0.5); padding: 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); }
         h1 { font-size: 20px; text-align: center; color: #fff; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 35px; text-shadow: 0 3px 6px rgba(0,0,0,0.7); cursor: pointer; }
@@ -23,7 +23,7 @@
         .slot-btn { width: 45px; height: 35px; font-size: 12px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid #777; cursor: pointer; margin: 3px; }
         
         .content { display: none; }
-        .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+        .controls { display: none; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
         .ctrl-btn { background: rgba(0,0,0,0.7); border: 1px solid #666; color: #fff; padding: 18px; font-size: 12px; cursor: pointer; border-radius: 4px; text-transform: uppercase; opacity: 1; }
     </style>
 </head>
@@ -86,12 +86,8 @@
         function toggleSubmenu(btn, subDiv) {
             var parent = btn.parentElement;
             var isOpening = (subDiv.style.display !== 'block');
-            
-            // Toggle showing the submenu contents
             subDiv.style.display = isOpening ? 'block' : 'none';
             btn.classList.toggle('active-glow');
-            
-            // Hide/Show the other buttons in the same container
             Array.from(parent.children).forEach(child => {
                 if (child !== btn && child !== subDiv && child.className.includes('sub-btn')) {
                     child.style.display = isOpening ? 'none' : 'block';
@@ -105,10 +101,19 @@
             btn.classList.toggle('active-glow');
         }
 
-        function showCategory(id) { document.getElementById('home').style.display = 'none'; document.getElementById(id).style.display = 'block'; }
+        function showCategory(id) { 
+            document.getElementById('home').style.display = 'none'; 
+            document.getElementById(id).style.display = 'block'; 
+            document.getElementById('controls').style.display = 'grid';
+        }
         function showHome() { 
             document.getElementById('home').style.display = 'block';
-            document.querySelectorAll('.content').forEach(c => c.style.display = 'none');
+            document.querySelectorAll('.content').forEach(c => {
+                c.style.display = 'none';
+                c.querySelectorAll('.sub-btn').forEach(b => { b.style.display = 'block'; b.classList.remove('active-glow'); });
+                c.querySelectorAll('.submenu-items, .slot-container').forEach(s => s.style.display = 'none');
+            });
+            document.getElementById('controls').style.display = 'none';
         }
         function send(part, style) { var f = document.getElementById('sl_form'); f.action = window.location.hash.substring(1); document.getElementById('p_data').value = part + "," + style; f.submit(); }
     </script>
