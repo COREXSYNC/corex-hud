@@ -19,7 +19,7 @@
         
         .active-glow { border-color: #fff !important; box-shadow: var(--glow) !important; opacity: 1 !important; }
         
-        .slot-container { display: none; padding: 10px; text-align: center; }
+        .slot-container, .submenu-items { display: none; padding: 10px; text-align: center; }
         .slot-btn { width: 45px; height: 35px; font-size: 12px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid #777; cursor: pointer; margin: 3px; }
         
         .content { display: none; }
@@ -64,15 +64,16 @@
             items.forEach(function(item) { 
                 var btn = document.createElement('button'); btn.className = 'sub-btn'; btn.innerText = item[0]; container.appendChild(btn); 
                 if (item[2]) { 
-                    btn.onclick = function() { toggleSubmenu(this); }; 
-                    var subDiv = document.createElement('div'); subDiv.className = 'submenu-items'; subDiv.style.display = 'none';
+                    var subDiv = document.createElement('div'); subDiv.className = 'submenu-items';
                     item[2].forEach(sub => { 
                         var subBtn = document.createElement('button'); subBtn.className = 'sub-btn'; subBtn.innerText = sub[0]; 
                         var slots = document.createElement('div'); slots.className = 'slot-container'; 
                         for(var i=1; i<=6; i++) slots.innerHTML += `<button class="slot-btn" onclick="send('${sub[1]}','style${i}')">${i}</button>`;
                         subBtn.onclick = function() { toggleOnlySlots(this); }; 
                         subDiv.appendChild(subBtn); subDiv.appendChild(slots); 
-                    }); container.appendChild(subDiv); 
+                    }); 
+                    btn.onclick = function() { toggleSubmenu(this, subDiv); };
+                    container.appendChild(subDiv); 
                 } else { 
                     btn.onclick = function() { toggleOnlySlots(this); }; 
                     var div = document.createElement('div'); div.className = 'slot-container'; 
@@ -82,20 +83,24 @@
             }); 
         }
 
-        function toggleSubmenu(btn) {
-            var sub = btn.nextElementSibling;
-            var isOpen = (sub.style.display === 'block');
-            // Hide other submenus
-            Array.from(btn.parentElement.children).forEach(child => { if(child !== btn && child.className !== 'nude-btn') child.style.display = 'none'; });
-            // Toggle current
-            sub.style.display = isOpen ? 'none' : 'block';
-            if (!isOpen) btn.classList.add('active-glow'); else btn.classList.remove('active-glow');
+        function toggleSubmenu(btn, subDiv) {
+            var parent = btn.parentElement;
+            var isOpening = (subDiv.style.display !== 'block');
+            
+            // Toggle showing the submenu contents
+            subDiv.style.display = isOpening ? 'block' : 'none';
+            btn.classList.toggle('active-glow');
+            
+            // Hide/Show the other buttons in the same container
+            Array.from(parent.children).forEach(child => {
+                if (child !== btn && child !== subDiv && child.className.includes('sub-btn')) {
+                    child.style.display = isOpening ? 'none' : 'block';
+                }
+            });
         }
 
         function toggleOnlySlots(btn) {
             var slots = btn.nextElementSibling;
-            var parent = btn.parentElement;
-            parent.querySelectorAll('.slot-container').forEach(s => { if(s !== slots) s.style.display = 'none'; });
             slots.style.display = (slots.style.display === 'block') ? 'none' : 'block';
             btn.classList.toggle('active-glow');
         }
