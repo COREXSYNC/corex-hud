@@ -3,25 +3,21 @@
 <head>
     <style>
         :root { --bg: #0f0f12; --panel: #1a1a1f; --accent: #00d4ff; --text: #e0e0e0; }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; padding: 15px; margin: 0; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; padding: 10px; margin: 0; }
+        h1 { font-size: 12px; text-align: center; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
         
-        h1 { font-size: 14px; text-align: center; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
-        
-        /* Main Category Buttons */
-        .menu-btn { width: 100%; background: var(--panel); border: 1px solid #333; color: var(--text); padding: 12px; margin-bottom: 6px; text-transform: uppercase; font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.3s; border-radius: 4px; }
+        /* Compact Main Buttons */
+        .menu-btn { width: 100%; background: var(--panel); border: 1px solid #333; color: var(--text); padding: 6px; margin-bottom: 4px; text-transform: uppercase; font-size: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; border-radius: 2px; }
         .menu-btn:hover { border-color: var(--accent); background: #222; }
         
+        /* Compact Bottom Controls */
+        .controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; margin-top: 10px; }
+        .ctrl-btn { background: #1a1a1f; border: 1px solid #333; color: #888; padding: 6px; font-size: 9px; text-transform: uppercase; cursor: pointer; border-radius: 2px; }
+        
         /* Content Panels */
-        .content { display: none; padding: 12px; background: #141417; border-left: 2px solid var(--accent); margin-bottom: 10px; border-radius: 0 4px 4px 0; }
-        .sub-cat { font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 6px; margin-top: 10px; letter-spacing: 1px; }
-        
-        /* Buttons */
-        .slot-btn { width: 34px; height: 24px; font-size: 9px; font-weight: bold; background: #222; color: #aaa; border: 1px solid #333; cursor: pointer; margin: 2px; transition: 0.2s; }
-        .slot-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
-        
-        /* Bottom Control Bar */
-        .controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-top: 20px; }
-        .ctrl-btn { background: #1a1a1f; border: 1px solid #444; color: #888; padding: 8px; font-size: 9px; text-transform: uppercase; cursor: pointer; }
+        .content { display: none; padding: 8px; background: #141417; border-left: 2px solid var(--accent); margin: 5px 0; font-size: 9px; }
+        .sub-cat { color: var(--accent); margin-bottom: 4px; margin-top: 8px; font-weight: bold; }
+        .slot-btn { width: 28px; height: 20px; font-size: 9px; background: #222; color: #aaa; border: 1px solid #333; cursor: pointer; margin: 1px; }
     </style>
 </head>
 <body>
