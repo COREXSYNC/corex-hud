@@ -1,4 +1,48 @@
-<script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        :root { --glass: rgba(0, 0, 0, 0.7); --glow: 0 0 15px rgba(255, 255, 255, 0.6); }
+        body { margin: 0; padding: 40px; font-family: 'Segoe UI', sans-serif; color: #fff; 
+               background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('closet.jpg'); 
+               background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh; }
+        .container { position: relative; z-index: 1; max-width: 800px; margin: 2% auto; background: rgba(0, 0, 0, 0.5); padding: 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); }
+        h1 { font-size: 20px; text-align: center; color: #fff; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 35px; text-shadow: 0 3px 6px rgba(0,0,0,0.7); cursor: pointer; }
+        
+        .menu-btn { width: 100%; background: var(--glass); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 20px; margin-bottom: 12px; text-transform: uppercase; font-size: 14px; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; }
+        .sub-btn { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid #555; color: #fff; padding: 15px; margin-bottom: 5px; font-size: 12px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        
+        /* The Glow Effect when active */
+        .active-glow { border-color: #fff !important; box-shadow: var(--glow) !important; background: rgba(255,255,255,0.2) !important; }
+        
+        .slot-container { display: none; padding: 10px; text-align: center; }
+        .slot-btn { width: 45px; height: 35px; font-size: 12px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid #777; cursor: pointer; margin: 3px; }
+        .slot-btn:hover { border-color: #fff; box-shadow: var(--glow); }
+        .content { display: none; }
+        .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+        .ctrl-btn { background: rgba(0,0,0,0.7); border: 1px solid #666; color: #fff; padding: 18px; font-size: 12px; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
+        .nude-btn { width: 100%; background: #500; border: 1px solid #900; color: #fff; padding: 15px; margin-top: 15px; text-transform: uppercase; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 onclick="showHome()">COREX_SYNC</h1>
+        <div id="home">
+            <button class="menu-btn" onclick="showCategory('dresser')">Dresser</button>
+            <button class="menu-btn" onclick="showCategory('closet')">Closet</button>
+            <button class="menu-btn" onclick="showCategory('wardrobe')">Wardrobe</button>
+        </div>
+        <div id="dresser" class="content"></div>
+        <div id="closet" class="content"></div>
+        <div id="wardrobe" class="content">
+            <button class="nude-btn" onclick="send('Nude','remove')">Nude</button>
+        </div>
+        <div id="controls" class="controls">
+            <button class="ctrl-btn" onclick="showHome()">Back</button>
+            <button class="ctrl-btn" onclick="send('RemoveLast','detach')">Remove Last Item</button>
+        </div>
+    </div>
+    <script>
         window.onload = function() {
             addCategory('dresser', [
                 ["Lounge", "Dresser/Lounge"], ["Pj's", "Dresser/Pj's"], ["Swimwear", "Dresser/Swimwear"],
@@ -17,52 +61,48 @@
                 ["Seasons", null, [["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]]
             ]);
         };
-
         function addCategory(id, items) { 
             var container = document.getElementById(id); 
             items.forEach(function(item) { 
-                var btn = document.createElement('button'); 
-                btn.className = 'sub-btn'; btn.innerText = item[0]; 
-                container.appendChild(btn); 
-                
-                if (item[2]) { // Submenu
+                var btn = document.createElement('button'); btn.className = 'sub-btn'; btn.innerText = item[0]; container.appendChild(btn); 
+                if (item[2]) { 
                     btn.onclick = function() { toggleSubmenu(this); }; 
                     var subDiv = document.createElement('div'); subDiv.className = 'submenu-items'; subDiv.style.display = 'none';
                     item[2].forEach(sub => { 
                         var subBtn = document.createElement('button'); subBtn.className = 'sub-btn'; subBtn.innerText = sub[0]; 
                         var slots = document.createElement('div'); slots.className = 'slot-container'; 
                         for(var i=1; i<=6; i++) slots.innerHTML += `<button class="slot-btn" onclick="send('${sub[1]}','style${i}')">${i}</button>`;
-                        subBtn.onclick = function() { toggleOnlySlots(this.nextElementSibling); }; 
+                        subBtn.onclick = function() { toggleOnlySlots(this); }; 
                         subDiv.appendChild(subBtn); subDiv.appendChild(slots); 
-                    }); 
-                    container.appendChild(subDiv); 
-                } else { // Direct items
-                    btn.onclick = function() { toggleOnlySlots(this.nextElementSibling); }; 
+                    }); container.appendChild(subDiv); 
+                } else { 
+                    btn.onclick = function() { toggleOnlySlots(this); }; 
                     var div = document.createElement('div'); div.className = 'slot-container'; 
                     for(var i=1; i<=6; i++) div.innerHTML += `<button class="slot-btn" onclick="send('${item[1]}','style${i}')">${i}</button>`;
                     container.appendChild(div); 
                 } 
             }); 
         }
-
-        // Only shows the slots for the button clicked, closes others
-        function toggleOnlySlots(el) {
-            var parent = el.parentElement;
-            var allSlots = parent.querySelectorAll('.slot-container');
-            allSlots.forEach(s => { if(s !== el) s.style.display = 'none'; });
-            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        function toggleOnlySlots(btn) {
+            var slots = btn.nextElementSibling;
+            var parent = btn.parentElement;
+            parent.querySelectorAll('.slot-container').forEach(s => { if(s !== slots) s.style.display = 'none'; });
+            parent.querySelectorAll('.sub-btn').forEach(b => { if(b !== btn) b.classList.remove('active-glow'); });
+            var isVisible = (slots.style.display === 'block');
+            slots.style.display = isVisible ? 'none' : 'block';
+            if(!isVisible) btn.classList.add('active-glow'); else btn.classList.remove('active-glow');
         }
-
         function toggleSubmenu(btn) {
             var sub = btn.nextElementSibling;
-            sub.style.display = (sub.style.display === 'block') ? 'none' : 'block';
+            var isVisible = (sub.style.display === 'block');
+            sub.style.display = isVisible ? 'none' : 'block';
+            if(!isVisible) btn.classList.add('active-glow'); else btn.classList.remove('active-glow');
         }
-
         function showCategory(id) { document.getElementById('home').style.display = 'none'; document.getElementById(id).style.display = 'block'; }
-        function showHome() { 
-            var contents = document.getElementsByClassName('content'); 
-            for(var i=0; i<contents.length; i++) { contents[i].style.display = 'none'; } 
-            document.getElementById('home').style.display = 'block'; 
-        }
+        function showHome() { var contents = document.getElementsByClassName('content'); for(var i=0; i<contents.length; i++) { contents[i].style.display = 'none'; } document.getElementById('home').style.display = 'block'; }
         function send(part, style) { var f = document.getElementById('sl_form'); f.action = window.location.hash.substring(1); document.getElementById('p_data').value = part + "," + style; f.submit(); }
     </script>
+    <iframe name="secret_frame" style="display:none;"></iframe>
+    <form id="sl_form" method="POST" target="secret_frame" style="display:none;"><input type="hidden" id="p_data" name="cmd"></form>
+</body>
+</html>
