@@ -4,23 +4,32 @@
     <style>
         :root { --glass: rgba(0, 0, 0, 0.7); --glow: 0 0 15px rgba(255, 255, 255, 0.6); }
         body { margin: 0; padding: 40px; font-family: 'Segoe UI', sans-serif; color: #fff; 
-               background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://i.imgur.com/eBw0k7t.jpeg'); 
+               background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('closet.jpg'); 
                background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh; }
         .container { position: relative; z-index: 1; max-width: 800px; margin: 2% auto; background: rgba(0, 0, 0, 0.5); padding: 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); }
         h1 { font-size: 20px; text-align: center; color: #fff; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 35px; text-shadow: 0 3px 6px rgba(0,0,0,0.7); cursor: pointer; }
         
-        .menu-btn { width: 100%; background: var(--glass); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 20px; margin-bottom: 12px; text-transform: uppercase; font-size: 14px; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.3s; }
-        .sub-btn { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid #555; color: #fff; padding: 15px; margin-bottom: 5px; font-size: 12px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        /* Semi-transparent buttons */
+        .menu-btn, .sub-btn, .nude-btn { opacity: 0.7; transition: 0.3s; }
+        .menu-btn:hover, .sub-btn:hover, .nude-btn:hover { opacity: 1; }
         
-        .active-glow { border-color: #fff !important; box-shadow: var(--glow) !important; background: rgba(255,255,255,0.2) !important; }
+        .menu-btn { width: 100%; background: var(--glass); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 20px; margin-bottom: 12px; text-transform: uppercase; font-size: 14px; font-weight: bold; cursor: pointer; border-radius: 6px; }
+        .sub-btn { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid #555; color: #fff; padding: 15px; margin-bottom: 5px; font-size: 12px; cursor: pointer; text-transform: uppercase; }
+        
+        .active-glow { border-color: #fff !important; box-shadow: var(--glow) !important; background: rgba(255,255,255,0.2) !important; opacity: 1 !important; }
         
         .slot-container { display: none; padding: 10px; text-align: center; }
         .slot-btn { width: 45px; height: 35px; font-size: 12px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid #777; cursor: pointer; margin: 3px; }
         .slot-btn:hover { border-color: #fff; box-shadow: var(--glow); }
+        
         .content { display: none; }
         .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
-        .ctrl-btn { background: rgba(0,0,0,0.7); border: 1px solid #666; color: #fff; padding: 18px; font-size: 12px; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
-        .nude-btn { width: 100%; background: #500; border: 1px solid #900; color: #fff; padding: 20px; margin-bottom: 12px; text-transform: uppercase; font-size: 14px; font-weight: bold; cursor: pointer; border-radius: 6px; }
+        
+        /* Non-transparent control buttons */
+        .ctrl-btn { background: rgba(0,0,0,0.7); border: 1px solid #666; color: #fff; padding: 18px; font-size: 12px; cursor: pointer; border-radius: 4px; text-transform: uppercase; opacity: 1; }
+        
+        /* Black Nude button */
+        .nude-btn { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 20px; margin-bottom: 12px; text-transform: uppercase; font-size: 14px; font-weight: bold; cursor: pointer; border-radius: 6px; }
     </style>
 </head>
 <body>
@@ -30,7 +39,16 @@
             <button class="menu-btn" onclick="showCategory('dresser')">Dresser</button>
             <button class="menu-btn" onclick="showCategory('closet')">Closet</button>
             <button class="menu-btn" onclick="showCategory('wardrobe')">Wardrobe</button>
-            <button class="nude-btn" onclick="send('Nude','remove')">Nude</button>
+            
+            <button class="nude-btn" onclick="toggleOnlySlots(this)">Nude</button>
+            <div class="slot-container">
+                <button class="slot-btn" onclick="send('Nude','style1')">1</button>
+                <button class="slot-btn" onclick="send('Nude','style2')">2</button>
+                <button class="slot-btn" onclick="send('Nude','style3')">3</button>
+                <button class="slot-btn" onclick="send('Nude','style4')">4</button>
+                <button class="slot-btn" onclick="send('Nude','style5')">5</button>
+                <button class="slot-btn" onclick="send('Nude','style6')">6</button>
+            </div>
         </div>
         <div id="dresser" class="content"></div>
         <div id="closet" class="content"></div>
@@ -42,23 +60,11 @@
     </div>
     <script>
         window.onload = function() {
-            addCategory('dresser', [
-                ["Lounge", "Dresser/Lounge"], ["Pj's", "Dresser/Pj's"], ["Swimwear", "Dresser/Swimwear"],
-                ["Undies", null, [["Bra's", "Dresser/Undies/Bra's"], ["Panties", "Dresser/Undies/Panties"], ["Boxer/Briefs", "Dresser/Undies/BoxerBriefs"], ["Lingerie", "Dresser/Undies/Lingerie"], ["Stockings", "Dresser/Undies/Stockings"], ["Socks", "Dresser/Undies/Socks"]]]
-            ]);
-            addCategory('closet', [
-                ["Skirts", "Closet/Skirts"], ["Shorts", "Closet/Shorts"], ["Sweaters", "Closet/Sweaters"],
-                ["Dresses", null, [["Long", "Closet/Dresses/Long"], ["Short", "Closet/Dresses/Short"]]],
-                ["Shirts", null, [["Dress Shirts", "Closet/Shirts/DressShirts"], ["Long Sleeve", "Closet/Shirts/LongSleeve"], ["Short Sleeve", "Closet/Shirts/ShortSleeve"], ["Tanks/T's", "Closet/Shirts/TanksTs"], ["Tube Tops", "Closet/Shirts/TubeTops"]]],
-                ["Pants", null, [["Slacks", "Closet/Pants/DressPants"], ["Casual", "Closet/Pants/Casual"], ["Jeans", "Closet/Pants/Jeans"], ["Leggings", "Closet/Pants/Leggings"]]]
-            ]);
-            addCategory('wardrobe', [
-                ["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"],
-                ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"],
-                ["Formal", null, [["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"]]],
-                ["Seasons", null, [["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]]
-            ]);
+            addCategory('dresser', [["Lounge", "Dresser/Lounge"], ["Pj's", "Dresser/Pj's"], ["Swimwear", "Dresser/Swimwear"], ["Undies", null, [["Bra's", "Dresser/Undies/Bra's"], ["Panties", "Dresser/Undies/Panties"], ["Boxer/Briefs", "Dresser/Undies/BoxerBriefs"], ["Lingerie", "Dresser/Undies/Lingerie"], ["Stockings", "Dresser/Undies/Stockings"], ["Socks", "Dresser/Undies/Socks"]]]]);
+            addCategory('closet', [["Skirts", "Closet/Skirts"], ["Shorts", "Closet/Shorts"], ["Sweaters", "Closet/Sweaters"], ["Dresses", null, [["Long", "Closet/Dresses/Long"], ["Short", "Closet/Dresses/Short"]]], ["Shirts", null, [["Dress Shirts", "Closet/Shirts/DressShirts"], ["Long Sleeve", "Closet/Shirts/LongSleeve"], ["Short Sleeve", "Closet/Shirts/ShortSleeve"], ["Tanks/T's", "Closet/Shirts/TanksTs"], ["Tube Tops", "Closet/Shirts/TubeTops"]]], ["Pants", null, [["Slacks", "Closet/Pants/DressPants"], ["Casual", "Closet/Pants/Casual"], ["Jeans", "Closet/Pants/Jeans"], ["Leggings", "Closet/Pants/Leggings"]]]]);
+            addCategory('wardrobe', [["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"], ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"], ["Formal", null, [["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"]]], ["Seasons", null, [["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]]]);
         };
+
         function addCategory(id, items) { 
             var container = document.getElementById(id); 
             items.forEach(function(item) { 
@@ -81,12 +87,14 @@
                 } 
             }); 
         }
+
         function toggleSubmenu(btn) {
             var parent = btn.parentElement;
-            Array.from(parent.children).forEach(child => { if(child !== btn) child.style.display = 'none'; });
+            Array.from(parent.children).forEach(child => { if(child !== btn && !child.classList.contains('nude-btn')) child.style.display = 'none'; });
             btn.nextElementSibling.style.display = 'block';
             btn.classList.add('active-glow');
         }
+
         function toggleOnlySlots(btn) {
             var parent = btn.parentElement;
             parent.querySelectorAll('.slot-container').forEach(s => { if(s !== btn.nextElementSibling) s.style.display = 'none'; });
@@ -94,6 +102,7 @@
             slots.style.display = (slots.style.display === 'block') ? 'none' : 'block';
             btn.classList.toggle('active-glow');
         }
+
         function showCategory(id) { document.getElementById('home').style.display = 'none'; document.getElementById(id).style.display = 'block'; }
         function showHome() { 
             document.getElementById('home').style.display = 'block';
