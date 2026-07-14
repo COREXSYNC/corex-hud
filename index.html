@@ -10,7 +10,7 @@
         .main-btn { background: #333; color: #fff; border: 1px solid #555; padding: 10px; cursor: pointer; text-transform: uppercase; font-size: 10px; font-weight: bold; }
         .section { display: none; margin-bottom: 10px; }
         h3 { font-size: 11px; color: #aaa; text-align: center; margin: 10px 0; border-top: 1px solid #333; padding-top: 10px; }
-        .btn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+        .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; }
         .btn { background: #222; color: #fff; border: 1px solid #444; padding: 8px; cursor: pointer; text-transform: uppercase; font-size: 9px; }
         .sub-btn { background: #444; border-color: #666; }
         .slot-btn { width: 30px; font-size: 8px; padding: 5px; }
@@ -19,67 +19,70 @@
 <body>
 
     <h1>Corex_Sync</h1>
-    
-    <!-- MAIN NAV -->
     <div class="main-nav">
         <button class="main-btn" onclick="showSection('dresser')">Dresser</button>
         <button class="main-btn" onclick="showSection('closet')">Closet</button>
         <button class="main-btn" onclick="showSection('wardrobe')">Wardrobe</button>
         <button class="main-btn" onclick="sendCustomData(this, 'Nude', 'remove')">Nude</button>
         <button class="main-btn" style="grid-column: span 2;" onclick="sendCustomData(this, 'RemoveHud', 'detach')">Remove Hud</button>
+        <button class="main-btn" style="grid-column: span 2; border-color:#ffcc00; color:#ffcc00;" onclick="sendCustomData(this, 'RemoveLast', 'detach')">Undo Last</button>
     </div>
 
-    <!-- DRESSER SECTION -->
+    <!-- DRESSER -->
     <div id="dresser" class="section">
-        <h3>Dresser Items</h3>
+        <h3>Dresser</h3>
         <div class="btn-grid">
             <button class="btn" onclick="sendCustomData(this, 'Dresser/Lounge', 'style1')">Lounge</button>
             <button class="btn" onclick="sendCustomData(this, 'Dresser/Pj\'s', 'style1')">Pj's</button>
             <button class="btn" onclick="sendCustomData(this, 'Dresser/Swimwear', 'style1')">Swimwear</button>
-            <button class="btn sub-btn" style="grid-column: span 3;" onclick="toggleUndies()">Toggle Undies</button>
+            <button class="btn sub-btn" style="grid-column: span 2;" onclick="toggleSub('undies-menu')">Undies &#9662;</button>
         </div>
-
-        <div id="undies-menu" style="display:none; margin-top:10px;">
-            <script>
-                function createUndies(name, path) {
-                    document.write('<div><small>'+name+'</small><br>');
-                    for(let i=1; i<=6; i++) {
-                        document.write(`<button class="btn slot-btn" onclick="sendCustomData(this, '${path}', 'style${i}')">${i}</button>`);
-                    }
-                    document.write('</div>');
-                }
-                createUndies("Bra's", "Dresser/Undies/Bra's");
-                createUndies("Panties", "Dresser/Undies/Panties");
-                createUndies("Boxer/Briefs", "Dresser/Undies/BoxerBriefs");
-                createUndies("Lingerie", "Dresser/Undies/Lingerie");
-                createUndies("Stockings", "Dresser/Undies/Stockings");
-                createUndies("Socks", "Dresser/Undies/Socks");
-            </script>
-        </div>
+        <div id="undies-menu" style="display:none; margin-top:10px;"><script>
+            createSlots("Bra's", "Dresser/Undies/Bra's"); createSlots("Panties", "Dresser/Undies/Panties");
+            createSlots("Boxer/Briefs", "Dresser/Undies/BoxerBriefs"); createSlots("Lingerie", "Dresser/Undies/Lingerie");
+            createSlots("Stockings", "Dresser/Undies/Stockings"); createSlots("Socks", "Dresser/Undies/Socks");
+        </script></div>
     </div>
 
-    <!-- ENGINE & SCRIPTS -->
-    <iframe name="secret_frame" style="display:none;"></iframe>
-    <form id="sl_form" method="POST" target="secret_frame" style="display:none;">
-        <input type="hidden" id="payload_data" name="cmd">
-    </form>
+    <!-- CLOSET -->
+    <div id="closet" class="section">
+        <h3>Closet</h3>
+        <div class="btn-grid">
+            <button class="btn" onclick="sendCustomData(this, 'Closet/Skirts', 'style1')">Skirts</button>
+            <button class="btn" onclick="sendCustomData(this, 'Closet/Shorts', 'style1')">Shorts</button>
+            <button class="btn" onclick="sendCustomData(this, 'Closet/Sweaters', 'style1')">Sweaters</button>
+            <button class="btn sub-btn" onclick="toggleSub('dresses-menu')">Dresses &#9662;</button>
+            <button class="btn sub-btn" onclick="toggleSub('shirts-menu')">Shirts &#9662;</button>
+            <button class="btn sub-btn" style="grid-column: span 2;" onclick="toggleSub('pants-menu')">Pants &#9662;</button>
+        </div>
+        <div id="dresses-menu" style="display:none;"><script>createSlots("Long", "Closet/Dresses/Long"); createSlots("Short", "Closet/Dresses/Short");</script></div>
+        <div id="shirts-menu" style="display:none;"><script>createSlots("Dress Shirts", "Closet/Shirts/DressShirts"); createSlots("Long Sleeve", "Closet/Shirts/LongSleeve"); createSlots("Short Sleeve", "Closet/Shirts/ShortSleeve"); createSlots("Tanks/T's", "Closet/Shirts/TanksTs"); createSlots("Tube Tops", "Closet/Shirts/TubeTops");</script></div>
+        <div id="pants-menu" style="display:none;"><script>createSlots("Dress Pants", "Closet/Pants/DressPants"); createSlots("Casual", "Closet/Pants/Casual"); createSlots("Jeans", "Closet/Pants/Jeans"); createSlots("Leggings", "Closet/Pants/Leggings");</script></div>
+    </div>
+
+    <!-- WARDROBE -->
+    <div id="wardrobe" class="section">
+        <h3>Wardrobe</h3>
+        <div class="btn-grid">
+            <button class="btn" onclick="sendCustomData(this, 'Wardrobe/Casual', 'style1')">Casual</button>
+            <button class="btn" onclick="sendCustomData(this, 'Wardrobe/Club', 'style1')">Club</button>
+            <button class="btn" onclick="sendCustomData(this, 'Wardrobe/Shopping', 'style1')">Shopping</button>
+            <button class="btn" onclick="sendCustomData(this, 'Wardrobe/Sleep', 'style1')">Sleep</button>
+            <button class="btn" onclick="sendCustomData(this, 'Wardrobe/Roleplay', 'style1')">Roleplay</button>
+            <button class="btn sub-btn" onclick="toggleSub('formal-menu')">Formal &#9662;</button>
+            <button class="btn sub-btn" style="grid-column: span 2;" onclick="toggleSub('seasons-menu')">Seasons &#9662;</button>
+        </div>
+        <div id="formal-menu" style="display:none;"><script>createSlots("Gowns", "Wardrobe/Formal/Gowns"); createSlots("Suits", "Wardrobe/Formal/Suits");</script></div>
+        <div id="seasons-menu" style="display:none;"><script>createSlots("Spring", "Wardrobe/Seasons/Spring"); createSlots("Summer", "Wardrobe/Seasons/Summer"); createSlots("Fall", "Wardrobe/Seasons/Fall"); createSlots("Winter", "Wardrobe/Seasons/Winter");</script></div>
+    </div>
 
     <script>
-        function showSection(id) {
-            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
-        }
-        function toggleUndies() {
-            let u = document.getElementById('undies-menu');
-            u.style.display = (u.style.display === 'none') ? 'block' : 'none';
-        }
-        function sendCustomData(btn, part, style) {
-            let simUrl = window.location.hash.substring(1) || window.location.href.split('#')[1];
-            const form = document.getElementById('sl_form');
-            form.action = decodeURIComponent(simUrl);
-            document.getElementById('payload_data').value = part + "," + style;
-            form.submit();
-        }
+        function createSlots(n, p) { document.write('<div><small>'+n+'</small><br>'); for(let i=1; i<=6; i++) document.write(`<button class="btn slot-btn" onclick="sendCustomData(this,'${p}','style${i}')">${i}</button>`); document.write('</div>'); }
+        function showSection(id) { document.querySelectorAll('.section').forEach(s => s.style.display = 'none'); document.getElementById(id).style.display = 'block'; }
+        function toggleSub(id) { let el = document.getElementById(id); el.style.display = (el.style.display === 'none') ? 'block' : 'none'; }
+        function sendCustomData(btn, part, style) { let simUrl = window.location.hash.substring(1) || window.location.href.split('#')[1]; const form = document.getElementById('sl_form'); form.action = decodeURIComponent(simUrl); document.getElementById('payload_data').value = part + "," + style; form.submit(); }
     </script>
+    <iframe name="secret_frame" style="display:none;"></iframe>
+    <form id="sl_form" method="POST" target="secret_frame" style="display:none;"><input type="hidden" id="payload_data" name="cmd"></form>
 </body>
 </html>
