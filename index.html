@@ -4,14 +4,13 @@
     <style>
         :root { --glass: rgba(0, 0, 0, 0.7); --glow: 0 0 15px rgba(255, 255, 255, 0.6); }
         
-        /* Centering the entire page content */
         body { 
             margin: 0; padding: 0; 
             font-family: 'Segoe UI', sans-serif; color: #fff; 
             background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('closet.jpg'); 
             background-size: cover; background-position: center; background-attachment: fixed; 
             min-height: 100vh;
-            display: flex; justify-content: center; align-items: center; /* This centers the HUD */
+            display: flex; justify-content: center; align-items: center;
         }
         
         .container { 
@@ -20,11 +19,10 @@
             border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); 
         }
         
-        /* Header: Thinner weight, fixed margins */
         h1 { 
             font-size: 24px; text-align: center; color: #fff; 
             letter-spacing: 4px; text-transform: uppercase; 
-            margin: 0 0 30px 0; /* Reset margins to control position */
+            margin: 0 0 30px 0; 
             text-shadow: 0 2px 4px rgba(0,0,0,0.7); 
             cursor: pointer; 
             font-family: 'Courier New', Courier, monospace; 
@@ -69,6 +67,8 @@
                 <button class="slot-btn" onclick="send('Nude','style5')">5</button>
                 <button class="slot-btn" onclick="send('Nude','style6')">6</button>
             </div>
+            <!-- Added the Remove HUD button back here -->
+            <button class="remove-hud-btn" onclick="send('HUD','remove')">Remove HUD</button>
         </div>
 
         <div id="dresser" class="content"></div>
