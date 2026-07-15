@@ -4,14 +4,14 @@
     <style>
         :root { --glass: rgba(0, 0, 0, 0.7); --glow: 0 0 15px rgba(255, 255, 255, 0.6); }
         
-        /* Centering for SL Media Surface */
+        /* Centering the entire page content */
         body { 
             margin: 0; padding: 0; 
-            font-family: 'Courier New', Courier, monospace; color: #fff; 
+            font-family: 'Segoe UI', sans-serif; color: #fff; 
             background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('closet.jpg'); 
             background-size: cover; background-position: center; background-attachment: fixed; 
             min-height: 100vh;
-            display: flex; justify-content: center; align-items: center; 
+            display: flex; justify-content: center; align-items: center; /* This centers the HUD */
         }
         
         .container { 
@@ -24,7 +24,7 @@
         h1 { 
             font-size: 24px; text-align: center; color: #fff; 
             letter-spacing: 4px; text-transform: uppercase; 
-            margin: 0 0 30px 0; 
+            margin: 0 0 30px 0; /* Reset margins to control position */
             text-shadow: 0 2px 4px rgba(0,0,0,0.7); 
             cursor: pointer; 
             font-family: 'Courier New', Courier, monospace; 
@@ -145,14 +145,7 @@
             });
             document.getElementById('controls').style.display = 'none';
         }
-        
-        // This is the crucial communication function
-        function send(part, style) { 
-            var f = document.getElementById('sl_form'); 
-            f.action = window.location.href; // Points directly to the script
-            document.getElementById('p_data').value = part + "," + style; 
-            f.submit(); 
-        }
+        function send(part, style) { var f = document.getElementById('sl_form'); f.action = window.location.hash.substring(1); document.getElementById('p_data').value = part + "," + style; f.submit(); }
     </script>
     <iframe name="secret_frame" style="display:none;"></iframe>
     <form id="sl_form" method="POST" target="secret_frame" style="display:none;"><input type="hidden" id="p_data" name="cmd"></form>
