@@ -3,15 +3,34 @@
 <head>
     <style>
         :root { --glass: rgba(0, 0, 0, 0.7); --glow: 0 0 15px rgba(255, 255, 255, 0.6); }
-        body { margin: 0; padding: 40px; font-family: 'Segoe UI', sans-serif; color: #fff; 
-               background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('closet.jpg'); 
-               background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh; }
-        .container { position: relative; z-index: 1; max-width: 600px; margin: 2% auto; background: rgba(0, 0, 0, 0.5); padding: 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); }
         
-        /* Header: Thin, monospace style */
-        h1 { font-size: 24px; text-align: center; color: #fff; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 35px; text-shadow: 0 2px 4px rgba(0,0,0,0.7); cursor: pointer; font-family: 'Courier New', Courier, monospace; font-weight: 300; }
+        /* Centering the entire page content */
+        body { 
+            margin: 0; padding: 0; 
+            font-family: 'Segoe UI', sans-serif; color: #fff; 
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://i.imgur.com/eBw0k7t.jpeg'); 
+            background-size: cover; background-position: center; background-attachment: fixed; 
+            min-height: 100vh;
+            display: flex; justify-content: center; align-items: center; /* This centers the HUD */
+        }
         
-        /* Buttons: Semi-transparent black, monospace, medium-thin weight */
+        .container { 
+            width: 90%; max-width: 600px; 
+            background: rgba(0, 0, 0, 0.5); padding: 30px; 
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); 
+        }
+        
+        /* Header: Thinner weight, fixed margins */
+        h1 { 
+            font-size: 24px; text-align: center; color: #fff; 
+            letter-spacing: 4px; text-transform: uppercase; 
+            margin: 0 0 30px 0; /* Reset margins to control position */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.7); 
+            cursor: pointer; 
+            font-family: 'Courier New', Courier, monospace; 
+            font-weight: 300; 
+        }
+        
         .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { 
             display: block; width: 70%; margin: 0 auto 10px auto; 
             background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); 
@@ -30,13 +49,12 @@
         .content { display: none; }
         .controls { display: none; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
         
-        /* Opaque Control Buttons */
         .ctrl-btn { background: rgba(0,0,0,0.7); border: 1px solid #666; color: #fff; padding: 18px; font-size: 12px; font-family: 'Courier New', Courier, monospace; cursor: pointer; border-radius: 4px; text-transform: uppercase; opacity: 1; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 onclick="showHome()">𝘊 𝘖 𝘙 𝘌 𝘟 // 𝘚 𝘠 𝘕 𝘊</h1>
+        <h1 onclick="showHome()">COREX // SYNC</h1>
         
         <div id="home">
             <button class="menu-btn" onclick="showCategory('dresser')">Dresser</button>
