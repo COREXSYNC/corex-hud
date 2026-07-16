@@ -16,7 +16,13 @@
             width: 70%; max-width: 600px; 
             height: 500px; /* Fixed height to prevent HUD resizing */
             overflow-y: auto; /* Adds scrollbar if content exceeds height */
-            background: rgba(0, 0, 0, 0.5); padding: 30px; 
+            
+            /* --- IMAGE BACKGROUND BLOCK --- */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('your-image.jpg'); 
+            background-size: cover; 
+            background-position: center;
+            
+            padding: 30px; 
             border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); 
         }
         
@@ -44,10 +50,10 @@
         .menu-btn:hover, .sub-btn:hover, .nude-btn:hover, .remove-hud-btn:hover { opacity: 1; }
         
         /* Glow effect */
-        .active-glow { border-color: #fff !important; box-shadow: var(--glow) !important; opacity: 1 !important; }
+        .active-glow { border-color: #fff !important; box-shadow: var(--glow) !important; opacity: 1 !important; background: rgba(255,255,255,0.2) !important; }
         
         .slot-container, .submenu-items { display: none; padding: 10px; text-align: center; }
-        .slot-btn { width: 45px; height: 35px; font-size: 14px; font-family: 'Courier New', Courier, monospace; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid #777; cursor: pointer; margin: 3px; }
+        .slot-btn { width: 45px; height: 35px; font-size: 14px; font-family: 'Courier New', Courier, monospace; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid #777; cursor: pointer; margin: 3px; transition: 0.2s; }
         
         .content { display: none; }
         .controls { display: none; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
@@ -116,17 +122,13 @@
             }); 
         }
 
-        // --- NEW GLOW LOGIC ---
         function send(btn, part, style) { 
-            // Remove glow from siblings in the same container
             if (btn.parentElement) {
                 var siblings = btn.parentElement.querySelectorAll('.slot-btn');
                 siblings.forEach(s => s.classList.remove('active-glow'));
             }
-            // Add glow to clicked button
             btn.classList.add('active-glow');
             
-            // Perform submit
             var f = document.getElementById('sl_form'); 
             f.action = window.location.hash.substring(1); 
             document.getElementById('p_data').value = part + "," + style; 
