@@ -6,52 +6,49 @@
         
         body { 
             margin: 0; padding: 0; 
-            font-family: 'Courier New', Courier, monospace; 
-            color: #fff; background: transparent;
-            min-height: 100vh;
+            font-family: 'Courier New', Courier, monospace; color: #fff; 
+            background: transparent; min-height: 100vh;
             display: flex; justify-content: center; align-items: center;
         }
         
         .container { 
-            width: 80%; max-width: 400px; 
-            height: 500px; /* Fixed height */
+            width: 70%; max-width: 500px; 
+            height: 500px; /* Fixed height for consistency */
             overflow-y: auto; 
             
-            /* Background Image Block */
-            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('your-image.jpg'); 
+            /* Background image setup */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('closet.jpg'); 
             background-size: cover; 
             background-position: center;
             
-            /* Panel Style */
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px; 
-            padding: 20px;
+            padding: 30px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(255,255,255,0.2); 
             display: flex; flex-direction: column; align-items: center;
         }
         
         /* Scrollbar */
         .container::-webkit-scrollbar { width: 4px; }
-        .container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); }
+        .container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
         
         h1 { 
-            font-size: 22px; letter-spacing: 4px; margin: 20px 0 30px 0; 
+            font-size: 24px; letter-spacing: 4px; margin: 20px 0 30px 0; 
             text-transform: uppercase; font-weight: 300; cursor: pointer;
         }
         
         .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { 
-            width: 85%; padding: 15px; margin-bottom: 15px;
+            width: 80%; padding: 15px; margin-bottom: 12px;
             background: transparent; border: 1px solid rgba(255,255,255,0.3); 
             color: #fff; text-transform: uppercase; letter-spacing: 2px;
-            cursor: pointer; font-family: 'Courier New', Courier, monospace;
-            transition: 0.3s; border-radius: 5px;
+            cursor: pointer; transition: 0.3s; border-radius: 4px;
         }
         .menu-btn:hover, .sub-btn:hover { background: rgba(255,255,255,0.1); }
         
-        /* Glow Effect */
+        /* Glow Effect for selected buttons */
         .active-glow { border: 1px solid #fff !important; box-shadow: var(--glow) !important; background: rgba(255,255,255,0.1) !important; }
         
         .slot-container, .submenu-items { display: none; padding: 10px; text-align: center; }
-        .slot-btn { width: 40px; height: 40px; background: rgba(0,0,0,0.4); color: #fff; border: 1px solid #666; cursor: pointer; margin: 3px; font-size: 12px; }
+        .slot-btn { width: 40px; height: 40px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid #666; cursor: pointer; margin: 3px; font-size: 12px; }
         
         .content { display: none; width: 100%; text-align: center; }
         .controls { display: none; margin-top: 20px; }
@@ -120,11 +117,13 @@
         }
 
         function send(btn, part, style) { 
-            if (btn.parentElement) {
+            // Handle glow for slot buttons
+            if (btn.classList.contains('slot-btn')) {
                 var siblings = btn.parentElement.querySelectorAll('.slot-btn');
                 siblings.forEach(s => s.classList.remove('active-glow'));
+                btn.classList.add('active-glow');
             }
-            btn.classList.add('active-glow');
+            
             var f = document.getElementById('sl_form'); 
             f.action = window.location.hash.substring(1); 
             document.getElementById('p_data').value = part + "," + style; 
