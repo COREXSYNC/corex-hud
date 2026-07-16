@@ -2,63 +2,60 @@
 <html lang="en">
 <head>
     <style>
-        :root { --glass: rgba(0, 0, 0, 0.7); --glow: 0 0 15px rgba(255, 255, 255, 0.6); }
+        :root { --glass: rgba(0, 0, 0, 0.5); --glow: 0 0 10px rgba(255, 255, 255, 0.5); }
         
         body { 
             margin: 0; padding: 0; 
-            font-family: 'Segoe UI', sans-serif; color: #fff; 
-            background: transparent;
+            font-family: 'Courier New', Courier, monospace; 
+            color: #fff; background: transparent;
             min-height: 100vh;
             display: flex; justify-content: center; align-items: center;
         }
         
         .container { 
-            width: 70%; max-width: 600px; 
-            height: 500px; /* Fixed height to prevent HUD resizing */
-            overflow-y: auto; /* Adds scrollbar if content exceeds height */
+            width: 80%; max-width: 400px; 
+            height: 500px; /* Fixed height */
+            overflow-y: auto; 
             
-            /* --- IMAGE BACKGROUND BLOCK --- */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('closet.jpg'); 
+            /* Background Image Block */
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('your-image.jpg'); 
             background-size: cover; 
             background-position: center;
             
-            padding: 30px; 
-            border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); 
+            /* Panel Style */
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px; 
+            padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
         }
         
-        .container::-webkit-scrollbar { width: 6px; }
-        .container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+        /* Scrollbar */
+        .container::-webkit-scrollbar { width: 4px; }
+        .container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); }
         
         h1 { 
-            font-size: 24px; text-align: center; color: #fff; 
-            letter-spacing: 4px; text-transform: uppercase; 
-            margin: 0 0 30px 0; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.7); 
-            cursor: pointer; 
-            font-family: 'Courier New', Courier, monospace; 
-            font-weight: 300; 
+            font-size: 22px; letter-spacing: 4px; margin: 20px 0 30px 0; 
+            text-transform: uppercase; font-weight: 300; cursor: pointer;
         }
         
         .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { 
-            display: block; width: 70%; margin: 0 auto 10px auto; 
-            background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); 
-            color: #fff; padding: 20px 10px; text-transform: uppercase; 
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 18px; font-weight: 500; letter-spacing: 2px; cursor: pointer; border-radius: 6px; 
-            opacity: 0.7; transition: 0.3s; 
+            width: 85%; padding: 15px; margin-bottom: 15px;
+            background: transparent; border: 1px solid rgba(255,255,255,0.3); 
+            color: #fff; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; font-family: 'Courier New', Courier, monospace;
+            transition: 0.3s; border-radius: 5px;
         }
-        .menu-btn:hover, .sub-btn:hover, .nude-btn:hover, .remove-hud-btn:hover { opacity: 1; }
+        .menu-btn:hover, .sub-btn:hover { background: rgba(255,255,255,0.1); }
         
-        /* Glow effect */
-        .active-glow { border-color: #fff !important; box-shadow: var(--glow) !important; opacity: 1 !important; background: rgba(255,255,255,0.2) !important; }
+        /* Glow Effect */
+        .active-glow { border: 1px solid #fff !important; box-shadow: var(--glow) !important; background: rgba(255,255,255,0.1) !important; }
         
         .slot-container, .submenu-items { display: none; padding: 10px; text-align: center; }
-        .slot-btn { width: 45px; height: 35px; font-size: 14px; font-family: 'Courier New', Courier, monospace; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid #777; cursor: pointer; margin: 3px; transition: 0.2s; }
+        .slot-btn { width: 40px; height: 40px; background: rgba(0,0,0,0.4); color: #fff; border: 1px solid #666; cursor: pointer; margin: 3px; font-size: 12px; }
         
-        .content { display: none; }
-        .controls { display: none; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
-        
-        .ctrl-btn { background: rgba(0,0,0,0.7); border: 1px solid #666; color: #fff; padding: 18px; font-size: 12px; font-family: 'Courier New', Courier, monospace; cursor: pointer; border-radius: 4px; text-transform: uppercase; opacity: 1; }
+        .content { display: none; width: 100%; text-align: center; }
+        .controls { display: none; margin-top: 20px; }
+        .ctrl-btn { background: none; border: 1px solid #777; color: #fff; padding: 10px 20px; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -128,7 +125,6 @@
                 siblings.forEach(s => s.classList.remove('active-glow'));
             }
             btn.classList.add('active-glow');
-            
             var f = document.getElementById('sl_form'); 
             f.action = window.location.hash.substring(1); 
             document.getElementById('p_data').value = part + "," + style; 
@@ -156,7 +152,7 @@
         function showCategory(id) { 
             document.getElementById('home').style.display = 'none'; 
             document.getElementById(id).style.display = 'block'; 
-            document.getElementById('controls').style.display = 'grid';
+            document.getElementById('controls').style.display = 'block';
         }
         function showHome() { 
             document.getElementById('home').style.display = 'block';
