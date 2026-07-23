@@ -10,7 +10,9 @@
         body { 
             margin: 0; padding: 0; 
             font-family: 'Segoe UI', sans-serif; color: #fff; 
-            background: #1a1a1a; 
+            /* Background image added here - ensure closet.jpg is in the same folder */
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('closet.jpg'); 
+            background-size: cover; background-position: center; background-attachment: fixed;
             min-height: 100vh;
             display: flex; justify-content: center; align-items: center;
         }
@@ -27,7 +29,7 @@
         .container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
         
         h1 { 
-            font-size: 27px; text-align: center; color: #fff; 
+            font-size: 24px; text-align: center; color: #fff; 
             letter-spacing: 4px; text-transform: uppercase; 
             margin: 0 0 30px 0; 
             cursor: pointer; 
@@ -35,7 +37,7 @@
             font-weight: 300; 
         }
         
-        /* Menu Buttons */
+        /* Transparent Menu Buttons */
         .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { 
             display: block; width: 70%; margin: 0 auto 10px auto; 
             background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); 
