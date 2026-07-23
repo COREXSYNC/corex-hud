@@ -10,24 +10,11 @@
         body { 
             margin: 0; padding: 0; 
             font-family: 'Segoe UI', sans-serif; color: #fff; 
+            /* Background image added here - ensure closet.jpg is in the same folder */
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('closet.jpg'); 
+            background-size: cover; background-position: center; background-attachment: fixed;
             min-height: 100vh;
             display: flex; justify-content: center; align-items: center;
-            /* Positioning context for the background layer */
-            position: relative;
-        }
-
-        /* This creates the transparent background image layer */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('closet.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            /* Adjust this value for transparency: 0.0 is invisible, 1.0 is full image */
-            opacity: 0.5; 
-            z-index: -1;
         }
         
         .container { 
@@ -35,14 +22,14 @@
             height: 400px;
             overflow-y: auto;
             background: rgba(0, 0, 0, 0.5); padding: 30px; 
-            border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); 
+            border-radius: 12px; border: 2px solid rgba(255,255,255,0.15); 
         }
         
         .container::-webkit-scrollbar { width: 7px; }
         .container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
         
         h1 { 
-            font-size: 24px; text-align: center; color: #fff; 
+            font-size: 28px; text-align: center; color: #fff; 
             letter-spacing: 4px; text-transform: uppercase; 
             margin: 0 0 30px 0; 
             cursor: pointer; 
@@ -53,7 +40,7 @@
         /* Transparent Menu Buttons */
         .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { 
             display: block; width: 70%; margin: 0 auto 10px auto; 
-            background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); 
+            background: rgba(0, 0, 0, 0.5); border: 3px solid rgba(255, 255, 255, 0.2); 
             color: #fff; padding: 20px 10px; text-transform: uppercase; 
             font-family: 'Courier New', Courier, monospace;
             font-size: 19px; font-weight: 500; letter-spacing: 2px; cursor: pointer; border-radius: 6px; 
@@ -63,7 +50,7 @@
         /* Slot Buttons */
         .slot-btn { 
             width: 45px; height: 35px; font-size: 14px; font-family: 'Courier New', Courier, monospace; 
-            background: rgba(0,0,0,0.6); color: #fff; border: 1px solid #777; 
+            background: rgba(0,0,0,0.6); color: #fff; border: 2px solid #777; 
             cursor: pointer; margin: 3px; 
             transition: box-shadow 0.5s ease, border-color 0.5s ease, opacity 0.3s;
         }
@@ -143,11 +130,17 @@
         }
 
         function send(btn, part, style) { 
+            // 1. Remove glow from all buttons on the page
             var allButtons = document.querySelectorAll('button');
             allButtons.forEach(s => s.classList.remove('active-glow'));
+
+            // 2. Add glow to clicked button
             btn.classList.add('active-glow');
+
+            // 3. Remove glow after 2 seconds
             setTimeout(function() { btn.classList.remove('active-glow'); }, 2000);
             
+            // 4. Submit
             var f = document.getElementById('sl_form'); 
             f.action = window.location.hash.substring(1); 
             document.getElementById('p_data').value = "cmd=" + part + "," + style; 
