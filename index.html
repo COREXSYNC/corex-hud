@@ -35,7 +35,7 @@
             font-weight: 300; 
         }
         
-        /* Transparent Menu Buttons */
+        /* Menu Buttons */
         .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { 
             display: block; width: 70%; margin: 0 auto 10px auto; 
             background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); 
@@ -128,11 +128,17 @@
         }
 
         function send(btn, part, style) { 
-            var allButtons = document.querySelectorAll('.slot-btn, .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn');
+            // 1. Remove glow from all buttons on the page
+            var allButtons = document.querySelectorAll('button');
             allButtons.forEach(s => s.classList.remove('active-glow'));
+
+            // 2. Add glow to clicked button
             btn.classList.add('active-glow');
+
+            // 3. Remove glow after 2 seconds
             setTimeout(function() { btn.classList.remove('active-glow'); }, 2000);
             
+            // 4. Submit
             var f = document.getElementById('sl_form'); 
             f.action = window.location.hash.substring(1); 
             document.getElementById('p_data').value = "cmd=" + part + "," + style; 
