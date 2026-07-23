@@ -30,34 +30,35 @@
             font-size: 24px; text-align: center; color: #fff; 
             letter-spacing: 4px; text-transform: uppercase; 
             margin: 0 0 30px 0; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.7); 
             cursor: pointer; 
             font-family: 'Courier New', Courier, monospace; 
             font-weight: 300; 
         }
         
-        .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn, .slot-btn { 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
+        /* Transparent Menu Buttons */
+        .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { 
+            display: block; width: 70%; margin: 0 auto 10px auto; 
+            background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); 
             color: #fff; padding: 20px 10px; text-transform: uppercase; 
             font-family: 'Courier New', Courier, monospace;
-            cursor: pointer; border-radius: 6px; 
-            opacity: 0.7; 
-            /* Added transition for smooth glow effect */
-            transition: box-shadow 0.5s ease, border-color 0.5s ease, opacity 0.3s; 
+            font-size: 19px; font-weight: 500; letter-spacing: 2px; cursor: pointer; border-radius: 6px; 
+            opacity: 0.7; transition: 0.3s; 
         }
 
-        .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn {
-            display: block; width: 70%; margin: 0 auto 10px auto;
-            font-size: 19px; font-weight: 500; letter-spacing: 2px;
+        /* Slot Buttons */
+        .slot-btn { 
+            width: 45px; height: 35px; font-size: 14px; font-family: 'Courier New', Courier, monospace; 
+            background: rgba(0,0,0,0.6); color: #fff; border: 1px solid #777; 
+            cursor: pointer; margin: 3px; 
+            transition: box-shadow 0.5s ease, border-color 0.5s ease, opacity 0.3s;
         }
-
+        
         .menu-btn:hover, .sub-btn:hover, .nude-btn:hover, .remove-hud-btn:hover, .slot-btn:hover { opacity: 1; }
         
         /* Glow style */
         .active-glow { border-color: #fff !important; box-shadow: var(--glow) !important; opacity: 1 !important; }
         
         .slot-container, .submenu-items { display: none; padding: 10px; text-align: center; }
-        .slot-btn { width: 45px; height: 35px; font-size: 14px; background: rgba(0,0,0,0.6); margin: 3px; }
         
         .content { display: none; }
         .controls { display: none; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
@@ -127,19 +128,11 @@
         }
 
         function send(btn, part, style) { 
-            // 1. Remove glow from all buttons
             var allButtons = document.querySelectorAll('.slot-btn, .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn');
             allButtons.forEach(s => s.classList.remove('active-glow'));
-
-            // 2. Add glow to clicked button
             btn.classList.add('active-glow');
-
-            // 3. Remove glow after 2 seconds
-            setTimeout(function() {
-                btn.classList.remove('active-glow');
-            }, 2000);
+            setTimeout(function() { btn.classList.remove('active-glow'); }, 2000);
             
-            // 4. Submit
             var f = document.getElementById('sl_form'); 
             f.action = window.location.hash.substring(1); 
             document.getElementById('p_data').value = "cmd=" + part + "," + style; 
