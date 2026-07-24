@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COREX//SYNC Vanity</title>
     <style>
+        /* Defined the color with transparency variables */
         :root { 
             --purple-trans: rgba(151, 92, 207, 0.6); 
             --glow: 0 0 15px rgba(151, 92, 207, 0.6); 
+            /* Added text-glow variable for consistency */
+            --text-glow: 0 0 8px rgba(151, 92, 207, 0.8);
         }
         
         body { 
@@ -44,7 +47,7 @@
         .container::-webkit-scrollbar { width: 9px; }
         .container::-webkit-scrollbar-thumb { background: rgba(52,32,74,0.7); border-radius: 3px; }
         
-        /* Updated H1 with glow */
+        /* H1 with glow */
         h1 { 
             font-size: 30px; text-align: center; color: #fff; 
             letter-spacing: 4px; text-transform: uppercase; 
@@ -52,10 +55,10 @@
             cursor: pointer; 
             font-family: 'Courier New', Courier, monospace; 
             font-weight: 300; 
-            text-shadow: 0 0 10px rgba(151, 92, 207, 0.8), 0 0 20px rgba(151, 92, 207, 0.5);
+            text-shadow: var(--text-glow);
         }
         
-        /* Menu Buttons */
+        /* Menu Buttons with text-glow */
         .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { 
             display: block; width: 50%; margin: 0 auto 10px auto; 
             background: rgba(0, 0, 0, 0.5); 
@@ -64,15 +67,17 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 25px; font-weight: 500; letter-spacing: 2px; cursor: pointer; border-radius: 6px; 
             opacity: 0.7; transition: 0.3s; 
+            text-shadow: var(--text-glow);
         }
 
-        /* Slot Buttons */
+        /* Slot Buttons with text-glow */
         .slot-btn { 
             width: 40px; height: 35px; font-size: 14px; font-family: 'Courier New', Courier, monospace; 
             background: rgba(0,0,0,0.6); color: #fff; 
             border: 1px solid var(--purple-trans); 
             cursor: pointer; margin: 3px; 
             transition: box-shadow 0.5s ease, border-color 0.5s ease, opacity 0.3s;
+            text-shadow: var(--text-glow);
         }
         
         .menu-btn:hover, .sub-btn:hover, .nude-btn:hover, .remove-hud-btn:hover, .slot-btn:hover { opacity: 1; }
@@ -85,7 +90,12 @@
         .content { display: none; }
         .controls { display: none; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
         
-        .ctrl-btn { background: rgba(0,0,0,0.7); border: 1px solid var(--purple-trans); color: #fff; padding: 18px; font-size: 12px; font-family: 'Courier New', Courier, monospace; cursor: pointer; border-radius: 4px; text-transform: uppercase; opacity: 1; }
+        /* Controls with text-glow */
+        .ctrl-btn { 
+            background: rgba(0,0,0,0.7); border: 1px solid var(--purple-trans); color: #fff; padding: 18px; 
+            font-size: 12px; font-family: 'Courier New', Courier, monospace; cursor: pointer; border-radius: 4px; 
+            text-transform: uppercase; opacity: 1; text-shadow: var(--text-glow);
+        }
     </style>
 </head>
 <body>
