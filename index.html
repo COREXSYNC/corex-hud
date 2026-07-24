@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COREX//SYNC Vanity</title>
     <style>
-        /* Defined the color with transparency variables */
         :root { 
             --purple-trans: rgba(151, 92, 207, 0.6); 
             --glow: 0 0 15px rgba(151, 92, 207, 0.6); 
@@ -39,14 +38,13 @@
             background: rgba(0, 0, 0, 0.4); 
             padding: 30px; 
             border-radius: 12px; 
-            /* Purple Transparent Border */
             border: 1px solid var(--purple-trans); 
         }
         
         .container::-webkit-scrollbar { width: 9px; }
-        /* Purple Transparent Scrollbar */
         .container::-webkit-scrollbar-thumb { background: rgba(52,32,74,0.7); border-radius: 3px; }
         
+        /* Updated H1 with glow */
         h1 { 
             font-size: 30px; text-align: center; color: #fff; 
             letter-spacing: 4px; text-transform: uppercase; 
@@ -54,6 +52,7 @@
             cursor: pointer; 
             font-family: 'Courier New', Courier, monospace; 
             font-weight: 300; 
+            text-shadow: 0 0 10px rgba(151, 92, 207, 0.8), 0 0 20px rgba(151, 92, 207, 0.5);
         }
         
         /* Menu Buttons */
@@ -78,7 +77,7 @@
         
         .menu-btn:hover, .sub-btn:hover, .nude-btn:hover, .remove-hud-btn:hover, .slot-btn:hover { opacity: 1; }
         
-        /* Glow style updated to match purple */
+        /* Active Glow */
         .active-glow { border-color: #34204a !important; box-shadow: var(--glow) !important; opacity: 1 !important; }
         
         .slot-container, .submenu-items { display: none; padding: 10px; text-align: center; }
@@ -126,7 +125,6 @@
             addCategory('wardrobe', [["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"], ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"], ["Formal", null, [["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"]]], ["Seasons", null, [["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]]]);
         };
 
-        // Helper function to clear all glows
         function clearAllGlows() {
             var allButtons = document.querySelectorAll('button');
             allButtons.forEach(function(b) {
