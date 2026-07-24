@@ -126,6 +126,14 @@
             addCategory('wardrobe', [["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"], ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"], ["Formal", null, [["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"]]], ["Seasons", null, [["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]]]);
         };
 
+        // Helper function to clear all glows
+        function clearAllGlows() {
+            var allButtons = document.querySelectorAll('button');
+            allButtons.forEach(function(b) {
+                b.classList.remove('active-glow');
+            });
+        }
+
         function addCategory(id, items) { 
             var container = document.getElementById(id); 
             items.forEach(function(item) { 
@@ -136,13 +144,22 @@
                         var subBtn = document.createElement('button'); subBtn.className = 'sub-btn'; subBtn.innerText = sub[0]; 
                         var slots = document.createElement('div'); slots.className = 'slot-container'; 
                         for(var i=1; i<=6; i++) slots.innerHTML += `<button class="slot-btn" onclick="send(this,'${sub[1]}','style${i}')">${i}</button>`;
-                        subBtn.onclick = function() { toggleOnlySlots(this); }; 
+                        subBtn.onclick = function() { 
+                            clearAllGlows();
+                            toggleOnlySlots(this); 
+                        }; 
                         subDiv.appendChild(subBtn); subDiv.appendChild(slots); 
                     }); 
-                    btn.onclick = function() { toggleSubmenu(this, subDiv); };
+                    btn.onclick = function() { 
+                        clearAllGlows();
+                        toggleSubmenu(this, subDiv); 
+                    };
                     container.appendChild(subDiv); 
                 } else { 
-                    btn.onclick = function() { toggleOnlySlots(this); }; 
+                    btn.onclick = function() { 
+                        clearAllGlows();
+                        toggleOnlySlots(this); 
+                    }; 
                     var div = document.createElement('div'); div.className = 'slot-container'; 
                     for(var i=1; i<=6; i++) div.innerHTML += `<button class="slot-btn" onclick="send(this,'${item[1]}','style${i}')">${i}</button>`;
                     container.appendChild(div); 
@@ -151,10 +168,8 @@
         }
 
         function send(btn, part, style) { 
-            var allButtons = document.querySelectorAll('button');
-            allButtons.forEach(s => s.classList.remove('active-glow'));
+            clearAllGlows();
             btn.classList.add('active-glow');
-            setTimeout(function() { btn.classList.remove('active-glow'); }, 2000);
             
             var f = document.getElementById('sl_form'); 
             f.action = window.location.hash.substring(1); 
@@ -163,33 +178,29 @@
         }
 
         function toggleSubmenu(btn, subDiv) {
-            var parent = btn.parentElement;
             var isOpening = (subDiv.style.display !== 'block');
             subDiv.style.display = isOpening ? 'block' : 'none';
-            btn.classList.toggle('active-glow');
-            Array.from(parent.children).forEach(child => {
-                if (child !== btn && child !== subDiv && child.className.includes('sub-btn')) {
-                    child.style.display = isOpening ? 'none' : 'block';
-                }
-            });
+            btn.classList.add('active-glow');
         }
 
         function toggleOnlySlots(btn) {
             var slots = btn.nextElementSibling;
             slots.style.display = (slots.style.display === 'block') ? 'none' : 'block';
-            btn.classList.toggle('active-glow');
+            btn.classList.add('active-glow');
         }
 
         function showCategory(id) { 
+            clearAllGlows();
             document.getElementById('home').style.display = 'none'; 
             document.getElementById(id).style.display = 'block'; 
             document.getElementById('controls').style.display = 'grid';
         }
         function showHome() { 
+            clearAllGlows();
             document.getElementById('home').style.display = 'block';
             document.querySelectorAll('.content').forEach(c => {
                 c.style.display = 'none';
-                c.querySelectorAll('.sub-btn').forEach(b => { b.style.display = 'block'; b.classList.remove('active-glow'); });
+                c.querySelectorAll('.sub-btn').forEach(b => { b.style.display = 'block'; });
                 c.querySelectorAll('.submenu-items, .slot-container').forEach(s => s.style.display = 'none');
             });
             document.getElementById('controls').style.display = 'none';
