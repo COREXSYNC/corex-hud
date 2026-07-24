@@ -17,7 +17,7 @@
             min-height: 100vh;
             display: flex; justify-content: center; align-items: center;
             position: relative;
-            background: transparent;
+            background: #000; /* Reverted to black */
         }
 
         body::before {
@@ -36,10 +36,7 @@
             width: 65%; max-width: 600px; 
             height: 400px;
             overflow-y: auto;
-            /* Frosted Glass: Dark purple tint with blur */
-            background: rgba(129, 64, 150, 0.2); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.4); /* Reverted to dark black */
             padding: 30px; 
             border-radius: 12px; 
             border: 1px solid var(--purple-trans); 
