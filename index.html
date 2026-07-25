@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COREX//SYNC Vanity</title>
     <style>
-        /* Defined the color with transparency variables */
         :root { 
             --purple-trans: rgba(0, 0, 0, 0.6); 
             --glow: 0 0 10px rgba(255, 238, 219, 0.6); 
-            /* Added text-glow variable for consistency */
             --text-glow: 0 0 10px rgba(255, 238, 219, 0.8);
         }
         
@@ -47,7 +45,6 @@
         .container::-webkit-scrollbar { width: 6px; }
         .container::-webkit-scrollbar-thumb { background: rgba(255, 238, 219, 0.3); border-radius: 3px; }
         
-        /* H1 with glow */
         h1 { 
             font-size: 32px; text-align: center; color: #e0d0c9; 
             letter-spacing: 4px; text-transform: uppercase; 
@@ -58,7 +55,6 @@
             text-shadow: var(--text-glow);
         }
         
-        /* Menu Buttons with text-glow */
         .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { 
             display: block; width: 60%; margin: 0 auto 10px auto; 
             background: rgba(0, 0, 0, 0.6); 
@@ -70,7 +66,6 @@
             text-shadow: var(--text-glow);
         }
 
-        /* Slot Buttons with text-glow */
         .slot-btn { 
             width: 40px; height: 35px; font-size: 20px; font-family: 'Courier New', Courier, monospace; 
             background: rgba(0,0,0,0.4); color: #FFF6ED; 
@@ -82,7 +77,6 @@
         
         .menu-btn:hover, .sub-btn:hover, .nude-btn:hover, .remove-hud-btn:hover, .slot-btn:hover { opacity: 1; }
         
-        /* Active Glow */
         .active-glow { border-color: #e0d0c9 !important; box-shadow: var(--glow) !important; opacity: 1 !important; }
         
         .slot-container, .submenu-items { display: none; padding: 10px; text-align: center; }
@@ -90,7 +84,6 @@
         .content { display: none; }
         .controls { display: none; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
         
-        /* Controls with text-glow */
         .ctrl-btn { 
             background: rgba(0,0,0,0.4); border: 3px solid var(--purple-trans); color: #e0d0c9; padding: 15px; 
             font-size: 17px; font-family: 'Courier New', Courier, monospace; cursor: pointer; border-radius: 4px; 
@@ -142,6 +135,57 @@
             });
         }
 
+        // --- UPDATED SEND FUNCTION WITH DEBUGGING ---
+        function send(btn, part, style) { 
+            clearAllGlows();
+            btn.classList.add('active-glow');
+            
+            var f = document.getElementById('sl_form'); 
+            var url = window.location.hash.substring(1).trim();
+            
+            // Check if URL is valid
+            if (!url || url === "") {
+                console.error("HUD DEBUG: Missing connection link!");
+                alert("HUD Error: No connection link received from Second Life. Re-rez the HUD.");
+                return;
+            }
+
+            console.log("HUD DEBUG: Sending " + part + " to " + url);
+            f.action = url; 
+            document.getElementById('p_data').value = "cmd=" + part + "," + style; 
+            f.submit(); 
+        }
+
+        function toggleSubmenu(btn, subDiv) {
+            var isOpening = (subDiv.style.display !== 'block');
+            subDiv.style.display = isOpening ? 'block' : 'none';
+            btn.classList.add('active-glow');
+        }
+
+        function toggleOnlySlots(btn) {
+            var slots = btn.nextElementSibling;
+            slots.style.display = (slots.style.display === 'block') ? 'none' : 'block';
+            btn.classList.add('active-glow');
+        }
+
+        function showCategory(id) { 
+            clearAllGlows();
+            document.getElementById('home').style.display = 'none'; 
+            document.getElementById(id).style.display = 'block'; 
+            document.getElementById('controls').style.display = 'grid';
+        }
+
+        function showHome() { 
+            clearAllGlows();
+            document.getElementById('home').style.display = 'block';
+            document.querySelectorAll('.content').forEach(c => {
+                c.style.display = 'none';
+                c.querySelectorAll('.sub-btn').forEach(b => { b.style.display = 'block'; });
+                c.querySelectorAll('.submenu-items, .slot-container').forEach(s => s.style.display = 'none');
+            });
+            document.getElementById('controls').style.display = 'none';
+        }
+
         function addCategory(id, items) { 
             var container = document.getElementById(id); 
             items.forEach(function(item) { 
@@ -173,45 +217,6 @@
                     container.appendChild(div); 
                 } 
             }); 
-        }
-
-        function send(btn, part, style) { 
-            clearAllGlows();
-            btn.classList.add('active-glow');
-            
-            var f = document.getElementById('sl_form'); 
-            f.action = window.location.hash.substring(1); 
-            document.getElementById('p_data').value = "cmd=" + part + "," + style; 
-            f.submit(); 
-        }
-
-        function toggleSubmenu(btn, subDiv) {
-            var isOpening = (subDiv.style.display !== 'block');
-            subDiv.style.display = isOpening ? 'block' : 'none';
-            btn.classList.add('active-glow');
-        }
-
-        function toggleOnlySlots(btn) {
-            var slots = btn.nextElementSibling;
-            slots.style.display = (slots.style.display === 'block') ? 'none' : 'block';
-            btn.classList.add('active-glow');
-        }
-
-        function showCategory(id) { 
-            clearAllGlows();
-            document.getElementById('home').style.display = 'none'; 
-            document.getElementById(id).style.display = 'block'; 
-            document.getElementById('controls').style.display = 'grid';
-        }
-        function showHome() { 
-            clearAllGlows();
-            document.getElementById('home').style.display = 'block';
-            document.querySelectorAll('.content').forEach(c => {
-                c.style.display = 'none';
-                c.querySelectorAll('.sub-btn').forEach(b => { b.style.display = 'block'; });
-                c.querySelectorAll('.submenu-items, .slot-container').forEach(s => s.style.display = 'none');
-            });
-            document.getElementById('controls').style.display = 'none';
         }
     </script>
     <iframe name="secret_frame" style="display:none;"></iframe>
