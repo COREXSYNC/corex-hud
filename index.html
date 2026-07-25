@@ -57,26 +57,19 @@
             addCategory('wardrobe', [["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"], ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"], ["Formal", null, [["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"]]], ["Seasons", null, [["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]]]);
         };
 
-        // THE "AESTHETIC" ROBUST SEND FUNCTION
         function send(btn, part, style) { 
             let simUrl = window.location.hash.substring(1);
+            if (!simUrl) { return; }
+            
+            // Cooldown mechanism
+            btn.style.pointerEvents = 'none';
+            setTimeout(() => { btn.style.pointerEvents = 'auto'; }, 800);
 
-            // 1. Check connection exactly when clicked
-            if (!simUrl) {
-                btn.style.borderColor = "#ff4444";
-                btn.innerText = "CONN ERROR";
-                setTimeout(() => { btn.style.borderColor = ""; btn.innerText = "..."; }, 1000);
-                return;
-            }
-
-            // 2. Decode and Submit
             simUrl = decodeURIComponent(simUrl);
             const form = document.getElementById('sl_form');
-            const input = document.getElementById('p_data');
-            
+            document.getElementById('p_data').value = part + "," + style; 
             form.action = simUrl;
-            input.value = part + "," + style;
-            form.submit();
+            form.submit(); 
         }
 
         function toggleSubmenu(btn, subDiv) { subDiv.style.display = (subDiv.style.display !== 'block') ? 'block' : 'none'; btn.classList.add('active-glow'); }
@@ -109,8 +102,6 @@
         }
     </script>
     <iframe name="secret_frame" style="display:none;"></iframe>
-    <form id="sl_form" method="POST" target="secret_frame" style="display:none;">
-        <input type="hidden" id="p_data" name="data">
-    </form>
+    <form id="sl_form" method="POST" target="secret_frame" style="display:none;"><input type="hidden" id="p_data" name="data"></form>
 </body>
 </html>
