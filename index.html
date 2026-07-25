@@ -60,11 +60,8 @@
         function send(btn, part, style) { 
             let simUrl = window.location.hash.substring(1);
             if (!simUrl) { return; }
-            
-            // Cooldown mechanism
             btn.style.pointerEvents = 'none';
             setTimeout(() => { btn.style.pointerEvents = 'auto'; }, 800);
-
             simUrl = decodeURIComponent(simUrl);
             const form = document.getElementById('sl_form');
             document.getElementById('p_data').value = part + "," + style; 
@@ -72,10 +69,32 @@
             form.submit(); 
         }
 
-        function toggleSubmenu(btn, subDiv) { subDiv.style.display = (subDiv.style.display !== 'block') ? 'block' : 'none'; btn.classList.add('active-glow'); }
-        function toggleOnlySlots(btn) { btn.nextElementSibling.style.display = (btn.nextElementSibling.style.display === 'block') ? 'none' : 'block'; btn.classList.add('active-glow'); }
-        function showCategory(id) { document.getElementById('home').style.display = 'none'; document.getElementById(id).style.display = 'block'; document.getElementById('controls').style.display = 'grid'; }
-        function showHome() { document.getElementById('home').style.display = 'block'; document.querySelectorAll('.content').forEach(c => c.style.display = 'none'); document.getElementById('controls').style.display = 'none'; }
+        function toggleSubmenu(btn, subDiv) { 
+            document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active-glow'));
+            subDiv.style.display = (subDiv.style.display !== 'block') ? 'block' : 'none'; 
+            btn.classList.add('active-glow'); 
+        }
+
+        function toggleOnlySlots(btn) { 
+            document.querySelectorAll('.sub-btn, .nude-btn, .menu-btn').forEach(b => b.classList.remove('active-glow'));
+            btn.nextElementSibling.style.display = (btn.nextElementSibling.style.display === 'block') ? 'none' : 'block'; 
+            btn.classList.add('active-glow'); 
+        }
+
+        function showCategory(id) { 
+            document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active-glow'));
+            event.target.classList.add('active-glow');
+            document.getElementById('home').style.display = 'none'; 
+            document.getElementById(id).style.display = 'block'; 
+            document.getElementById('controls').style.display = 'grid'; 
+        }
+
+        function showHome() { 
+            document.querySelectorAll('.menu-btn, .sub-btn, .nude-btn').forEach(b => b.classList.remove('active-glow'));
+            document.getElementById('home').style.display = 'block'; 
+            document.querySelectorAll('.content').forEach(c => c.style.display = 'none'); 
+            document.getElementById('controls').style.display = 'none'; 
+        }
         
         function addCategory(id, items) { 
             var container = document.getElementById(id);
