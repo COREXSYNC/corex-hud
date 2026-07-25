@@ -24,26 +24,32 @@
 <body>
     <div class="container">
         <h1 onclick="showHome()">𝙲𝙾𝚁𝙴𝚇//𝚂𝚈𝙽𝙲</h1>
+        
         <div id="home">
             <button class="menu-btn" onclick="showCategory(this, 'dresser')">Dresser</button>
             <button class="menu-btn" onclick="showCategory(this, 'closet')">Closet</button>
             <button class="menu-btn" onclick="showCategory(this, 'wardrobe')">Wardrobe</button>
-            <button class="nude-btn" onclick="toggleOnlySlots(this)">Nude</button>
-            <div class="slot-container">
-                <!-- UPDATED: Now sends NudeStyle to avoid strip collision -->
-                <button class="slot-btn" onclick="send(this,'NudeStyle','style1')">1</button>
-                <button class="slot-btn" onclick="send(this,'NudeStyle','style2')">2</button>
-                <button class="slot-btn" onclick="send(this,'NudeStyle','style3')">3</button>
-                <button class="slot-btn" onclick="send(this,'NudeStyle','style4')">4</button>
-                <button class="slot-btn" onclick="send(this,'NudeStyle','style5')">5</button>
-                <button class="slot-btn" onclick="send(this,'NudeStyle','style6')">6</button>
-            </div>
+            <button class="menu-btn" onclick="showCategory(this, 'nude_cat')">Nude</button>
+            <button class="remove-hud-btn" style="border-color:#8b0000; color:#ff6b6b;" onclick="send(this,'StripAll','none')">Remove Clothes</button>
             <button class="remove-hud-btn" onclick="send(this,'HUD','remove')">Remove HUD</button>
         </div>
 
         <div id="dresser" class="content"></div>
         <div id="closet" class="content"></div>
         <div id="wardrobe" class="content"></div>
+        
+        <!-- Nude Category Page -->
+        <div id="nude_cat" class="content">
+            <div class="slot-container" style="display:block;">
+                <button class="slot-btn" onclick="send(this,'Nude','style1')">1</button>
+                <button class="slot-btn" onclick="send(this,'Nude','style2')">2</button>
+                <button class="slot-btn" onclick="send(this,'Nude','style3')">3</button>
+                <button class="slot-btn" onclick="send(this,'Nude','style4')">4</button>
+                <button class="slot-btn" onclick="send(this,'Nude','style5')">5</button>
+                <button class="slot-btn" onclick="send(this,'Nude','style6')">6</button>
+            </div>
+            <button class="ctrl-btn" onclick="showHome()">Back</button>
+        </div>
 
         <div id="controls" class="controls">
             <button class="ctrl-btn" onclick="showHome()">Back</button>
@@ -54,10 +60,7 @@
     <script>
         window.onload = function() {
             addCategory('dresser', [["Lounge", "Dresser/Lounge"], ["Pjs", "Dresser/Pjs"], ["Swimwear", "Dresser/Swimwear"], ["Undies", null, [["Bras", "Dresser/Undies/Bras"], ["Panties", "Dresser/Undies/Panties"], ["Boxer/Briefs", "Dresser/Undies/BoxerBriefs"], ["Lingerie", "Dresser/Undies/Lingerie"], ["Stockings", "Dresser/Undies/Stockings"], ["Socks", "Dresser/Undies/Socks"]]]]);
-            
-            // Path is set to Closet/Pants/Slacks. Ensure folder "Slacks" is in "Pants"
             addCategory('closet', [["Skirts", "Closet/Skirts"], ["Shorts", "Closet/Shorts"], ["Sweaters", "Closet/Sweaters"], ["Dresses", null, [["Long", "Closet/Dresses/Long"], ["Short", "Closet/Dresses/Short"]]], ["Shirts", null, [["Dress Shirts", "Closet/Shirts/DressShirts"], ["Long Sleeve", "Closet/Shirts/LongSleeve"], ["Short Sleeve", "Closet/Shirts/ShortSleeve"], ["Tanks/T's", "Closet/Shirts/TanksTs"], ["Tube Tops", "Closet/Shirts/TubeTops"]]], ["Pants", null, [["Slacks", "Closet/Pants/Slacks"], ["Casual", "Closet/Pants/Casual"], ["Jeans", "Closet/Pants/Jeans"], ["Leggings", "Closet/Pants/Leggings"]]]]);
-            
             addCategory('wardrobe', [["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"], ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"], ["Formal", null, [["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"]]], ["Seasons", null, [["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]]]);
         };
 
@@ -89,7 +92,7 @@
             btn.classList.add('active-glow');
             document.getElementById('home').style.display = 'none'; 
             document.getElementById(id).style.display = 'block'; 
-            document.getElementById('controls').style.display = 'grid'; 
+            document.getElementById('controls').style.display = (id === 'nude_cat') ? 'none' : 'grid'; 
         }
 
         function showHome() { 
