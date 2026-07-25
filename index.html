@@ -70,15 +70,26 @@
         }
 
         function toggleSubmenu(btn, subDiv) { 
-            document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active-glow'));
-            subDiv.style.display = (subDiv.style.display !== 'block') ? 'block' : 'none'; 
-            btn.classList.add('active-glow'); 
+            if (subDiv.style.display === 'block') {
+                subDiv.style.display = 'none';
+                btn.classList.remove('active-glow');
+            } else {
+                document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active-glow'));
+                subDiv.style.display = 'block';
+                btn.classList.add('active-glow');
+            }
         }
 
         function toggleOnlySlots(btn) { 
-            document.querySelectorAll('.sub-btn, .nude-btn, .menu-btn').forEach(b => b.classList.remove('active-glow'));
-            btn.nextElementSibling.style.display = (btn.nextElementSibling.style.display === 'block') ? 'none' : 'block'; 
-            btn.classList.add('active-glow'); 
+            let slots = btn.nextElementSibling;
+            if (slots.style.display === 'block') {
+                slots.style.display = 'none';
+                btn.classList.remove('active-glow');
+            } else {
+                document.querySelectorAll('.sub-btn, .nude-btn, .menu-btn').forEach(b => b.classList.remove('active-glow'));
+                slots.style.display = 'block';
+                btn.classList.add('active-glow');
+            }
         }
 
         function showCategory(id) { 
