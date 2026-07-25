@@ -30,12 +30,13 @@
             <button class="menu-btn" onclick="showCategory(this, 'wardrobe')">Wardrobe</button>
             <button class="nude-btn" onclick="toggleOnlySlots(this)">Nude</button>
             <div class="slot-container">
-                <button class="slot-btn" onclick="send(this,'Nude','style1')">1</button>
-                <button class="slot-btn" onclick="send(this,'Nude','style2')">2</button>
-                <button class="slot-btn" onclick="send(this,'Nude','style3')">3</button>
-                <button class="slot-btn" onclick="send(this,'Nude','style4')">4</button>
-                <button class="slot-btn" onclick="send(this,'Nude','style5')">5</button>
-                <button class="slot-btn" onclick="send(this,'Nude','style6')">6</button>
+                <!-- UPDATED: Now sends NudeStyle to avoid strip collision -->
+                <button class="slot-btn" onclick="send(this,'NudeStyle','style1')">1</button>
+                <button class="slot-btn" onclick="send(this,'NudeStyle','style2')">2</button>
+                <button class="slot-btn" onclick="send(this,'NudeStyle','style3')">3</button>
+                <button class="slot-btn" onclick="send(this,'NudeStyle','style4')">4</button>
+                <button class="slot-btn" onclick="send(this,'NudeStyle','style5')">5</button>
+                <button class="slot-btn" onclick="send(this,'NudeStyle','style6')">6</button>
             </div>
             <button class="remove-hud-btn" onclick="send(this,'HUD','remove')">Remove HUD</button>
         </div>
@@ -53,17 +54,18 @@
     <script>
         window.onload = function() {
             addCategory('dresser', [["Lounge", "Dresser/Lounge"], ["Pjs", "Dresser/Pjs"], ["Swimwear", "Dresser/Swimwear"], ["Undies", null, [["Bras", "Dresser/Undies/Bras"], ["Panties", "Dresser/Undies/Panties"], ["Boxer/Briefs", "Dresser/Undies/BoxerBriefs"], ["Lingerie", "Dresser/Undies/Lingerie"], ["Stockings", "Dresser/Undies/Stockings"], ["Socks", "Dresser/Undies/Socks"]]]]);
-            addCategory('closet', [["Skirts", "Closet/Skirts"], ["Shorts", "Closet/Shorts"], ["Sweaters", "Closet/Sweaters"], ["Dresses", null, [["Long", "Closet/Dresses/Long"], ["Short", "Closet/Dresses/Short"]]], ["Shirts", null, [["Dress Shirts", "Closet/Shirts/DressShirts"], ["Long Sleeve", "Closet/Shirts/LongSleeve"], ["Short Sleeve", "Closet/Shirts/ShortSleeve"], ["Tanks/T's", "Closet/Shirts/TanksTs"], ["Tube Tops", "Closet/Shirts/TubeTops"]]], ["Pants", null, [["Slacks", "Closet/Pants/DressPants"], ["Casual", "Closet/Pants/Casual"], ["Jeans", "Closet/Pants/Jeans"], ["Leggings", "Closet/Pants/Leggings"]]]]);
+            
+            // Path is set to Closet/Pants/Slacks. Ensure folder "Slacks" is in "Pants"
+            addCategory('closet', [["Skirts", "Closet/Skirts"], ["Shorts", "Closet/Shorts"], ["Sweaters", "Closet/Sweaters"], ["Dresses", null, [["Long", "Closet/Dresses/Long"], ["Short", "Closet/Dresses/Short"]]], ["Shirts", null, [["Dress Shirts", "Closet/Shirts/DressShirts"], ["Long Sleeve", "Closet/Shirts/LongSleeve"], ["Short Sleeve", "Closet/Shirts/ShortSleeve"], ["Tanks/T's", "Closet/Shirts/TanksTs"], ["Tube Tops", "Closet/Shirts/TubeTops"]]], ["Pants", null, [["Slacks", "Closet/Pants/Slacks"], ["Casual", "Closet/Pants/Casual"], ["Jeans", "Closet/Pants/Jeans"], ["Leggings", "Closet/Pants/Leggings"]]]]);
+            
             addCategory('wardrobe', [["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"], ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"], ["Formal", null, [["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"]]], ["Seasons", null, [["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]]]);
         };
 
         function send(btn, part, style) { 
             let simUrl = window.location.hash.substring(1);
-            if (!simUrl) { btn.innerText = "!"; setTimeout(() => { btn.innerText = style.slice(-1); }, 1000); return; }
-            
+            if (!simUrl) { return; }
             btn.style.pointerEvents = 'none';
             setTimeout(() => { btn.style.pointerEvents = 'auto'; }, 800);
-            
             simUrl = decodeURIComponent(simUrl);
             const form = document.getElementById('sl_form');
             document.getElementById('p_data').value = part + "," + style; 
