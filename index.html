@@ -51,18 +51,26 @@
     </div>
 
     <script>
+        // GLOBAL VARIABLE: This stores the connection link forever once it loads
+        var targetUrl = "";
+
         window.onload = function() {
+            // "Lock in" the URL immediately
+            targetUrl = window.location.hash.substring(1);
+            
             addCategory('dresser', [["Lounge", "Dresser/Lounge"], ["Pjs", "Dresser/Pjs"], ["Swimwear", "Dresser/Swimwear"], ["Undies", null, [["Bras", "Dresser/Undies/Bras"], ["Panties", "Dresser/Undies/Panties"], ["Boxer/Briefs", "Dresser/Undies/BoxerBriefs"], ["Lingerie", "Dresser/Undies/Lingerie"], ["Stockings", "Dresser/Undies/Stockings"], ["Socks", "Dresser/Undies/Socks"]]]]);
             addCategory('closet', [["Skirts", "Closet/Skirts"], ["Shorts", "Closet/Shorts"], ["Sweaters", "Closet/Sweaters"], ["Dresses", null, [["Long", "Closet/Dresses/Long"], ["Short", "Closet/Dresses/Short"]]], ["Shirts", null, [["Dress Shirts", "Closet/Shirts/DressShirts"], ["Long Sleeve", "Closet/Shirts/LongSleeve"], ["Short Sleeve", "Closet/Shirts/ShortSleeve"], ["Tanks/T's", "Closet/Shirts/TanksTs"], ["Tube Tops", "Closet/Shirts/TubeTops"]]], ["Pants", null, [["Slacks", "Closet/Pants/DressPants"], ["Casual", "Closet/Pants/Casual"], ["Jeans", "Closet/Pants/Jeans"], ["Leggings", "Closet/Pants/Leggings"]]]]);
             addCategory('wardrobe', [["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"], ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"], ["Formal", null, [["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"]]], ["Seasons", null, [["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]]]);
         };
 
         function send(btn, part, style) { 
-            // The FIX: We set the value to "path,style"
-            // The input name is "cmd", so it sends "cmd=path,style"
+            if (!targetUrl || targetUrl === "") {
+                targetUrl = window.location.hash.substring(1); // Emergency re-sync
+            }
+            
             document.getElementById('p_data').value = part + "," + style; 
             var f = document.getElementById('sl_form'); 
-            f.action = window.location.hash.substring(1); 
+            f.action = targetUrl; // Use the "Locked in" variable
             f.submit(); 
         }
 
