@@ -12,7 +12,15 @@
         .container::-webkit-scrollbar { width: 6px; }
         .container::-webkit-scrollbar-thumb { background: rgba(255, 238, 219, 0.3); border-radius: 3px; }
         h1 { font-size: 32px; text-align: center; color: #e0d0c9; letter-spacing: 4px; text-transform: uppercase; margin: 0 0 20px 0; cursor: pointer; font-family: 'Courier New', Courier, monospace; font-weight: 350; text-shadow: var(--text-glow); }
-        .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { display: block; width: 60%; margin: 0 auto 10px auto; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255, 238, 219, 0.4); color: #FFF6ED; padding: 15px 10px; text-transform: uppercase; font-family: 'Courier New', Courier, monospace; font-size: 20px; font-weight: 700; cursor: pointer; border-radius: 6px; opacity: 0.5; }
+        .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { display: block; width: 60%; margin: 0 auto 10px auto; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255, 238, 219, 0.4); color: #FFF6ED; padding: 15px 10px; text-transform: uppercase; font-family: 'Courier New', Courier, monospace; font-size: 20px; font-weight: 700; cursor: pointer; border-radius: 6px; opacity: 0.5; transition: all 0.3s ease; }
+        
+        /* Added Hover Glow Effect */
+        .menu-btn:hover, .sub-btn:hover, .nude-btn:hover, .remove-hud-btn:hover { 
+            opacity: 1; 
+            border-color: #e0d0c9; 
+            box-shadow: 0 0 15px rgba(255, 238, 219, 0.4); 
+        }
+
         .slot-btn { width: 40px; height: 35px; font-size: 20px; font-family: 'Courier New', Courier, monospace; background: rgba(0,0,0,0.4); color: #FFF6ED; border: 2px solid rgba(255, 238, 219, 0.4); cursor: pointer; margin: 3px; }
         .active-glow { border-color: #e0d0c9 !important; box-shadow: var(--glow) !important; opacity: 1 !important; }
         .slot-container, .submenu-items { display: none; padding: 10px; }
