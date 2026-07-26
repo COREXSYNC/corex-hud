@@ -12,8 +12,23 @@
         .container::-webkit-scrollbar { width: 6px; }
         .container::-webkit-scrollbar-thumb { background: rgba(255, 238, 219, 0.3); border-radius: 3px; }
         h1 { font-size: 32px; text-align: center; color: #e0d0c9; letter-spacing: 4px; text-transform: uppercase; margin: 0 0 20px 0; cursor: pointer; font-family: 'Courier New', Courier, monospace; font-weight: 350; text-shadow: var(--text-glow); }
-        .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { display: block; width: 60%; margin: 0 auto 10px auto; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255, 238, 219, 0.4); color: #FFF6ED; padding: 15px 10px; text-transform: uppercase; font-family: 'Courier New', Courier, monospace; font-size: 20px; font-weight: 700; cursor: pointer; border-radius: 6px; opacity: 0.5; }
-        .slot-btn { width: 40px; height: 35px; font-size: 20px; font-family: 'Courier New', Courier, monospace; background: rgba(0,0,0,0.4); color: #FFF6ED; border: 2px solid rgba(255, 238, 219, 0.4); cursor: pointer; margin: 3px; }
+        
+        .menu-btn, .sub-btn, .nude-btn, .remove-hud-btn { display: block; width: 60%; margin: 0 auto 10px auto; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255, 238, 219, 0.4); color: #FFF6ED; padding: 15px 10px; text-transform: uppercase; font-family: 'Courier New', Courier, monospace; font-size: 20px; font-weight: 700; cursor: pointer; border-radius: 6px; opacity: 0.5; transition: all 0.2s ease; }
+        
+        /* Slight Glow on Hover - only for inactive buttons */
+        .menu-btn:hover:not(.active-glow), 
+        .sub-btn:hover:not(.active-glow), 
+        .nude-btn:hover:not(.active-glow), 
+        .remove-hud-btn:hover:not(.active-glow) { 
+            border-color: #e0d0c9; 
+            box-shadow: 0 0 8px rgba(255, 238, 219, 0.4); 
+            opacity: 0.7;
+        }
+
+        .slot-btn { width: 40px; height: 35px; font-size: 20px; font-family: 'Courier New', Courier, monospace; background: rgba(0,0,0,0.4); color: #FFF6ED; border: 2px solid rgba(255, 238, 219, 0.4); cursor: pointer; margin: 3px; transition: all 0.2s ease; }
+        /* Slight Glow on Hover for slots */
+        .slot-btn:hover { border-color: #e0d0c9; box-shadow: 0 0 8px rgba(255, 238, 219, 0.4); }
+
         .active-glow { border-color: #e0d0c9 !important; box-shadow: var(--glow) !important; opacity: 1 !important; }
         .slot-container, .submenu-items { display: none; padding: 10px; }
         .content { display: none; }
@@ -37,7 +52,6 @@
         <div id="closet" class="content"></div>
         <div id="wardrobe" class="content"></div>
         
-        <!-- Nude Category Page -->
         <div id="nude_cat" class="content">
             <div class="slot-container" style="display:block;">
                 <button class="slot-btn" onclick="send(this,'Nude','style1')">1</button>
