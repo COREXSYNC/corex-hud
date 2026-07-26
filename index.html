@@ -55,15 +55,27 @@
 
     <script>
         window.onload = function() {
-            addCategory('dresser', [["Lounge", "Dresser/Lounge"], ["Pjs", "Dresser/Pjs"], ["Swimwear", "Dresser/Swimwear"], ["Undies", null, [["Bras", "Dresser/Undies/Bras"], ["Panties", "Dresser/Undies/Panties"], ["Stockings", "Dresser/Undies/Stockings"]]]]);
-            addCategory('closet', [["Skirts", "Closet/Skirts"], ["Shorts", "Closet/Shorts"], ["Sweaters", "Closet/Sweaters"], ["Pants", null, [["Slacks", "Closet/Pants/Slacks"], ["Jeans", "Closet/Pants/Jeans"]]]]);
-            addCategory('wardrobe', [["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Formal", "Wardrobe/Formal"]]);
+            // RESTORED MENU STRUCTURE
+            addCategory('dresser', [
+                ["Lounge", "Dresser/Lounge"], ["Pjs", "Dresser/Pjs"], ["Swimwear", "Dresser/Swimwear"], 
+                ["Undies", null, [["Bras", "Dresser/Undies/Bras"], ["Panties", "Dresser/Undies/Panties"], ["Boxer/Briefs", "Dresser/Undies/BoxerBriefs"], ["Lingerie", "Dresser/Undies/Lingerie"], ["Stockings", "Dresser/Undies/Stockings"], ["Socks", "Dresser/Undies/Socks"]]]
+            ]);
+            addCategory('closet', [
+                ["Skirts", "Closet/Skirts"], ["Shorts", "Closet/Shorts"], ["Sweaters", "Closet/Sweaters"], 
+                ["Dresses", null, [["Long", "Closet/Dresses/Long"], ["Short", "Closet/Dresses/Short"]]], 
+                ["Shirts", null, [["Dress Shirts", "Closet/Shirts/DressShirts"], ["Long Sleeve", "Closet/Shirts/LongSleeve"], ["Short Sleeve", "Closet/Shirts/ShortSleeve"], ["Tanks/T's", "Closet/Shirts/TanksTs"], ["Tube Tops", "Closet/Shirts/TubeTops"]]], 
+                ["Pants", null, [["Slacks", "Closet/Pants/Slacks"], ["Casual", "Closet/Pants/Casual"], ["Jeans", "Closet/Pants/Jeans"], ["Leggings", "Closet/Pants/Leggings"]]]
+            ]);
+            addCategory('wardrobe', [
+                ["Casual", "Wardrobe/Casual"], ["Club", "Wardrobe/Club"], ["Shopping", "Wardrobe/Shopping"], ["Sleep", "Wardrobe/Sleep"], ["Roleplay", "Wardrobe/Roleplay"], 
+                ["Formal", null, [["Gowns", "Wardrobe/Formal/Gowns"], ["Suits", "Wardrobe/Formal/Suits"]]], 
+                ["Seasons", null, [["Spring", "Wardrobe/Seasons/Spring"], ["Summer", "Wardrobe/Seasons/Summer"], ["Fall", "Wardrobe/Seasons/Fall"], ["Winter", "Wardrobe/Seasons/Winter"]]]
+            ]);
         };
 
         function send(btn, part, style) { 
             let simUrl = window.location.hash.substring(1);
             if (!simUrl) return;
-            
             simUrl = decodeURIComponent(simUrl);
             const form = document.getElementById('sl_form');
             document.getElementById('p_data').value = part + "," + style; 
@@ -72,12 +84,15 @@
         }
 
         function showCategory(btn, id) { 
+            document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active-glow'));
+            btn.classList.add('active-glow');
             document.getElementById('home').style.display = 'none'; 
             document.getElementById(id).style.display = 'block'; 
             document.getElementById('controls').style.display = (id === 'nude_cat') ? 'none' : 'grid'; 
         }
 
         function showHome() { 
+            document.querySelectorAll('.menu-btn, .sub-btn, .nude-btn').forEach(b => b.classList.remove('active-glow'));
             document.getElementById('home').style.display = 'block'; 
             document.querySelectorAll('.content').forEach(c => c.style.display = 'none'); 
             document.getElementById('controls').style.display = 'none'; 
