@@ -2,44 +2,70 @@
 <html>
 <head>
     <style>
-        body { background: #000; color: #0f0; font-family: monospace; display: flex; flex-direction: column; align-items: center; }
-        .category-row { margin: 10px; }
-        button { background: #222; color: #0f0; border: 1px solid #0f0; padding: 10px; margin: 5px; cursor: pointer; }
+        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; margin: 0; padding: 10px; }
+        .menu { display: flex; flex-direction: column; gap: 15px; }
+        .category { display: flex; flex-direction: column; gap: 5px; }
+        .row { display: flex; gap: 5px; flex-wrap: wrap; }
+        button { background: #111; color: #0f0; border: 1px solid #0f0; padding: 8px 10px; cursor: pointer; text-transform: uppercase; font-size: 10px; }
         button:hover { background: #0f0; color: #000; }
+        h3 { margin: 0; font-size: 12px; border-bottom: 1px solid #0f0; }
     </style>
 </head>
 <body>
 
-    <h2>COREX//SYNC</h2>
+    <div class="menu">
+        <!-- DRESSER -->
+        <div class="category">
+            <h3>DRESSER</h3>
+            <div class="row">
+                <button onclick="sendCommand('Dresser/Lounge', '1')">Lounge</button>
+                <button onclick="sendCommand('Dresser/Pjs', '1')">PJs</button>
+                <button onclick="sendCommand('Dresser/Swimwear', '1')">Swim</button>
+            </div>
+            <div class="row">
+                <button onclick="sendCommand('Dresser/Undies', 'Bras')">Bras</button>
+                <button onclick="sendCommand('Dresser/Undies', 'Panties')">Panties</button>
+                <button onclick="sendCommand('Dresser/Undies', 'Stockings')">Stockings</button>
+            </div>
+        </div>
 
-    <!-- Example: Swimwear Category -->
-    <div class="category-row">
-        <h3>Swimwear</h3>
-        <button onclick="sendCommand('Swimwear', '1')">Style 1</button>
-        <button onclick="sendCommand('Swimwear', '2')">Style 2</button>
-        <button onclick="sendCommand('Swimwear', '3')">Style 3</button>
-    </div>
+        <!-- CLOSET -->
+        <div class="category">
+            <h3>CLOSET</h3>
+            <div class="row">
+                <button onclick="sendCommand('Closet/Skirts', '1')">Skirts</button>
+                <button onclick="sendCommand('Closet/Shorts', '1')">Shorts</button>
+                <button onclick="sendCommand('Closet/Sweaters', '1')">Sweaters</button>
+                <button onclick="sendCommand('Closet/Shirts', '1')">Shirts</button>
+            </div>
+        </div>
 
-    <!-- System Controls -->
-    <div class="category-row">
-        <button onclick="sendCommand('StripAll', '0')">STRIP ALL</button>
+        <!-- WARDROBE -->
+        <div class="category">
+            <h3>WARDROBE</h3>
+            <div class="row">
+                <button onclick="sendCommand('Wardrobe/Casual', '1')">Casual</button>
+                <button onclick="sendCommand('Wardrobe/Club', '1')">Club</button>
+                <button onclick="sendCommand('Wardrobe/Formal', '1')">Formal</button>
+            </div>
+        </div>
+
+        <!-- SYSTEM -->
+        <div class="row" style="margin-top:10px;">
+            <button onclick="sendCommand('StripAll', '0')" style="border-color:red; color:red;">STRIP ALL</button>
+            <button onclick="sendCommand('HUD', '0')">DETACH HUD</button>
+        </div>
     </div>
 
     <script>
         function sendCommand(path, style) {
-            // Get the URL hash passed from the LSL script
             const targetUrl = window.location.hash.substring(1);
-            if (!targetUrl) {
-                console.error("No HUD URL found!");
-                return;
+            if (targetUrl) {
+                fetch(targetUrl, {
+                    method: 'POST',
+                    body: 'data=' + path + ',' + style
+                });
             }
-
-            fetch(targetUrl, {
-                method: 'POST',
-                body: 'data=' + path + ',' + style
-            }).then(() => {
-                console.log('Sent: ' + path + '/' + style);
-            });
         }
     </script>
 </body>
