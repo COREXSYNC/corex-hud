@@ -83,10 +83,13 @@
             btn.style.pointerEvents = 'none';
             setTimeout(() => { btn.style.pointerEvents = 'auto'; }, 800);
             simUrl = decodeURIComponent(simUrl);
-            const form = document.getElementById('sl_form');
-            document.getElementById('p_data').value = part + "," + style; 
-            form.action = simUrl;
-            form.submit(); 
+            
+            // Send request via background fetch to completely eliminate URL tooltips/popups in SL
+            fetch(simUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'data=' + encodeURIComponent(part + "," + style)
+            }).catch(error => console.log('Error:', error));
         }
 
         function toggleSubmenu(btn, subDiv) { 
@@ -139,7 +142,5 @@
             });
         }
     </script>
-    <iframe name="secret_frame" style="display:none;"></iframe>
-    <form id="sl_form" method="POST" target="secret_frame" style="display:none;"><input type="hidden" id="p_data" name="data"></form>
 </body>
 </html>
